@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 12: Driver Functions — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 12: Driver Functions</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/coding/driver_functions.html" target="_blank">Driver Functions</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>The Built-in Toolbox</h3>
+    <p>
+      The LPC driver comes with a library of built-in functions called
+      <strong>efuns</strong>. You will use these constantly, they are the workhorses
+      for processing text, crunching lists, and managing data.
+    </p>
+    <h3>The Ones You Will Use Most</h3>
+    <p><strong>Strings:</strong></p>
+    <ul>
+      <li><code>explode("a,b,c", ",")</code> → <code>({"a","b","c"})</code>, split text</li>
+      <li><code>implode(({"a","b","c"}), ",")</code> → <code>"a,b,c"</code>, join text</li>
+      <li><code>capitalize("goblin")</code> → <code>"Goblin"</code></li>
+      <li><code>sprintf("HP: %d", 100)</code> → <code>"HP: 100"</code>, formatted output</li>
+    </ul>
+    <p><strong>Arrays:</strong></p>
+    <ul>
+      <li><code>sizeof(arr)</code>, how many elements</li>
+      <li><code>filter(arr, func)</code>, keep matching elements</li>
+      <li><code>sort_array(arr, func)</code>, sort with a comparison function</li>
+    </ul>
+    <p><strong>Mappings:</strong></p>
+    <ul>
+      <li><code>m_indices(map)</code>, all keys as an array</li>
+      <li><code>m_values(map)</code>, all values as an array</li>
+      <li><code>map_delete(map, key)</code>, remove an entry</li>
+    </ul>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/driver_functions.html" target="_blank">Driver Functions</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 12.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 12.1: String Toolbox <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-12.1" data-exercise="12.1">
+      <label for="check-12.1">Completed</label>
+    </div>
+    <p class="objective">Write a utility object containing three string manipulation functions.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Implement <code>string title_case(string s)</code>:
+          <ul>
+            <li>Capitalizes the first letter of every word in the string</li>
+            <li>Use <code>explode()</code> to split on spaces, <code>capitalize()</code> each word, then <code>implode()</code> to rejoin</li>
+            <li>Example: <code>"hello world"</code> becomes <code>"Hello World"</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>int word_count(string s)</code>:
+          <ul>
+            <li>Returns the number of words in the string</li>
+            <li>Use <code>explode()</code> to split on spaces, then <code>sizeof()</code></li>
+            <li>Handle edge case: empty string <code>""</code> should return <code>0</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>string pad_right(string s, int width)</code>:
+          <ul>
+            <li>Returns the string padded with trailing spaces to reach <code>width</code></li>
+            <li>Use <code>sprintf("%-*s", width, s)</code> for the formatting</li>
+            <li>If the string is already longer than <code>width</code>, return it unchanged</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch12_driver_functions/ex01_string_funcs.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>explode("hello world", " ")</code> returns <code>({"hello", "world"})</code>. It splits a string into an array by the given delimiter.</li>
+        <li><code>capitalize("hello")</code> returns <code>"Hello"</code>. It only capitalizes the very first character of the string.</li>
+        <li><code>implode(array, " ")</code> is the reverse of <code>explode</code>, it joins an array of strings back together with the given delimiter.</li>
+        <li>The <code>sprintf</code> format <code>"%-*s"</code> left-aligns a string in a field of variable width. The <code>*</code> means the width comes from the next argument: <code>sprintf("%-*s", 10, "hi")</code> produces <code>"hi        "</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 12.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 12.2: Array Operations <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-12.2" data-exercise="12.2">
+      <label for="check-12.2">Completed</label>
+    </div>
+    <p class="objective">Write a utility object that stores an array of monster levels and provides functions to analyze and transform the data.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Store a global <code>int *levels</code> array set in <code>create()</code> with at least 8 values (e.g., <code>({5, 12, 3, 18, 7, 25, 14, 9})</code>)</li>
+        <li>Implement <code>int average_level()</code>:
+          <ul>
+            <li>Returns the integer average of all values in <code>levels</code></li>
+            <li>Use a <code>foreach</code> loop to sum the values, then divide by <code>sizeof(levels)</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>int *filter_above(int threshold)</code>:
+          <ul>
+            <li>Returns a new array containing only levels strictly greater than <code>threshold</code></li>
+            <li>Use the <code>filter()</code> efun with a function or closure</li>
+          </ul>
+        </li>
+        <li>Implement <code>int *sort_descending()</code>:
+          <ul>
+            <li>Returns a copy of <code>levels</code> sorted from highest to lowest</li>
+            <li>Use <code>sort_array()</code> with a closure comparator: <code>(: $2 - $1 :)</code></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch12_driver_functions/ex02_array_funcs.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>foreach</code> syntax in LPC: <code>foreach (int val : levels) { total += val; }</code> iterates over every element in the array.</li>
+        <li><code>filter(array, function)</code> keeps only elements for which the function returns nonzero. You can use a closure: <code>filter(levels, (: $1 > threshold :))</code> or define a helper function.</li>
+        <li><code>sort_array(array, closure)</code> sorts in place. The closure receives two elements and should return positive if the first should come after the second. For descending: <code>(: $2 - $1 :)</code>.</li>
+        <li>Remember that integer division in LPC truncates (rounds toward zero), so <code>93 / 8</code> gives <code>11</code>, not <code>11.625</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 12.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 12.3: Mapping Utilities <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-12.3" data-exercise="12.3">
+      <label for="check-12.3">Completed</label>
+    </div>
+    <p class="objective">Write a utility object with two mapping manipulation functions.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Implement <code>mapping invert_mapping(mapping m)</code>:
+          <ul>
+            <li>Returns a new mapping with keys and values swapped</li>
+            <li>Given <code>(["a":1, "b":2, "c":3])</code> return <code>([1:"a", 2:"b", 3:"c"])</code></li>
+            <li>Use <code>m_indices()</code> or <code>foreach</code> to iterate the original mapping</li>
+          </ul>
+        </li>
+        <li>Implement <code>mapping merge_mappings(mapping a, mapping b)</code>:
+          <ul>
+            <li>Returns a new mapping that combines both <code>a</code> and <code>b</code></li>
+            <li>Where keys overlap, values from <code>b</code> overwrite values from <code>a</code></li>
+            <li>Given <code>(["hp":100, "sp":50])</code> and <code>(["sp":75, "mp":30])</code>, return <code>(["hp":100, "sp":75, "mp":30])</code></li>
+            <li>Do not modify the original mappings</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch12_driver_functions/ex03_mapping_funcs.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>m_indices(m)</code> returns an array of all keys in mapping <code>m</code>. You can loop over these keys and read <code>m[key]</code> to get each value.</li>
+        <li>To build a new mapping, start with <code>mapping result = ([]);</code> and then assign into it: <code>result[new_key] = new_value;</code>.</li>
+        <li>For <code>merge_mappings</code>, one approach: copy all of <code>a</code> into the result first, then copy all of <code>b</code> (which naturally overwrites any conflicts).</li>
+        <li>The <code>foreach</code> syntax for mappings is: <code>foreach (mixed key, mixed val : m) { ... }</code> which gives you both the key and value on each iteration.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 2: Atmosphere</h3>
+    <p>
+      Driver functions are the tools you will reach for constantly when building your
+      capstone area. String formatting with <code>sprintf()</code> creates polished
+      output, <code>filter()</code> and <code>sort_array()</code> help manage monster
+      inventories and loot tables, and mapping operations power everything from exit
+      lists to stat tracking.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

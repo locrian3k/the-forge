@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 10: Inheritance — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 10: Inheritance</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/inheritance.html" target="_blank">
+        Inheritance
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Building on What Already Exists</h3>
+    <p>
+      Inheritance is the reason you can create a working monster in 20 lines instead
+      of 2,000. When you write <code>inherit "obj/monster";</code>, your object gets
+      all of the monster class's functions, movement, combat, chat, death handling —
+      for free. Your file only adds what is different.
+    </p>
+<pre class="diagram">Parent: /obj/monster
+│  set_name(), set_level(), attack(), die(), ...
+│
+└─ Your file: goblin.c
+    create() → sets name, level, chat messages
+    (everything else inherited automatically)</pre>
+    <h3>The :: Operator</h3>
+    <p>
+      <code>::create()</code> means "call my parent's version of create." In
+      <code>create()</code>, you always call <code>::create();</code> first so the parent
+      initializes before you customize. When overriding other functions, calling
+      <code>::function_name()</code> lets you extend behavior rather than replace it.
+    </p>
+    <h3>Multiple Inheritance</h3>
+    <p>
+      LPC supports inheriting from two or more parents simultaneously. The child gets
+      functions from all parents. When parent names collide, you specify which one:
+      <code>describable::create();</code>
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/inheritance.html" target="_blank">Inheritance</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 10.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 10.1: Basic Inheritance <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-10.01" data-exercise="10.01">
+      <label for="check-10.01">Completed</label>
+    </div>
+    <p class="objective">Create a base class and a child class that inherits from it.</p>
+    <div class="requirements">
+      <h3>File 1: <code>ex01_base_creature.c</code></h3>
+      <ul>
+        <li>Declare a global <code>string creature_name</code></li>
+        <li>Implement <code>create()</code> that sets <code>creature_name</code> to <code>"creature"</code></li>
+        <li>Implement <code>query_creature_name()</code> returning <code>creature_name</code></li>
+        <li>Implement <code>set_creature_name(string s)</code> that sets <code>creature_name</code></li>
+      </ul>
+      <h3>File 2: <code>ex01_goblin.c</code></h3>
+      <ul>
+        <li>Inherit <code>ex01_base_creature.c</code></li>
+        <li>Implement <code>create()</code> that calls <code>::create()</code> first, then <code>set_creature_name("goblin")</code></li>
+        <li>Implement <code>query_battle_cry()</code> returning a goblin war cry string</li>
+        <li>Implement <code>query_description()</code> using <code>query_creature_name()</code> from the parent</li>
+      </ul>
+    </div>
+    <p>Files to create: <span class="file-path">exercises/ch10_inheritance/ex01_base_creature.c</span> and <span class="file-path">exercises/ch10_inheritance/ex01_goblin.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The <code>inherit</code> statement goes after <code>#include</code> but before any globals: <code>inherit "path/to/ex01_base_creature";</code></li>
+        <li><code>::create()</code> calls the parent's version of <code>create()</code>. Always call this first so the parent initializes before you customize.</li>
+        <li>The child automatically has access to <code>query_creature_name()</code> and <code>set_creature_name()</code> without re-implementing them.</li>
+        <li>You can call inherited functions just like local ones, the child "is a" base_creature.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 10.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 10.2: Override and Extend <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-10.02" data-exercise="10.02">
+      <label for="check-10.02">Completed</label>
+    </div>
+    <p class="objective">Override a parent function in a child class while still calling the parent's version.</p>
+    <div class="requirements">
+      <h3>File 1: <code>ex02_base_npc.c</code></h3>
+      <ul>
+        <li>Implement <code>extra_look()</code> returning a base description, e.g. <code>"This is a generic NPC."</code></li>
+        <li>Implement <code>query_greeting()</code> returning a base greeting, e.g. <code>"Hello there."</code></li>
+        <li>Implement <code>create()</code> with basic setup</li>
+      </ul>
+      <h3>File 2: <code>ex02_guard.c</code></h3>
+      <ul>
+        <li>Inherit <code>ex02_base_npc.c</code></li>
+        <li>Override <code>extra_look()</code>, call <code>::extra_look()</code> to get the parent's text, then concatenate guard-specific text</li>
+        <li>Override <code>query_greeting()</code> similarly, call <code>::query_greeting()</code> then append guard dialogue</li>
+        <li>Implement <code>query_post()</code> returning the guard's assigned post</li>
+        <li>Call <code>::create()</code> in the child's <code>create()</code></li>
+      </ul>
+    </div>
+    <p>Files to create: <span class="file-path">exercises/ch10_inheritance/ex02_base_npc.c</span> and <span class="file-path">exercises/ch10_inheritance/ex02_guard.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>To call the parent version of an overridden function, prefix with <code>::</code>, e.g. <code>::extra_look()</code>.</li>
+        <li>String concatenation: <code>::extra_look() + "\nExtra text."</code> builds on the parent's output.</li>
+        <li>The key concept: overriding replaces the function, but <code>::</code> lets you still access the original. This is "extend" vs. "replace."</li>
+        <li>If you forget <code>::create()</code> in the child, the parent's initialization never runs.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 10.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 10.3: Multiple Inheritance <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-10.03" data-exercise="10.03">
+      <label for="check-10.03">Completed</label>
+    </div>
+    <p class="objective">Create an object that inherits from two separate parent classes.</p>
+    <div class="requirements">
+      <h3>File 1: <code>ex03_describable.c</code></h3>
+      <ul>
+        <li>Declare a global <code>string description</code></li>
+        <li>Implement <code>create()</code> that sets <code>description</code> to a default</li>
+        <li>Implement <code>query_description()</code> and <code>set_description(string s)</code></li>
+      </ul>
+      <h3>File 2: <code>ex03_trackable.c</code></h3>
+      <ul>
+        <li>Declare a global <code>string location</code></li>
+        <li>Implement <code>create()</code> that sets <code>location</code> to a default</li>
+        <li>Implement <code>query_location()</code> and <code>set_location(string s)</code></li>
+      </ul>
+      <h3>File 3: <code>ex03_artifact.c</code></h3>
+      <ul>
+        <li>Inherit <strong>both</strong> <code>ex03_describable.c</code> and <code>ex03_trackable.c</code></li>
+        <li>Implement <code>create()</code> that calls both parent creates: <code>describable::create()</code> and <code>trackable::create()</code>, then sets custom values</li>
+        <li>Implement <code>query_full_info()</code> combining <code>query_description()</code> and <code>query_location()</code></li>
+        <li>Implement <code>query_artifact_name()</code> returning the artifact's name</li>
+      </ul>
+    </div>
+    <p>Files to create: <span class="file-path">exercises/ch10_inheritance/ex03_describable.c</span>, <span class="file-path">exercises/ch10_inheritance/ex03_trackable.c</span>, and <span class="file-path">exercises/ch10_inheritance/ex03_artifact.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Multiple inherit statements stack:
+<pre><code>inherit "path/to/ex03_describable";
+inherit "path/to/ex03_trackable";</code></pre></li>
+        <li>When both parents have <code>create()</code>, a plain <code>::create()</code> calls only the first parent's. Use the named form: <code>describable::create()</code> and <code>trackable::create()</code>.</li>
+        <li>The child has ALL functions from BOTH parents, you can call <code>query_description()</code> and <code>query_location()</code> as if they were local.</li>
+        <li>Watch for name collisions. In this exercise the parents have different function names (except <code>create()</code>), so the only conflict is the dual create call.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 2 — Atmosphere</h3>
+    <p>
+      Inheritance is the architectural backbone of your capstone dungeon. Rooms inherit
+      from <code>/room/room</code> or dungeon room bases, monsters inherit from
+      <code>/obj/monster</code>, and weapons inherit from <code>/obj/weapon</code>. Every
+      game object you build in the capstone uses inheritance to specialize a parent class
+      with your custom behavior.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 3: Variables — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 3: Variables</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/variables.html" target="_blank">
+        Variables
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Two Kinds of Memory</h3>
+    <p>
+      Variables in LPC come in two flavors, and understanding the difference prevents
+      one of the most common bugs in MUD coding.
+    </p>
+    <p>
+      <strong>Global variables</strong> are declared outside all functions. They persist
+      for the lifetime of the object, set a goblin's <code>hp</code> in
+      <code>create()</code>, and it's still there when <code>attack()</code> runs later.
+    </p>
+    <p>
+      <strong>Local variables</strong> are declared inside a function. They are created
+      fresh each time the function runs and destroyed when it returns. They exist only
+      within that function's braces.
+    </p>
+    <h3>The Shadowing Trap</h3>
+    <p>
+      If you declare a local variable with the same name as a global, the local
+      <strong>shadows</strong> (hides) the global within that function. Changes go to
+      the local copy, and when the function returns, those changes vanish. This is the
+      single most common variable bug in LPC, Exercise 3.2 makes you find and fix one.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/variables.html" target="_blank">Variables</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 3.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 3.1: Scope Matters <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-03.01" data-exercise="03.01">
+      <label for="check-03.01">Completed</label>
+    </div>
+    <p class="objective">Create an object that demonstrates the difference between global and local variable scope.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Follow all standard 3K codestyle rules</li>
+        <li>Inherit from <code>/obj/treasure</code></li>
+        <li>Set the name to <code>"scope stone"</code> and short to <code>"a scope stone"</code></li>
+        <li>Declare a <strong>global</strong> <code>int</code> variable named <code>counter</code>, initialized to <code>0</code> in <code>create()</code></li>
+        <li>Write a function <code>int do_increment()</code> that:
+          <ol>
+            <li>Declares a <strong>local</strong> <code>int</code> variable named <code>local_val</code> and sets it to <code>100</code></li>
+            <li>Increments the global <code>counter</code> by 1</li>
+            <li>Returns <code>local_val</code></li>
+          </ol>
+        </li>
+        <li>Write <code>int query_counter()</code> that returns the global <code>counter</code></li>
+      </ul>
+      <h3>Expected Behavior</h3>
+      <p>
+        Every call to <code>do_increment()</code> returns <code>100</code> (the local is always
+        freshly initialized) but increases <code>counter</code> by 1 (the global accumulates).
+        After 3 calls: <code>query_counter()</code> returns <code>3</code>.
+      </p>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch03_variables/ex01_scope.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Global variables are declared outside all functions, near the top of the file. They keep their value between calls.</li>
+        <li>Local variables are declared inside a function. They are created when the function runs and destroyed when it returns.</li>
+        <li><code>counter++</code> is shorthand for <code>counter = counter + 1</code>.</li>
+        <li>The key insight: <code>local_val</code> gets set to <code>100</code> every single time <code>do_increment</code> is called, because locals do not persist.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 3.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 3.2: Shadow Bug Fix <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-03.02" data-exercise="03.02">
+      <label for="check-03.02">Completed</label>
+    </div>
+    <p class="objective">A fellow coder wrote an object with a counter, but query_counter() always returns 0 no matter how many times do_increment() is called. Find the variable shadowing bug and fix it.</p>
+    <div class="requirements">
+      <h3>The Buggy File</h3>
+<pre><code>#pragma strong_types
+#include "defs.h"
+
+inherit "obj/treasure";
+
+int counter;
+
+void create()
+{
+  ::create();
+
+  set_name("shadow counter");
+  set_alias(({"counter", "shadow counter"}));
+  set_short("a shadow counter");
+  set_long("A counting device plagued by shadows.");
+  set_value(1);
+  set_weight(1);
+
+  counter = 0;
+
+  return;
+}
+
+void do_increment()
+{
+  // BUG: this local declaration shadows the global!
+  int counter;
+
+  counter++;
+
+  return;
+}
+
+int query_counter() { return counter; }</code></pre>
+      <h3>Requirements</h3>
+      <ul>
+        <li>Identify the shadowing bug: a local variable in <code>do_increment()</code> has the <strong>same name</strong> as the global, so <code>counter++</code> only modifies the local copy</li>
+        <li>Fix the code so that <code>do_increment()</code> modifies the <strong>global</strong> <code>counter</code></li>
+        <li>Do not change the function signatures or the query function</li>
+        <li>Maintain all 3K codestyle rules</li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch03_variables/ex02_shadow_bug.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Look carefully at the first line inside <code>do_increment()</code>. What does <code>int counter;</code> do?</li>
+        <li>When a local variable has the same name as a global, the local "shadows" the global. All references to that name inside the function affect only the local.</li>
+        <li>The fix is simple: remove the local declaration so that <code>counter</code> refers to the global.</li>
+        <li>After fixing, calling <code>do_increment()</code> three times should make <code>query_counter()</code> return <code>3</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Your capstone dungeon area will use global variables to track state, monster spawn
+      counts, boss phases, puzzle progress. Understanding scope and avoiding shadowing bugs
+      is essential for any stateful game object.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

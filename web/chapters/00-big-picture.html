@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 0: The Big Picture — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 0: The Big Picture</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/index.html" target="_blank">
+        3K Code Primer
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <p>
+      Before diving into syntax, it helps to understand how LPC thinks. This page
+      gives you the mental models that make everything else in this curriculum click.
+    </p>
+    <p>
+      <strong>If you haven't already, download the exercise files to follow along:</strong>
+      <a href="https://wemudtogether.com/the-forge.zip">Download ZIP</a> |
+      <a href="https://github.com/locrian3k/the-forge" target="_blank">GitHub</a>
+    </p>
+  </div>
+
+  <!-- Everything is an Object -->
+  <section id="everything-is-an-object">
+    <h2>Everything is an Object</h2>
+    <p>
+      In LPC, literally everything in the game world is an <strong>object</strong> —
+      players, monsters, rooms, swords, armor, NPCs, even daemon processes that run
+      behind the scenes. Each object is a file on disk (a <code>.c</code> file) that
+      the driver loads into memory when something needs it.
+    </p>
+    <p>
+      Here is how LPC organizes the game world:
+    </p>
+<pre class="diagram">
+LPC Game World
+│
+├─ Objects (everything in the game)
+│   ├─ players
+│   ├─ monsters
+│   ├─ rooms
+│   └─ items (weapons, armor, treasure)
+│
+├─ Data Types (what objects store)
+│   ├─ int        → numbers
+│   ├─ string     → text
+│   ├─ object     → game entities
+│   ├─ array      → lists
+│   └─ mapping    → dictionaries
+│
+├─ Functions (behavior)
+│   ├─ create()     → initialize
+│   ├─ attack()     → combat
+│   └─ query_name() → data access
+│
+└─ Driver (the game engine that runs it all)
+</pre>
+    <p>
+      Each object has two things: <strong>variables</strong> (data it stores) and
+      <strong>functions</strong> (things it can do). Think of every object as a little
+      machine with its own memory and its own set of buttons:
+    </p>
+<pre class="diagram">
+object
+│
+├─ variables
+│   hp
+│   name
+│   level
+│
+└─ functions
+    attack()
+    die()
+    move()
+</pre>
+    <p>
+      A sword object stores its damage and name. A monster object stores its hit points
+      and attack patterns. A room object stores its description and exits. Same
+      structure, different data.
+    </p>
+  </section>
+
+  <!-- Objects Know Where They Are -->
+  <section id="objects-know-where-they-are">
+    <h2>Objects Know Where They Are</h2>
+    <p>
+      Every object has an <strong>environment</strong>, the object that contains it.
+      This creates a containment tree that models the entire game world:
+    </p>
+<pre class="diagram">
+Room
+└─ Player
+    ├─ Sword
+    ├─ Shield
+    └─ Gold Ring
+</pre>
+    <p>
+      The room contains the player. The player contains the sword, shield, and ring.
+      In code:
+    </p>
+    <ul>
+      <li><code>environment(player)</code> returns the room</li>
+      <li><code>environment(sword)</code> returns the player</li>
+      <li><code>all_inventory(player)</code> returns everything the player is carrying</li>
+    </ul>
+    <p>
+      This containment model is how LPC knows what is where. When you pick up an item,
+      it moves from the room's inventory into the player's inventory. When you enter a
+      room, your player object moves into that room object.
+    </p>
+  </section>
+
+  <!-- How Objects Find Each Other -->
+  <section id="how-objects-find-each-other">
+    <h2>How Objects Find Each Other</h2>
+    <p>
+      Four functions you will use constantly to locate objects in the game:
+    </p>
+    <ul>
+      <li><code>this_player()</code>, who typed the command (the player who triggered this code)</li>
+      <li><code>this_object()</code>, the object whose code is currently running (abbreviated <code>TO</code> in defs.h)</li>
+      <li><code>environment()</code>, where something is located (its container)</li>
+      <li><code>present("sword", player)</code>, find an object by name inside a container</li>
+    </ul>
+    <p>
+      These are your navigation tools. Almost every function you write will start by
+      using one or more of these to find the objects it needs to work with.
+    </p>
+  </section>
+
+  <!-- How Objects Talk to Each Other -->
+  <section id="how-objects-talk">
+    <h2>How Objects Talk to Each Other</h2>
+    <p>
+      Objects communicate by calling functions on each other using the
+      <code>-&gt;</code> operator (called the "call other" operator):
+    </p>
+<pre><code>player-&gt;query_name()    // ask the player their name
+monster-&gt;add_hp(-10)    // damage the monster
+room-&gt;tell_room("...")  // send a message to the room</code></pre>
+    <p>
+      This is the core skill of LPC programming:
+      <strong>find the right object, call the right function on it.</strong>
+    </p>
+    <p>
+      You do not need to know how a monster tracks its HP internally. You just call
+      <code>monster-&gt;add_hp(-10)</code> and the monster handles the rest. This is why
+      LPC is built around objects, each one manages its own complexity.
+    </p>
+  </section>
+
+  <!-- The Driver -->
+  <section id="the-driver">
+    <h2>The Driver: How Code Actually Runs</h2>
+    <p>
+      The <strong>driver</strong> is the game engine. It is the C program that loads
+      your LPC files, compiles them, and runs them. It manages an event loop that
+      keeps the game world ticking:
+    </p>
+<pre class="diagram">
+Driver Event Loop
+│
+├─ Player commands    → parsed and executed immediately
+├─ Combat rounds      → automatic attacks on a timer
+├─ Heartbeats         → heart_beat() called every ~2 seconds
+├─ Scheduled events   → call_out() fires after a delay
+├─ Object creation    → clone_object() loads files into the game
+└─ Reset cycle        → reset() called periodically for respawning
+</pre>
+    <p>
+      When a player types a command like <code>kill goblin</code>, here is what happens:
+    </p>
+    <ol>
+      <li>The driver receives the input from the player's connection</li>
+      <li>It finds the matching command function (registered with <code>add_action()</code>)</li>
+      <li>That function runs, interacting with other objects as needed</li>
+      <li>Messages are sent to the relevant players in the room</li>
+    </ol>
+    <p>
+      You do not write the driver or the event loop. You write the objects that the
+      driver runs. Your job is to define what happens when the driver calls your
+      functions.
+    </p>
+  </section>
+
+  <!-- The Five Types That Matter -->
+  <section id="five-types">
+    <h2>The Five Types That Matter</h2>
+    <p>
+      For 95% of MUD coding, you only need five data types:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>What it stores</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>int</code></td>
+          <td>Numbers</td>
+          <td><code>int hp = 100;</code></td>
+        </tr>
+        <tr>
+          <td><code>string</code></td>
+          <td>Text</td>
+          <td><code>string name = "Goblin";</code></td>
+        </tr>
+        <tr>
+          <td><code>object</code></td>
+          <td>Game entities</td>
+          <td><code>object player = this_player();</code></td>
+        </tr>
+        <tr>
+          <td><code>array</code></td>
+          <td>Lists</td>
+          <td><code>string *pets = ({"dog","cat"});</code></td>
+        </tr>
+        <tr>
+          <td><code>mapping</code></td>
+          <td>Dictionaries</td>
+          <td><code>mapping scores = (["Steve":5]);</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Everything else (<code>float</code>, <code>status</code>, <code>mixed</code>,
+      <code>closure</code>) is either rare or specialized. You will learn them when
+      you need them.
+    </p>
+  </section>
+
+  <!-- The Eight Patterns -->
+  <section id="eight-patterns">
+    <h2>The Eight Patterns You Will See Everywhere</h2>
+
+    <h3>Pattern 1: Query/Set Functions</h3>
+    <p>
+      Objects expose data through getter functions like <code>query_name()</code> and
+      <code>query_level()</code>, and configure themselves through setters like
+      <code>set_name()</code> and <code>set_level()</code>. You never access another
+      object's variables directly from outside, always go through the functions.
+    </p>
+
+    <h3>Pattern 2: Inheritance</h3>
+    <p>
+      Most objects inherit from a base class. Writing <code>inherit "obj/monster";</code>
+      gives you all the default monster behavior, HP tracking, combat, movement, death.
+      Your file only adds what is different. This is how you avoid writing thousands of
+      lines for every monster.
+    </p>
+
+    <h3>Pattern 3: create()</h3>
+    <p>
+      Every object's <code>create()</code> function runs once when the object is first
+      loaded. It calls <code>::create()</code> (the parent's version) first, then
+      configures the object with setter calls. This is where you define what makes your
+      object unique.
+    </p>
+
+    <h3>Pattern 4: init()</h3>
+    <p>
+      Called when a living thing enters the object's environment. Used to register
+      commands with <code>add_action()</code>. For example, a room uses <code>init()</code>
+      to add special commands that only work in that room.
+    </p>
+
+    <h3>Pattern 5: reset()</h3>
+    <p>
+      Called periodically by the driver (usually every few minutes). Used to respawn
+      monsters and restock items. If a room's guardian monster has been killed,
+      <code>reset()</code> creates a new one.
+    </p>
+
+    <h3>Pattern 6: Messaging</h3>
+    <p>
+      <code>tell_object(player, "You feel cold.")</code> sends a message to one player.
+      <code>tell_room(room, "A goblin enters.", player)</code> sends a message to everyone
+      in the room except the specified player. These are how the game communicates what
+      is happening.
+    </p>
+
+    <h3>Pattern 7: Object Movement</h3>
+    <p>
+      <code>move_object(item, player)</code> puts an item in a player's inventory.
+      <code>clone_object("/obj/sword")</code> creates a new instance of a sword.
+      <code>destruct(obj)</code> removes an object from the game entirely.
+    </p>
+
+    <h3>Pattern 8: Safety Checks</h3>
+    <p>
+      Always check before using an object reference:
+      <code>if (!objectp(obj)) return;</code> prevents crashes when an object might have
+      been destroyed between when you found it and when you try to use it. This is a
+      habit you will build early and use forever.
+    </p>
+  </section>
+
+  <!-- Where To Go From Here -->
+  <section id="where-to-go">
+    <h2>Where To Go From Here</h2>
+    <p>
+      You now have the mental map. The rest of this curriculum fills in the details
+      through hands-on exercises. Start with
+      <a href="01-intro.html">Chapter 1</a> to write your first object.
+    </p>
+  </section>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

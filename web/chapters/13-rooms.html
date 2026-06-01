@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 13: Rooms — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 13: Rooms</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/room.html" target="_blank">Rooms</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>The World is Made of Rooms</h3>
+    <p>
+      Every location a player can visit is a room object. A room defines what players
+      see, what they can examine, where they can go, and what they can interact with.
+    </p>
+<pre class="diagram">A Room
+│
+├─ set_short()       → one-line room title
+├─ set_long()        → full room description
+├─ add_exit()        → connects to other rooms
+├─ add_item()        → examinable details
+├─ add_search_item() → hidden discoveries
+├─ add_read()        → readable signs/tablets
+└─ add_action()      → custom commands</pre>
+    <p>
+      Rooms inherit from <code>/room/room</code>, which provides all the core
+      functions for descriptions, exits, items, and player interaction.
+    </p>
+    <p class="note">
+      Dungeon rooms with level scaling are covered in the optional
+      <a href="20-dungeon-rooms.html">Chapter 20</a>.
+    </p>
+    <p>
+      These exercises take you from creating a single room to building rich, interactive
+      environments with readable signs, searchable features, and custom commands.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/examples/room.html" target="_blank">Rooms</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 13.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 13.1: Your First Room <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-13.1" data-exercise="13.1">
+      <label for="check-13.1">Completed</label>
+    </div>
+    <p class="objective">Create a basic room that a player can enter, look around in, and leave through an exit.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/room</code> (the standard room base)</li>
+        <li>Call <code>::create()</code> at the start of your <code>create()</code> function</li>
+        <li>Set room lighting with <code>set_light(1)</code> so players can see</li>
+        <li>Set a short description with <code>set_short()</code> (shown in brief mode and on the map)</li>
+        <li>Set a long description with <code>set_long()</code> (at least two sentences describing the room)</li>
+        <li>Add one exit using <code>add_exit(path, direction)</code>, use the file's own path as the destination so it loops back to itself</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch13_rooms/ex01_first_room.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Rooms use <code>inherit "room/room";</code>, this gives you all the standard room functionality including exits, items, and searching.</li>
+        <li><code>set_long()</code> takes a single string. You can break long strings across multiple lines using string concatenation: <code>"first part " "second part"</code> (two adjacent string literals are automatically joined).</li>
+        <li><code>add_exit()</code> takes two arguments: the file path of the destination room (without the <code>.c</code> extension) and a direction string like <code>"north"</code>, <code>"south"</code>, <code>"east"</code>, <code>"west"</code>.</li>
+        <li>Remember: <code>#pragma strong_types</code> must be the very first non-comment line, followed by <code>#include "defs.h"</code>, then your inherit, then your <code>create()</code> function.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 13.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 13.2: Room Details <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-13.2" data-exercise="13.2">
+      <label for="check-13.2">Completed</label>
+    </div>
+    <p class="objective">Enrich a room with examinable items, searchable features, and multiple exits.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/room</code> and set up basic room properties</li>
+        <li>Add at least 3 <code>add_item()</code> calls, each with an alias array and a descriptive string:
+          <code>add_item(({"torch","torches","wall torch"}), "description...")</code></li>
+        <li>Add at least 2 <code>add_search_item()</code> calls for discoverable details when the player types <code>search &lt;keyword&gt;</code></li>
+        <li>Add at least 3 exits connecting to other rooms (use placeholder paths that loop back to yourself, or connect to your ex01 room)</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch13_rooms/ex02_room_details.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>add_item()</code> takes two arguments: either a string or an array of strings for the name(s), and a string description. The alias array lets you match multiple keywords.</li>
+        <li><code>add_search_item()</code> has the same signature as <code>add_item()</code>. The difference is that players must type <code>search &lt;keyword&gt;</code> instead of <code>look at &lt;keyword&gt;</code>.</li>
+        <li>Think about what a player would naturally try to look at in your room. If your long description mentions torches, walls, and a door, add <code>add_item()</code> entries for each.</li>
+        <li>Keep your descriptions immersive but concise, two or three sentences per item is ideal.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 13.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 13.3: Readable Items <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-13.3" data-exercise="13.3">
+      <label for="check-13.3">Completed</label>
+    </div>
+    <p class="objective">Add a readable item to a room using add_read() and a named callback function.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Create a room with standard properties and at least one exit</li>
+        <li>Add an item that can be looked at (using <code>add_item()</code>) and also read (using <code>add_read()</code>)</li>
+        <li>Use <code>add_read()</code> with a callback reference: <code>add_read(({"sign","wooden sign"}), "@read_sign");</code>, the <code>@</code> prefix tells the driver to call the function <code>read_sign()</code> in this same object</li>
+        <li>Implement the callback function (e.g. <code>string read_sign()</code>) that returns a multi-line string with at least 3 lines of content</li>
+        <li>Include a SCREENREAD check: if <code>TP-&gt;query_property("SCREENREAD")</code> is true, return a plain text version (no ASCII art borders); otherwise return a decorated version</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch13_rooms/ex03_readable.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>add_read()</code> works like <code>add_item()</code> but responds to the <code>read</code> command. The <code>@function_name</code> syntax tells it to call a function in the current object instead of returning a static string.</li>
+        <li>The callback function must return a <code>string</code>. It takes no arguments. The driver calls it when a player reads the matching keywords.</li>
+        <li>For the SCREENREAD check, use: <code>if (TP &amp;&amp; TP-&gt;query_property("SCREENREAD"))</code> to branch between plain text and decorated output. This is good MUD citizenship.</li>
+        <li>Multi-line strings can use <code>\n</code> for newlines within a single string, or you can concatenate adjacent string literals that each end with <code>\n</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 13.4 -->
+  <section class="exercise" id="ex04">
+    <h2>Exercise 13.4: Interactive Room <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-13.4" data-exercise="13.4">
+      <label for="check-13.4">Completed</label>
+    </div>
+    <p class="objective">Create a room with a custom interactive command using add_action().</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Create a room with standard properties and at least one exit</li>
+        <li>Add an <code>init()</code> function that calls <code>::init()</code> then registers a custom command using <code>add_action("handler_func", "verb")</code></li>
+        <li>Implement the handler function (return type <code>int</code>) that:
+          <ul>
+            <li>Returns <code>0</code> if the argument does not match</li>
+            <li>Checks a condition to prevent duplicates (e.g. if the player already has the object)</li>
+            <li>Uses <code>clone_object()</code> to create a new instance of an object</li>
+            <li>Uses <code>move_object(obj, TP)</code> to place it in the player's inventory</li>
+            <li>Uses <code>write()</code> and <code>say()</code> for player and room messages</li>
+            <li>Returns <code>1</code> on successful match</li>
+          </ul>
+        </li>
+        <li>Create a simple treasure object (inherit <code>/obj/treasure</code>) as the cloned item</li>
+      </ul>
+    </div>
+
+    <p>Files to create:
+      <span class="file-path">exercises/ch13_rooms/ex04_interactive.c</span> (the room)<br>
+      <span class="file-path">exercises/ch13_rooms/ex04_hidden_item.c</span> (the treasure object)
+    </p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>add_action("do_dig", "dig")</code> in <code>init()</code> registers the verb <code>dig</code> so that when a player types <code>dig &lt;anything&gt;</code>, the function <code>do_dig(string str)</code> is called with everything after the verb as the argument.</li>
+        <li>Use <code>present("item_name", TP)</code> to check if the player already carries an object with that name. This prevents them from farming unlimited copies.</li>
+        <li><code>clone_object(path)</code> creates a new copy of an object from its file path (without <code>.c</code>). The returned object needs to be moved somewhere with <code>move_object()</code>.</li>
+        <li>The handler must return <code>int</code>: return <code>1</code> if you handled the command (even for error cases), return <code>0</code> if the argument does not match your trigger word.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 2: Atmosphere</h3>
+    <p>
+      Rooms are the skeleton of your capstone area. The techniques from these exercises,
+      examinable items, searchable features, readable signs, and interactive commands,
+      are exactly what make an area feel alive and worth exploring. Start thinking
+      about the theme and layout of your own area.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

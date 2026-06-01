@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 7: Control Structures — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 7: Control Structures</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/control_structures.html" target="_blank">
+        Control Structures
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Directing the Flow</h3>
+    <p>
+      Code runs top to bottom, unless you tell it otherwise. Control structures
+      let you branch, loop, and jump.
+    </p>
+    <p>
+      <strong>Branching:</strong> <code>if/else</code> chains handle decisions.
+      <code>switch/case</code> is cleaner when testing one value against many options.
+      Switch has a quirk: cases <strong>fall through</strong> to the next unless you
+      add <code>break;</code>. This is sometimes a bug, sometimes intentional —
+      Exercise 7.2 explores both.
+    </p>
+    <p>
+      <strong>Loops:</strong> LPC has three kinds:
+    </p>
+    <ul>
+      <li><code>for</code>, when you need an index counter</li>
+      <li><code>foreach</code>, cleanest way to walk through arrays and mappings</li>
+      <li><code>while</code>, when the exit condition is not index-based</li>
+    </ul>
+    <p>
+      Choosing the right loop makes your code clearer. <code>foreach</code> is almost
+      always the best choice for arrays and mappings in LPC.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/control_structures.html" target="_blank">Control Structures</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 7.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 7.1: Branch Logic <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-07.01" data-exercise="07.01">
+      <label for="check-07.01">Completed</label>
+    </div>
+    <p class="objective">Implement the same weather-description logic twice, once using if/else chains and once using switch/case.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Implement <code>string describe_weather_if(int code)</code> using <code>if/else</code>:
+          <ul>
+            <li><code>0</code> returns <code>"clear"</code></li>
+            <li><code>1</code> returns <code>"cloudy"</code></li>
+            <li><code>2</code> returns <code>"rainy"</code></li>
+            <li><code>3</code> returns <code>"stormy"</code></li>
+            <li><code>4</code> returns <code>"snowy"</code></li>
+            <li>Any other value returns <code>"unknown"</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>string describe_weather_switch(int code)</code> using <code>switch/case</code> with the same mappings</li>
+        <li>Each case must have a <code>break;</code> statement (no fall-through)</li>
+        <li>Use <code>default:</code> for the unknown case</li>
+        <li>Both functions must return identical results for the same input</li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch07_control/ex01_branch_logic.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>An if/else chain: <code>if (code == 0) ... else if (code == 1) ...</code> ending with a final <code>else</code>.</li>
+        <li>LPC <code>switch</code> syntax: <code>switch (code) { case 0: ...; break; ... }</code></li>
+        <li>Declare a local <code>string result;</code>, assign in each branch, and return at the end.</li>
+        <li>Test with values 0 through 5 to verify both functions are equivalent.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 7.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 7.2: Switch Fall-Through <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-07.02" data-exercise="07.02">
+      <label for="check-07.02">Completed</label>
+    </div>
+    <p class="objective">Practice using intentional switch fall-through.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Implement <code>string damage_message(string type)</code> using a <code>switch</code> with intentional fall-through:
+          <ul>
+            <li><code>"fire"</code> falls through to <code>"acid"</code>, both return <code>"It burns!"</code></li>
+            <li><code>"ice"</code> falls through to <code>"lightning"</code>, both return <code>"A shocking chill!"</code></li>
+            <li><code>"poison"</code> returns <code>"You feel ill."</code></li>
+            <li><code>default</code> returns <code>"Ouch!"</code></li>
+          </ul>
+        </li>
+        <li>Comment every intentional fall-through with <code>// fall through</code></li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch07_control/ex02_fall_through.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Fall-through means omitting <code>break;</code> so execution continues into the next case. Place the empty case first:
+<pre><code>case "fire":   // fall through
+case "acid":
+  result = "It burns!";
+  break;</code></pre></li>
+        <li>In LPC, <code>switch</code> works with strings as well as integers.</li>
+        <li>Commenting fall-through signals intent, without it, another coder might think you forgot the <code>break;</code>.</li>
+        <li>Test with all six inputs: "fire", "acid", "ice", "lightning", "poison", and something like "blunt".</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 7.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 7.3: Loop Workshop <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-07.03" data-exercise="07.03">
+      <label for="check-07.03">Completed</label>
+    </div>
+    <p class="objective">Practice the three main loop constructs in LPC, for, foreach, and while.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>In <code>create()</code>, set up two global variables:
+          <ul>
+            <li><code>string *monsters</code>, an array of at least 4 monster names</li>
+            <li><code>mapping levels</code>, a mapping of monster_name : level (int)</li>
+          </ul>
+        </li>
+        <li>Implement <code>string list_monsters()</code> using a <strong><code>for</code></strong> loop:
+          <ul>
+            <li>Iterate over the <code>monsters</code> array by index</li>
+            <li>Return a numbered list, e.g. <code>"1. goblin\n2. orc\n3. troll\n4. dragon\n"</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>int total_levels()</code> using a <strong><code>foreach</code></strong> loop:
+          <ul>
+            <li>Iterate over the <code>levels</code> mapping</li>
+            <li>Return the sum of all level values</li>
+          </ul>
+        </li>
+        <li>Implement <code>string first_above(int threshold)</code> using a <strong><code>while</code></strong> loop:
+          <ul>
+            <li>Walk through the <code>monsters</code> array</li>
+            <li>Return the name of the first monster whose level exceeds <code>threshold</code></li>
+            <li>Return <code>"none"</code> if no monster qualifies</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch07_control/ex03_loops.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>for</code> loop syntax: <code>for (int i = 0; i &lt; sizeof(array); i++)</code>. Use <code>sizeof()</code> for array length.</li>
+        <li><code>foreach</code> over a mapping: <code>foreach (string key, int val in mapping)</code>.</li>
+        <li><code>while</code> loop: initialize an index before the loop, check the condition, increment inside the body. Return early when you find a match.</li>
+        <li>Array indexing is zero-based, but your numbered list should start at 1.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Control structures power every game mechanic: branching logic determines what
+      happens when a player examines an item, loops process rooms on reset, and switch
+      statements route commands. You will use all three loop types in your capstone area.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

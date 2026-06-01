@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Forge — LPC Exercises for 3Kingdoms</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="index.html" class="active">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="chapters/01-intro.html">1. Introduction</a>
+  <a href="chapters/02-types.html">2. Types</a>
+  <a href="chapters/03-variables.html">3. Variables</a>
+  <a href="chapters/04-operators.html">4. Operators</a>
+  <a href="chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="chapters/06-functions.html">6. Functions</a>
+  <a href="chapters/07-control.html">7. Control Structures</a>
+  <a href="chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="chapters/13-rooms.html">13. Rooms</a>
+  <a href="chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="chapters/15-weapons.html">15. Weapons</a>
+  <a href="chapters/16-armor.html">16. Armor</a>
+  <a href="chapters/17-monsters.html">17. Monsters</a>
+  <a href="chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <h1>The Forge — LPC Exercises for 3Kingdoms</h1>
+  <p class="primer-link">
+    Companion exercises for the
+    <a href="https://3k.org/resources/primer/" target="_blank">3K Code Primer</a>
+  </p>
+
+  <p>
+    Welcome to <strong>The Forge</strong>, a hands-on exercise curriculum for learning LPC
+    programming on 3Kingdoms MUD. Each chapter pairs with a section of the 3K Code Primer,
+    giving you practical exercises to reinforce every concept you read about.
+  </p>
+  <p>
+    Every exercise comes with clear requirements, helpful hints you can reveal when stuck,
+    and solution files you can compare against to check your work. Work through them at
+    your own pace, and watch your skills grow from basic objects to complete dungeon areas.
+  </p>
+
+  <h2>Getting Started</h2>
+  <h3>1. Download the Exercise Files</h3>
+  <p>
+    To work through the exercises, you need a local copy of The Forge files.
+    Download them using either option:
+  </p>
+  <ul>
+    <li><a href="https://wemudtogether.com/the-forge.zip">Download ZIP</a> — extract to a folder on your computer</li>
+    <li><a href="https://github.com/locrian3k/the-forge" target="_blank">GitHub Repository</a> — clone or download from GitHub</li>
+  </ul>
+
+  <h3>2. Know Your Folders</h3>
+  <p>
+    The Forge is organized into folders you will work with throughout the curriculum:
+  </p>
+  <ul>
+    <li><strong>exercises/</strong> — Starter files with TODO comments for you to fill in.
+      Each chapter has its own subdirectory (e.g., <code>exercises/ch01_intro/</code>).
+      Open these in your text editor and write your code.</li>
+    <li><strong>solutions/</strong> — Fully commented reference implementations. When you
+      finish an exercise, compare your work against the matching solution file.</li>
+    <li><strong>reference/</strong> — Quick-reference cheatsheets you can look up while working.</li>
+    <li><strong>capstone/</strong> — A multi-phase final project where you build a complete
+      dungeon area. Templates and phase guides are inside.</li>
+  </ul>
+  <p>
+    Each exercise directory also contains a <code>defs.h</code> file. This is a shared header
+    that defines common shortcuts used across all exercises. You do not need to create or
+    modify it — just know that when your code says <code>#include "defs.h"</code>, it pulls
+    in those shortcuts automatically.
+    <a href="chapters/01-intro.html#setup">Chapter 1</a> explains what is inside it.
+  </p>
+
+  <h2>Two Learning Tracks</h2>
+  <p>Exercises come in two difficulty tiers. You can do just one track or both, it is up to you.</p>
+
+  <div style="display:flex; gap:1.5rem; margin:1rem 0 1.5rem;">
+    <div style="flex:1;">
+      <span class="tier apprentice">Apprentice</span>
+      <p style="margin-top:0.5rem;">
+        Core exercises that cover the fundamentals. If you are new to LPC or programming
+        in general, start here. Each Apprentice exercise focuses on one concept with
+        minimal complexity.
+      </p>
+    </div>
+    <div style="flex:1;">
+      <span class="tier journeyman">Journeyman</span>
+      <p style="margin-top:0.5rem;">
+        Deeper challenges that combine multiple concepts, debug existing code, or tackle
+        real-world MUD patterns. Take these on once you are comfortable with the basics,
+        or if you already have programming experience.
+      </p>
+    </div>
+  </div>
+
+  <h2>Chapters</h2>
+  <div class="chapter-grid">
+    <a href="chapters/01-intro.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>1. Introduction</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/02-types.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>2. Types</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/03-variables.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>3. Variables</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/04-operators.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>4. Operators</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/05-mappings.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>5. Mappings &amp; Arrays</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/06-functions.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>6. Functions</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/07-control.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>7. Control Structures</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/08-modifiers.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>8. Modifiers</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/09-preprocessor.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>9. Preprocessor</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/10-inheritance.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>10. Inheritance</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/11-codestyle.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>11. Codestyle</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/12-driver-functions.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>12. Driver Functions</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/13-rooms.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>13. Rooms</h3>
+      <span class="count">4 exercises</span>
+    </a>
+    <a href="chapters/14-objects.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>14. Objects</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/15-weapons.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>15. Weapons</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/16-armor.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>16. Armor</h3>
+      <span class="count">2 exercises</span>
+    </a>
+    <a href="chapters/17-monsters.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>17. Monsters</h3>
+      <span class="count">3 exercises</span>
+    </a>
+    <a href="chapters/18-putting-together.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>18. Putting It Together</h3>
+      <span class="count">4 exercises</span>
+    </a>
+    <a href="chapters/19-advanced.html" class="chapter-card" style="text-decoration:none;color:inherit;">
+      <h3>19. Advanced Topics</h3>
+      <span class="count">4 exercises</span>
+    </a>
+  </div>
+
+  <h2>The Capstone Project</h2>
+  <div class="capstone-callout">
+    <h3>Build Your Own Dungeon Area</h3>
+    <p>
+      The Forge culminates in a multi-phase capstone project where you build a complete,
+      working dungeon area for 3Kingdoms. As you progress through the chapters, each set
+      of exercises feeds into a phase of the capstone:
+    </p>
+    <ul>
+      <li><strong>Phase 1: The Foundation</strong> (Chapters 1-9), Core language skills</li>
+      <li><strong>Phase 2: Atmosphere</strong> (Chapters 10-14), Rooms, objects, and structure</li>
+      <li><strong>Phase 3: Combat</strong> (Chapters 15-17), Weapons, armor, and monsters</li>
+      <li><strong>Phase 4: Integration</strong> (Chapters 18-19), Tying it all together</li>
+    </ul>
+    <p>
+      By the time you finish, you will have a fully playable dungeon area that you built
+      from scratch, exercise by exercise.
+    </p>
+  </div>
+
+  <h2>Progress Tracking</h2>
+  <p>
+    Each exercise has a checkbox that saves your completion state in your browser's
+    local storage. Your progress persists between visits, no account needed. Look for
+    the checkboxes on each chapter page.
+  </p>
+  <p>
+    Completed: <strong id="progress-count">0/0</strong>
+  </p>
+</main>
+
+<script src="exercises.js"></script>
+</body>
+</html>

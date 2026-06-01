@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 19: Advanced Topics — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 19: Advanced Topics</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/coding/advanced.html" target="_blank">Advanced</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Timing, Commands, and Functional Programming</h3>
+    <p>
+      These advanced topics let you build dynamic environments that go beyond static
+      descriptions and simple combat.
+    </p>
+    <table class="type-table">
+      <tr><th>System</th><th>What it does</th><th>Use case</th></tr>
+      <tr><td><code>set_heart_beat(1)</code></td><td>Periodic timer (~2 sec)</td><td>Ambient messages, ongoing effects</td></tr>
+      <tr><td><code>call_out("func", N)</code></td><td>One-time delayed call</td><td>Traps, countdowns, spawns</td></tr>
+      <tr><td><code>add_action()</code> in <code>init()</code></td><td>Custom player commands</td><td>Forging, crafting, puzzles</td></tr>
+      <tr><td>Closures <code>(: :)</code> / <code>#'efun</code></td><td>Functions as values</td><td>filter(), map(), sort_array()</td></tr>
+    </table>
+    <p>
+      Heartbeats run every ~2 seconds and cost CPU, always disable them when no
+      players are present. <code>call_out()</code> fires once and is self-cleaning.
+      Closures enable compact functional patterns like
+      <code>filter(arr, (: $1 > 10 :))</code>.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/advanced.html" target="_blank">Advanced Topics</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 19.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 19.1: Heartbeat Timer <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-19.1" data-exercise="19.1">
+      <label for="check-19.1">Completed</label>
+    </div>
+    <p class="objective">Create a room that uses set_heart_beat() to produce periodic ambient messages.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/room</code></li>
+        <li>Declare a global <code>int beat_counter</code> to track heartbeats</li>
+        <li>In <code>create()</code>: set up the room, initialize <code>beat_counter</code> to 0, and call <code>set_heart_beat(1)</code></li>
+        <li>Define a <code>heart_beat()</code> function that:
+          <ul>
+            <li>Increments <code>beat_counter</code> by 1</li>
+            <li>Every 5 beats (~10 seconds), uses <code>tell_room(TO, msg)</code> to display a random ambient message</li>
+            <li>Has at least 3 different ambient messages</li>
+            <li>Checks if the room is empty using <code>sizeof(filter(all_inventory(TO), #'living))</code>, if no living objects are present, calls <code>set_heart_beat(0)</code> to stop and save CPU</li>
+          </ul>
+        </li>
+        <li>Define an <code>init()</code> that calls <code>::init()</code> and restarts the heartbeat with <code>set_heart_beat(1)</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch19_advanced/ex01_heartbeat.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>set_heart_beat(1)</code> tells the driver to call your <code>heart_beat()</code> function approximately every 2 seconds. <code>set_heart_beat(0)</code> turns it off. Always turn it off when not needed.</li>
+        <li>Use the modulo operator: <code>if (beat_counter % 5 == 0)</code>, this fires every 5 heartbeats (~10 seconds).</li>
+        <li><code>tell_room(TO, message)</code> sends a message to everyone in the room. Pick a random message with <code>messages[random(sizeof(messages))]</code>.</li>
+        <li>The <code>init()</code> function is called whenever a living object enters the room. Restarting the heartbeat there ensures ambient messages resume when a player arrives.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 19.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 19.2: Call Out Trap <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-19.2" data-exercise="19.2">
+      <label for="check-19.2">Completed</label>
+    </div>
+    <p class="objective">Create a trap room that uses call_out() to trigger a delayed event when a player enters.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/room</code></li>
+        <li>Set up a trapped room with at least 1 <code>add_item()</code> for the trap mechanism and at least 2 exits</li>
+        <li>Define an <code>init()</code> that:
+          <ul>
+            <li>Calls <code>::init()</code></li>
+            <li>Checks <code>if (!living(TP)) return;</code> to skip non-living objects</li>
+            <li>Checks <code>if (find_call_out("trigger_trap") != -1) return;</code> to prevent duplicate call_outs</li>
+            <li>Starts a delayed trap with <code>call_out("trigger_trap", 3)</code></li>
+          </ul>
+        </li>
+        <li>Define a <code>trigger_trap()</code> that uses <code>tell_room(TO, message)</code> to describe the trap going off</li>
+        <li>Cancel the trap when the player leaves using <code>remove_call_out("trigger_trap")</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch19_advanced/ex02_call_out.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>call_out("func_name", seconds)</code> schedules a function to be called after the given number of seconds. Unlike <code>heart_beat</code>, a <code>call_out</code> fires once and is then gone.</li>
+        <li><code>find_call_out("func_name")</code> returns the remaining seconds until the call_out fires, or <code>-1</code> if none exists. Always check before scheduling to prevent duplicates.</li>
+        <li><code>remove_call_out("func_name")</code> cancels a pending call_out. Use this when the player leaves so the trap does not fire on an empty room.</li>
+        <li>In <code>trigger_trap()</code>, the original <code>this_player()</code> from <code>init()</code> may no longer be valid. Either store the player reference, or iterate over <code>all_inventory(TO)</code> to find living objects still in the room.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 19.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 19.3: Command Hook <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-19.3" data-exercise="19.3">
+      <label for="check-19.3">Completed</label>
+    </div>
+    <p class="objective">Create a room with a custom player command that checks inventory, consumes an item, and produces a result object.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/room</code></li>
+        <li>Set up a forge/workshop room with at least 2 <code>add_item()</code> calls and at least 1 exit</li>
+        <li>Add a custom command in <code>init()</code>: <code>add_action("do_forge", "forge")</code></li>
+        <li>Implement <code>do_forge(string arg)</code> that returns <code>int</code>:
+          <ul>
+            <li>If <code>arg</code> is missing or not <code>"sword"</code>, sets <code>notify_fail()</code> and returns <code>0</code></li>
+            <li>Checks if the player has an <code>"iron bar"</code> using <code>present("iron bar", TP)</code></li>
+            <li>If no iron bar: sets <code>notify_fail()</code> and returns <code>0</code></li>
+            <li>If found: destructs the iron bar, clones a result weapon, moves it to the player</li>
+            <li>Writes success messages with <code>write()</code> and <code>tell_room(TO, msg, ({TP}))</code></li>
+            <li>Returns <code>1</code></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch19_advanced/ex03_command_hook.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>add_action("function_name", "command")</code> in <code>init()</code> registers a command. When a player types <code>forge sword</code>, <code>do_forge("sword")</code> is called.</li>
+        <li><code>present("name", TP)</code> searches the player's inventory for a matching object. It returns the object if found, or <code>0</code> if not.</li>
+        <li><code>notify_fail("message\n")</code> sets the failure message shown when your function returns <code>0</code>. Always include <code>\n</code> at the end.</li>
+        <li>When you <code>destruct()</code> the iron bar, it is gone forever, this is how crafting consumes materials. <code>clone_object()</code> creates a fresh copy of the result item.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 19.4 -->
+  <section class="exercise" id="ex04">
+    <h2>Exercise 19.4: Closures <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-19.4" data-exercise="19.4">
+      <label for="check-19.4">Completed</label>
+    </div>
+    <p class="objective">Write an object that demonstrates three closure styles used in LPC.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Declare three global arrays: <code>int *numbers</code>, <code>string *names</code>, <code>int *high_values</code></li>
+        <li>In <code>create()</code>: initialize <code>numbers</code> with at least 6 unsorted integers, <code>names</code> with at least 4 name strings, then call three processing functions</li>
+        <li>Define <code>sort_numbers()</code>:
+          <ul>
+            <li>Uses <code>sort_array()</code> with an efun closure <code>#'&lt;</code> to sort ascending</li>
+            <li>Example: <code>numbers = sort_array(numbers, #'&lt;);</code></li>
+          </ul>
+        </li>
+        <li>Define <code>filter_high()</code>:
+          <ul>
+            <li>Uses <code>filter()</code> with an inline closure to keep only values above 20</li>
+            <li>Example: <code>high_values = filter(numbers, (: $1 &gt; 20 :));</code></li>
+          </ul>
+        </li>
+        <li>Define <code>title_names()</code>:
+          <ul>
+            <li>Uses <code>map()</code> with an inline closure to append <code>" the Brave"</code> to each name</li>
+            <li>Example: <code>names = map(names, (: $1 + " the Brave" :));</code></li>
+          </ul>
+        </li>
+        <li>Define query functions: <code>query_numbers()</code>, <code>query_high_values()</code>, <code>query_names()</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch19_advanced/ex04_closures.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>#'&lt;</code> is an <strong>efun closure</strong>, a reference to the built-in less-than operator. <code>sort_array(arr, #'&lt;)</code> sorts in ascending order. <code>#'&gt;</code> would sort descending.</li>
+        <li>Inline closures use the <code>(: code :)</code> syntax. Inside them, <code>$1</code> is the first argument, <code>$2</code> the second. <code>filter(arr, (: $1 &gt; 20 :))</code> keeps elements where the closure returns true.</li>
+        <li><code>map(arr, closure)</code> returns a new array where each element is the result of calling the closure on the original. <code>map(names, (: $1 + " the Brave" :))</code> appends the title to every name.</li>
+        <li>These three closure styles cover most functional operations in LPC: sorting with efun references, filtering with inline predicates, and transforming with inline mappers.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 4: The Boss &amp; Phase 5: Polish</h3>
+    <p>
+      These advanced techniques are the finishing touches that elevate a good dungeon
+      into a great one. Heartbeats create atmospheric rooms that feel alive. Call_outs
+      power traps, puzzles, and timed events. Custom commands let players interact with
+      your dungeon in unique ways. And closures give you the tools to write clean,
+      efficient code for complex game logic. Use them all in your capstone area.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

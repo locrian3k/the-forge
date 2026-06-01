@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 18: Putting It Together — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 18: Putting It Together</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/put_it_together.html" target="_blank">Putting It Together</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>From Files to an Area</h3>
+    <p>
+      Building a complete area means organizing rooms, monsters, and objects into a
+      coherent structure. The architecture follows a consistent pattern:
+    </p>
+<pre class="diagram">your_area/
+├─ defs.h          → path constants shared by all files
+├─ rooms/
+│   ├─ base_room.c → base room all area rooms inherit
+│   ├─ entrance.c  → entry point (inherits /room/room)
+│   ├─ rm2.c       → area room (inherits base_room.c)
+│   ├─ rm3.c
+│   └─ rm4.c
+├─ mon/
+│   └─ goblin.c    → monsters
+└─ obj/
+    └─ key.c       → items and treasures</pre>
+    <p>
+      The <code>defs.h</code> header defines paths so every file can reference
+      <code>TRAINING_ROOM + "rm2"</code> instead of hardcoding full paths.
+      The <code>base_room.c</code> base room handles shared setup so individual rooms
+      stay short. The driver's <code>reset()</code> cycle keeps rooms populated by
+      respawning monsters after they are killed.
+    </p>
+    <p>
+      These exercises walk you through the full area architecture, from the header
+      file to a working multi-room area with monster spawning.
+    </p>
+    <p class="note">
+      For dungeon-specific area building with level scaling, see
+      <a href="20-dungeon-rooms.html">Chapters 20-21</a>.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/examples/put_it_together.html" target="_blank">Putting It Together</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 18.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 18.1: Area Header <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-18.1" data-exercise="18.1">
+      <label for="check-18.1">Completed</label>
+    </div>
+    <p class="objective">Create a defs.h header file for a new area.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li><code>#pragma strong_types</code> must be the first line of the file</li>
+        <li>Include the parent header with <code>#include "../defs.h"</code></li>
+        <li>Define the following path constants using <code>#define</code>:
+          <ul>
+            <li><code>TRAINING</code>, the area root path: <code>AREAS + "training/"</code></li>
+            <li><code>TRAINING_ROOM</code>, path to rooms: <code>TRAINING + "rooms/"</code></li>
+            <li><code>TRAINING_MOBS</code>, path to monsters: <code>TRAINING + "mon/"</code></li>
+            <li><code>TRAINING_ITEM</code>, path to objects: <code>TRAINING + "obj/"</code></li>
+          </ul>
+        </li>
+        <li>Use UPPERCASE naming for all <code>#define</code> macros</li>
+        <li>Comment each define to explain its purpose</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch18_putting_together/defs.h</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The <code>AREAS</code> macro is defined in the global <code>defs.h</code> and points to the base areas directory. Your area paths build on top of it.</li>
+        <li>Each <code>#define</code> creates a text substitution. When you write <code>TRAINING_ROOM + "rm2"</code> later in your code, the preprocessor expands it to the full file path string.</li>
+        <li>All area <code>defs.h</code> files follow this exact pattern. Look at any existing area for reference.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 18.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 18.2: Area Layout <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-18.2" data-exercise="18.2">
+      <label for="check-18.2">Completed</label>
+    </div>
+    <p class="objective">Create an entrance room and three connected rooms to form a small area layout.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <p>Create <strong>four files</strong>:</p>
+      <ul>
+        <li><strong><code>ex02_entrance.c</code></strong>, The outdoor entrance:
+          <ul>
+            <li>Inherit from <code>/room/room</code></li>
+            <li>Set light, short, and long descriptions</li>
+            <li>Add at least 2 <code>add_item()</code> calls</li>
+            <li>Add an exit north to <code>TRAINING_ROOM + "ex02_rm2"</code></li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm2.c</code></strong>, First interior room:
+          <ul>
+            <li>Inherit from <code>/room/room</code></li>
+            <li>Exits: south to ex02_entrance, east to ex02_rm3</li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm3.c</code></strong>, Second interior room:
+          <ul>
+            <li>Inherit from <code>/room/room</code></li>
+            <li>Exits: west to ex02_rm2, north to ex02_rm4</li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm4.c</code></strong>, Third interior room (dead end):
+          <ul>
+            <li>Inherit from <code>/room/room</code></li>
+            <li>Exit: south to ex02_rm3</li>
+          </ul>
+        </li>
+      </ul>
+      <p>All rooms must have bidirectional exits, use <code>TRAINING_ROOM</code> defines for paths, and follow 3K codestyle.</p>
+    </div>
+
+    <p>Files to create:
+      <span class="file-path">exercises/ch18_putting_together/ex02_entrance.c</span><br>
+      <span class="file-path">exercises/ch18_putting_together/ex02_rm2.c</span><br>
+      <span class="file-path">exercises/ch18_putting_together/ex02_rm3.c</span><br>
+      <span class="file-path">exercises/ch18_putting_together/ex02_rm4.c</span>
+    </p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>All rooms inherit <code>/room/room</code>, which provides the standard room functionality including exits, items, and searching.</li>
+        <li><code>add_exit(path, direction)</code> creates a one-way exit. You must add the reverse exit in the destination room to make movement bidirectional.</li>
+        <li>The entrance room uses <code>TRAINING + "ex02_entrance"</code> as its path (not <code>TRAINING_ROOM</code>) because it lives in the area root directory.</li>
+        <li>Each room should have its own theme and description. Even simple rooms benefit from at least one <code>add_item()</code> call for atmosphere.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 18.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 18.3: Base Area Room <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-18.3" data-exercise="18.3">
+      <label for="check-18.3">Completed</label>
+    </div>
+    <p class="objective">Create an inheritable base room (base_room.c) that all rooms in your area inherit from.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Include the header with <code>#include "../defs.h"</code> (base_room.c lives in <code>rooms/</code> subdirectory)</li>
+        <li>Inherit from <code>/room/room</code></li>
+        <li>Define a <code>create()</code> that calls <code>::create()</code> and sets light</li>
+        <li>Define a <code>block_them(string arg)</code> function that:
+          <ul>
+            <li>Uses <code>query_verb()</code> to get the direction the player typed</li>
+            <li>Checks if the direction exists in <code>query_exits()</code> or <code>query_hidden()</code></li>
+            <li>Blocks movement (returns 1) if the direction is not a valid exit</li>
+            <li>Allows movement (returns 0) if the direction is a valid exit</li>
+          </ul>
+        </li>
+        <li>Define an <code>init()</code> that calls <code>::init()</code> and registers <code>block_them</code> with <code>add_action("block_them", "", 1)</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch18_putting_together/ex03_droom.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The <code>ex03_droom.c</code> file acts as a middle layer: it inherits <code>/room/room</code> and your actual rooms inherit <code>ex03_droom.c</code>. This lets you put common setup in one place.</li>
+        <li><code>block_them()</code> prevents players from walking into walls. The <code>add_action("block_them", "", 1)</code> trick catches ALL player commands.</li>
+        <li><code>query_exits()</code> returns a mapping of visible exits. <code>query_hidden()</code> returns hidden exits. Use <code>member(mapping, key)</code> to check if a direction exists.</li>
+        <li>Keeping the base room simple means child rooms only need to add their own descriptions, items, and exits. Shared logic lives here.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 18.4 -->
+  <section class="exercise" id="ex04">
+    <h2>Exercise 18.4: Reset Spawning <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-18.4" data-exercise="18.4">
+      <label for="check-18.4">Completed</label>
+    </div>
+    <p class="objective">Create a room that uses reset() and clone_object() to respawn monsters.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from the <code>ex03_droom.c</code> base room created in Exercise 18.3</li>
+        <li>Define a <code>create()</code> that:
+          <ul>
+            <li>Calls <code>::create()</code></li>
+            <li>Sets short and long descriptions</li>
+            <li>Adds at least 1 <code>add_item()</code> for scenery</li>
+            <li>Adds at least 1 exit</li>
+          </ul>
+        </li>
+        <li>Define a <code>reset()</code> that:
+          <ul>
+            <li>Calls <code>::reset()</code></li>
+            <li>Uses <code>present("monster_id")</code> to check if the monster already exists in the room</li>
+            <li>If the monster is not present, uses <code>clone_object(TRAINING_MOBS + "goblin")</code> to create one and <code>move_object()</code> to place it in the room</li>
+            <li>This <code>present()</code> check + <code>clone_object()</code> approach prevents duplicate monsters from stacking up</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch18_putting_together/ex04_spawn_room.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>reset()</code> is called by the driver periodically (roughly every 30-45 minutes) to repopulate rooms. It is also called once after <code>create()</code> when the room first loads.</li>
+        <li>Always call <code>::reset()</code> at the start of your <code>reset()</code> function. The parent's reset handles internal bookkeeping.</li>
+        <li>The pattern is: <code>if (!present("goblin")) { object ob = clone_object(TRAINING_MOBS + "goblin"); move_object(ob, TO); }</code>. The <code>present()</code> check prevents duplicates.</li>
+        <li><code>clone_object(path)</code> creates a new copy of an object. <code>move_object(ob, TO)</code> places it in the current room. Together with <code>present()</code>, this is the standard respawn pattern for <code>/room/room</code> areas.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 4: The Boss</h3>
+    <p>
+      This is where your capstone area truly comes together. The header file, area
+      layout, base room, and reset spawning are the architectural backbone of every
+      3Kingdoms area. With these pieces in place, you have a fully functional area
+      skeleton ready to be populated with the monsters, weapons, armor, and objects you
+      built in earlier chapters.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

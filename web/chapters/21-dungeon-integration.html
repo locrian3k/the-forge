@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 21: Dungeon Integration — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 21: Dungeon Integration</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/put_it_together.html" target="_blank">Integration</a>
+    </p>
+  </header>
+
+  <div class="extension-banner">
+    <strong>3K Extension.</strong> This chapter covers the dungeon room system specific to
+    3Kingdoms. Skip it if your MUD does not have <code>/room/dungeon/dr.c</code>.
+  </div>
+
+  <div class="concept-recap">
+    <h3>Building a Complete Dungeon Area</h3>
+    <p>
+      Chapter 18 showed how to organize an area with standard rooms. This chapter
+      applies the same architecture to dungeon rooms, adding level scaling and the
+      convenience of <code>add_clone()</code> for spawning.
+    </p>
+    <p>
+      The typical dungeon area pattern uses three layers:
+    </p>
+    <table class="type-table">
+      <tr><th>File</th><th>Inherits</th><th>Purpose</th></tr>
+      <tr><td><code>entrance.c</code></td><td><code>/room/room</code></td><td>Outdoor entry point, no scaling</td></tr>
+      <tr><td><code>droom.c</code></td><td><code>/room/dungeon/dr.c</code></td><td>Base dungeon room with shared setup</td></tr>
+      <tr><td><code>rm2.c</code>, <code>rm3.c</code>, ...</td><td><code>droom.c</code></td><td>Individual dungeon rooms</td></tr>
+    </table>
+    <p>
+      The <code>droom.c</code> base room calls <code>set_dungeon()</code> once so child
+      rooms do not repeat it. It can also define helper functions like
+      <code>monster(path)</code> and <code>item(path)</code> that wrap
+      <code>add_clone()</code> with the area's path constants, keeping child rooms short
+      and consistent.
+    </p>
+    <p>
+      The entrance room inherits <code>/room/room</code> because it sits outside the
+      dungeon. Players pass through it to enter the scaled area. Inside the dungeon,
+      every room inherits <code>droom.c</code> and benefits from automatic scaling and
+      the <code>add_clone()</code> respawn system.
+    </p>
+  </div>
+
+  <!-- Exercise 21.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 21.1: Base Dungeon Room <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-21.1" data-exercise="21.1">
+      <label for="check-21.1">Completed</label>
+    </div>
+    <p class="objective">Create an inheritable base dungeon room with set_dungeon(), monster/item clone helpers, and a direction blocker.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Include the header with <code>#include "../defs.h"</code> (ex01_droom.c lives in <code>rooms/</code> subdirectory)</li>
+        <li>Inherit from <code>/room/dungeon/dr.c</code></li>
+        <li>Define a <code>create()</code> that calls <code>::create()</code>, calls <code>set_dungeon(DNAME, level, 1, 1, 1)</code> with a level of your choice, and sets light</li>
+        <li>Define a <code>monster(string path)</code> helper that calls <code>add_clone(TRAINING_MOBS + path)</code></li>
+        <li>Define an <code>item(string path)</code> helper that calls <code>add_clone(TRAINING_ITEM + path)</code></li>
+        <li>Define a <code>block_them(string arg)</code> function that:
+          <ul>
+            <li>Uses <code>query_verb()</code> to get the direction the player typed</li>
+            <li>Checks if the direction exists in <code>query_exits()</code> or <code>query_hidden()</code></li>
+            <li>Blocks movement (returns 1) if the direction is not a valid exit</li>
+            <li>Allows movement (returns 0) if the direction is a valid exit</li>
+          </ul>
+        </li>
+        <li>Define an <code>init()</code> that calls <code>::init()</code> and registers <code>block_them</code> with <code>add_action("block_them", "", 1)</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch21_dungeon_integration/ex01_droom.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The <code>ex01_droom.c</code> file acts as a middle layer: it inherits <code>/room/dungeon/dr.c</code> and your actual rooms inherit <code>ex01_droom.c</code>. This lets you put common setup in one place.</li>
+        <li><code>add_clone(path)</code> is a dungeon room function that clones an object and moves it into the room. It handles reset/respawning automatically, so the <code>monster()</code> and <code>item()</code> helpers are thin wrappers for convenience.</li>
+        <li><code>block_them()</code> prevents players from walking into walls. The <code>add_action("block_them", "", 1)</code> trick catches ALL player commands, so you check whether the verb matches a valid exit direction.</li>
+        <li><code>query_exits()</code> returns a mapping of visible exits. <code>query_hidden()</code> returns hidden exits. Use <code>member(mapping, key)</code> to check if a direction exists in either.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 21.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 21.2: Mini Dungeon Layout <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-21.2" data-exercise="21.2">
+      <label for="check-21.2">Completed</label>
+    </div>
+    <p class="objective">Create an entrance room and three connected dungeon rooms that inherit your base room.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <p>Create <strong>four files</strong>:</p>
+      <ul>
+        <li><strong><code>ex02_entrance.c</code></strong>, The outdoor entrance:
+          <ul>
+            <li>Inherit from <code>/room/room</code> (not a dungeon room)</li>
+            <li>Set light, short, and long descriptions</li>
+            <li>Add at least 2 <code>add_item()</code> calls</li>
+            <li>Add an exit leading into the dungeon (to <code>TRAINING_ROOM + "ex02_rm2"</code>)</li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm2.c</code></strong>, First dungeon room:
+          <ul>
+            <li>Inherit from <code>ex01_droom.c</code> (your base dungeon room from Exercise 21.1)</li>
+            <li>Set short and long descriptions</li>
+            <li>Exits: back to entrance, forward to rm3</li>
+            <li>Use <code>monster()</code> helper to spawn a monster</li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm3.c</code></strong>, Second dungeon room:
+          <ul>
+            <li>Inherit from <code>ex01_droom.c</code></li>
+            <li>Exits: back to rm2, forward to rm4</li>
+            <li>Use <code>item()</code> helper to place a treasure</li>
+          </ul>
+        </li>
+        <li><strong><code>ex02_rm4.c</code></strong>, Third dungeon room (dead end):
+          <ul>
+            <li>Inherit from <code>ex01_droom.c</code></li>
+            <li>Exit: back to rm3</li>
+            <li>Use <code>monster()</code> helper to spawn a tougher monster</li>
+          </ul>
+        </li>
+      </ul>
+      <p>All rooms must have bidirectional exits, use <code>TRAINING_ROOM</code> defines for paths, and follow 3K codestyle.</p>
+    </div>
+
+    <p>Files to create:
+      <span class="file-path">exercises/ch21_dungeon_integration/ex02_entrance.c</span><br>
+      <span class="file-path">exercises/ch21_dungeon_integration/ex02_rm2.c</span><br>
+      <span class="file-path">exercises/ch21_dungeon_integration/ex02_rm3.c</span><br>
+      <span class="file-path">exercises/ch21_dungeon_integration/ex02_rm4.c</span>
+    </p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The entrance room inherits <code>/room/room</code> because it is outdoors and does not need dungeon scaling. All interior rooms inherit <code>ex01_droom.c</code>, which already calls <code>set_dungeon()</code>.</li>
+        <li>Because <code>ex01_droom.c</code> handles <code>set_dungeon()</code>, light, and the direction blocker, your child rooms only need to set descriptions, add items/exits, and call the <code>monster()</code> or <code>item()</code> helpers.</li>
+        <li>The <code>monster()</code> helper takes just the filename, not the full path. For example: <code>monster("goblin")</code> expands to <code>add_clone(TRAINING_MOBS + "goblin")</code>.</li>
+        <li>Remember to create the monster and treasure files that your rooms reference. Simple <code>/obj/monster</code> and <code>/obj/treasure</code> inherits work fine for testing.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 21.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 21.3: Reset Respawning <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-21.3" data-exercise="21.3">
+      <label for="check-21.3">Completed</label>
+    </div>
+    <p class="objective">Create a dungeon room that uses reset() and add_clone() to respawn monsters.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from the <code>ex01_droom.c</code> base room created in Exercise 21.1</li>
+        <li>Define a <code>create()</code> that:
+          <ul>
+            <li>Calls <code>::create()</code></li>
+            <li>Sets short and long descriptions</li>
+            <li>Adds at least 1 <code>add_item()</code> for scenery</li>
+            <li>Adds at least 1 exit</li>
+            <li>Uses the <code>monster()</code> helper to spawn an initial monster</li>
+          </ul>
+        </li>
+        <li>Define a <code>reset()</code> that:
+          <ul>
+            <li>Calls <code>::reset()</code> (important for dungeon internals)</li>
+            <li>Uses <code>add_clone()</code> to spawn 1-2 monsters</li>
+            <li><code>add_clone()</code> handles duplicate checking internally, so it will not create extras if the monster still exists</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch21_dungeon_integration/ex03_spawn_room.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>reset()</code> is called by the driver periodically (roughly every 30-45 minutes) to repopulate rooms. It is also called once after <code>create()</code> when the room first loads.</li>
+        <li>Always call <code>::reset()</code> at the start of your <code>reset()</code> function. The parent's reset handles internal dungeon bookkeeping.</li>
+        <li><code>add_clone(path, count, chance, unique)</code> is the full signature. <code>add_clone(TRAINING_MOBS + "goblin")</code> spawns one goblin. The system will not spawn duplicates if one already exists.</li>
+        <li>The <code>monster()</code> helper from ex01_droom.c is a shorthand that calls <code>add_clone(TRAINING_MOBS + path)</code>. You can use either in <code>reset()</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone B: Dungeon Area</h3>
+    <p>
+      If you have completed these chapters, you are ready for Capstone B: Dungeon Area.
+      You now have all the tools to build a fully scaled dungeon with a base room,
+      connected layout, monster spawning, and automatic level adjustment. Combine these
+      with the weapons, armor, and advanced techniques from earlier chapters to create
+      a complete dungeon experience.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

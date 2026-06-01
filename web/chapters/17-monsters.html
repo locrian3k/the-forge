@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 17: Monsters — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 17: Monsters</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/monster.html" target="_blank">Monsters</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Three Tiers of Enemies</h3>
+    <p>
+      Monsters are the creatures players fight. 3Kingdoms provides three base classes,
+      each more powerful than the last:
+    </p>
+    <table class="type-table">
+      <tr><th>Base Class</th><th>Use For</th><th>Key Features</th></tr>
+      <tr><td><code>/obj/monster</code></td><td>Simple foes</td><td>Name, level, chat messages</td></tr>
+      <tr><td><code>/obj/complex_monster</code></td><td>Spell casters</td><td>+ spell attacks with multiple damage types</td></tr>
+      <tr><td><code>/obj/super_monster</code></td><td>Bosses</td><td>+ damage reduction, death events, loot</td></tr>
+    </table>
+    <p>
+      All monsters share core properties: name, race, level, alignment, and
+      descriptions. They can have idle chat (ambient dialogue), combat chat (battle
+      taunts), and <code>extra_look()</code> for conditional flavor text.
+    </p>
+    <p>
+      These exercises progress from a simple aggressive monster through a spell caster
+      to a full boss encounter.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/examples/monster.html" target="_blank">Monsters</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 17.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 17.1: Basic Monster <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-17.1" data-exercise="17.1">
+      <label for="check-17.1">Completed</label>
+    </div>
+    <p class="objective">Create a simple monster that could inhabit a dungeon room.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/monster</code></li>
+        <li>Define a <code>create()</code> function that:
+          <ul>
+            <li>Calls <code>::create()</code> as its first action</li>
+            <li>Sets the monster's name to <code>"cave goblin"</code> using <code>set_name()</code></li>
+            <li>Sets aliases with <code>set_alias()</code> including at least <code>"goblin"</code> and <code>"cave goblin"</code></li>
+            <li>Sets the race to <code>"goblin"</code> using <code>set_race()</code></li>
+            <li>Sets short and long descriptions (long description at least two sentences)</li>
+            <li>Sets the level to <code>5</code> using <code>set_level()</code></li>
+            <li>Sets alignment to <code>-200</code> using <code>set_al()</code> (negative = evil)</li>
+            <li>Sets the monster as aggressive with <code>set_aggressive(1)</code></li>
+            <li>Loads at least 3 idle chat messages using <code>load_chat(percentage, array)</code></li>
+          </ul>
+        </li>
+        <li>Define an <code>extra_look()</code> function that returns a string describing what the goblin is currently doing</li>
+        <li>Use 2-space indentation, Allman bracket style</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch17_monsters/ex01_basic_monster.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The <code>inherit "obj/monster";</code> line goes after your <code>#include</code> but before any functions. This gives your object all the standard monster behaviors.</li>
+        <li><code>load_chat()</code> takes a percentage (integer) and an array of strings. Each string must end with <code>\n</code>. Example: <code>load_chat(10, ({"The goblin scratches itself.\n", "The goblin growls.\n"}));</code></li>
+        <li><code>extra_look()</code> takes no arguments and returns a <code>string</code>. This is what players see appended after the monster's short description in a room.</li>
+        <li><code>set_aggressive(1)</code> means the monster attacks players on sight. Alignment ranges from -1000 (very evil) to 1000 (very good).</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 17.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 17.2: Chat and Spells <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-17.2" data-exercise="17.2">
+      <label for="check-17.2">Completed</label>
+    </div>
+    <p class="objective">Create a complex monster with a spell system that uses multiple damage types and combat chat messages.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/complex_monster</code></li>
+        <li>Set name, alias, race, short, and long descriptions for a dark mage</li>
+        <li>Set level to <code>12</code>, negative alignment, and <code>set_aggressive(1)</code></li>
+        <li>Configure at least <strong>3 spell attacks</strong> using the spell array system:
+          <ul>
+            <li><code>set_spell_mess1()</code>, array of attack messages seen by the room (use <code>$N$</code> for the target's name)</li>
+            <li><code>set_spell_mess2()</code>, array of attack messages seen by the target</li>
+            <li><code>set_spell_type()</code>, array of damage types (e.g., <code>"fire"</code>, <code>"ice"</code>, <code>"acid"</code>)</li>
+            <li><code>set_spell_dam()</code>, array of base damage values (negative numbers for scaling damage)</li>
+            <li><code>set_spell_probabilities()</code>, array of integer weights for spell selection</li>
+          </ul>
+        </li>
+        <li><strong>All spell arrays must be the same length</strong></li>
+        <li>Load combat chat messages using <code>load_a_chat(percentage, array)</code></li>
+        <li>Load idle chat with <code>load_chat()</code></li>
+        <li>Define <code>extra_look()</code> returning an intimidating description</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch17_monsters/ex02_chat_spells.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The spell arrays work in parallel, index 0 of each array describes the first spell, index 1 the second, and so on. If you have 3 spells, each array must have exactly 3 elements.</li>
+        <li><code>set_spell_dam()</code> uses negative values to indicate scaling damage. A value of <code>-80</code> means "80% of monster level as base damage."</li>
+        <li><code>set_spell_probabilities()</code> are relative weights, not percentages. <code>({3, 1, 1})</code> means the first spell is chosen 3 times as often as either of the others.</li>
+        <li><code>load_a_chat()</code> works exactly like <code>load_chat()</code> but only triggers during active combat.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 17.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 17.3: Boss Monster <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-17.3" data-exercise="17.3">
+      <label for="check-17.3">Completed</label>
+    </div>
+    <p class="objective">Create a boss-tier monster using /obj/super_monster with damage reduction, a death narrative, custom death messages, and a loot drop.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/super_monster</code></li>
+        <li>Set name, alias, race, short, and long descriptions for a boss monster</li>
+        <li>Set level to <code>20</code>, strongly negative alignment, and <code>set_aggressive(1)</code></li>
+        <li>Add <code>add_property("NOPEACE")</code> so players cannot use the peace command</li>
+        <li>Set <code>set_dead_ob(TO)</code> so the monster handles its own death events</li>
+        <li>Call <code>add_clone(path)</code> with a path to a weapon or armor that the boss drops on death</li>
+        <li>Set up at least 2 spell attacks using the spell array system</li>
+        <li>Load combat and idle chat messages</li>
+        <li>Define <code>modify_damage(int dam, string dam_type, int *att_wc)</code>, returns a reduced damage value (e.g. <code>dam / 2</code> for 50% reduction)</li>
+        <li>Define <code>monster_died()</code>, uses <code>tell_room()</code> to narrate the death, then moves all inventory to the room</li>
+        <li>Define <code>query_death_message(object for_who)</code>, returns the message shown to a player killed by this boss</li>
+        <li>Define <code>extra_look()</code> returning a boss-tier description</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch17_monsters/ex03_boss.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>modify_damage()</code> is called every time the boss takes a hit. Return the modified damage value. Returning <code>dam / 2</code> halves all incoming damage.</li>
+        <li><code>set_dead_ob(TO)</code> tells the driver to call <code>monster_died()</code> on this object when the monster dies. Without it, <code>monster_died()</code> is never called.</li>
+        <li><code>add_clone(path)</code> adds an object to the monster's inventory that becomes the boss's loot drop when <code>monster_died()</code> moves inventory to the room.</li>
+        <li>In <code>monster_died()</code>, use <code>environment(TO)</code> to get the room. Move inventory with: <code>map(all_inventory(TO), #'move_object, environment(TO));</code></li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 3: Combat</h3>
+    <p>
+      Monsters bring your dungeon to life. Use basic monsters for common encounters,
+      complex monsters for challenging mid-dungeon fights, and a super_monster for your
+      capstone boss. The boss fight is the climax of your area, give it damage reduction,
+      dramatic death narration, and a unique loot drop that players will remember.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

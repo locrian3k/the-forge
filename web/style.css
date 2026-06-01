@@ -1,0 +1,374 @@
+/* The Forge, LPC Exercise Curriculum */
+/* Companion site for the 3K Code Primer */
+
+:root {
+  --bg: #1a1a2e;
+  --bg-card: #16213e;
+  --bg-code: #0f0f1a;
+  --text: #e0e0e0;
+  --text-muted: #9898b8;
+  --accent: #e94560;
+  --accent-glow: #e9456033;
+  --apprentice: #4fc3f7;
+  --journeyman: #ffd54f;
+  --pass: #66bb6a;
+  --fail: #ef5350;
+  --link: #64b5f6;
+  --border: #2a2a4a;
+  --font-mono: 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- Sidebar Navigation --- */
+nav.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+nav.sidebar h1 {
+  font-size: 1.2rem;
+  padding: 0 1.25rem 1rem;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+nav.sidebar a {
+  display: block;
+  padding: 0.35rem 1.25rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.15s, background 0.15s;
+}
+
+nav.sidebar a:hover,
+nav.sidebar a.active {
+  color: var(--text);
+  background: var(--accent-glow);
+}
+
+nav.sidebar .section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0.75rem 1.25rem 0.25rem;
+  font-weight: 600;
+}
+
+/* --- Main Content --- */
+main {
+  margin-left: 260px;
+  flex: 1;
+  padding: 2rem 3rem;
+  max-width: 900px;
+}
+
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h2 { font-size: 1.3rem; margin: 2rem 0 0.75rem; color: var(--accent); }
+h3 { font-size: 1.1rem; margin: 1.25rem 0 0.5rem; }
+p { margin-bottom: 0.75rem; }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+li { margin-bottom: 0.3rem; }
+
+/* --- Tier Badges --- */
+.tier {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+}
+
+.tier.apprentice {
+  background: #4fc3f722;
+  color: var(--apprentice);
+  border: 1px solid var(--apprentice);
+}
+
+.tier.journeyman {
+  background: #ffd54f22;
+  color: var(--journeyman);
+  border: 1px solid var(--journeyman);
+}
+
+/* --- Exercise Cards --- */
+.exercise {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.exercise h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.exercise .objective {
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.exercise .requirements h3,
+.exercise .hints h3 {
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}
+
+.exercise .file-path {
+  background: var(--bg-code);
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+  display: inline-block;
+}
+
+.exercise .validation {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #66bb6a15;
+  border-left: 3px solid var(--pass);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
+}
+
+.exercise .validation code {
+  font-family: var(--font-mono);
+  color: var(--pass);
+  font-weight: 600;
+}
+
+/* --- Hints (collapsible) --- */
+details.hints {
+  margin-top: 0.75rem;
+}
+
+details.hints summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+details.hints summary:hover { color: var(--text); }
+
+details.hints ol {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* --- Code Blocks --- */
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0.75rem 0;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-code);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* --- Concept Recap --- */
+.concept-recap {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-muted);
+}
+
+.concept-recap a { color: var(--link); }
+
+/* --- Extension Banner --- */
+.extension-banner {
+  background: #f0ad4e20;
+  border: 1px solid #f0ad4e;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  margin: 0.5rem 0 1.5rem;
+  color: var(--text-muted);
+}
+
+/* --- Note --- */
+p.note {
+  background: var(--surface);
+  border-left: 3px solid #f0ad4e;
+  padding: 0.5rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* --- Capstone Callout --- */
+.capstone-callout {
+  background: #e9456015;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+}
+
+.capstone-callout h3 {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+/* --- Progress Checkboxes --- */
+.progress-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.progress-check input[type="checkbox"] {
+  accent-color: var(--pass);
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Chapter Grid (index page) --- */
+.chapter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.chapter-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  transition: border-color 0.15s;
+}
+
+.chapter-card:hover {
+  border-color: var(--accent);
+}
+
+.chapter-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.chapter-card .count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* --- Primer Link --- */
+.primer-link {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* --- Focus Indicators (WCAG 2.4.7) --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+details summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- Skip-to-Content Link (WCAG 2.4.1) --- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* --- Mobile Nav Toggle --- */
+.nav-toggle {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .nav-toggle { display: block; }
+  nav.sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+    max-height: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    transition: max-height 0.3s ease;
+  }
+  nav.sidebar.open { max-height: 80vh; overflow-y: auto; }
+  nav.sidebar h1 { display: none; }
+  main { margin-left: 0; padding: 1.5rem; }
+  .chapter-grid { grid-template-columns: 1fr; }
+}

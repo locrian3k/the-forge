@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 14: Objects — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 14: Objects</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/object.html" target="_blank">Objects</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Things Players Pick Up</h3>
+    <p>
+      Objects are what players carry, examine, and use. The simplest type is a
+      <strong>treasure</strong>, something with a name, description, weight, and gold
+      value that can be collected and sold to shops.
+    </p>
+    <p>
+      All objects inherit from a base class (like <code>/obj/treasure</code>) that
+      provides standard behaviors: getting, dropping, examining, and inventory
+      management. You customize each object in <code>create()</code> and optionally
+      add custom commands through <code>init()</code> and <code>add_action()</code>.
+    </p>
+    <p>
+      These exercises teach treasures and readable objects, the foundation for the
+      specialized item types (weapons, armor) that follow.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/examples/object.html" target="_blank">Objects</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 14.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 14.1: Treasure Object <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-14.1" data-exercise="14.1">
+      <label for="check-14.1">Completed</label>
+    </div>
+    <p class="objective">Create a treasure object that players can pick up, examine, and sell to shops.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/treasure</code></li>
+        <li>Call <code>::create()</code> at the start of your <code>create()</code> function</li>
+        <li>Set the creator with <code>set_creator("mimic")</code></li>
+        <li>Set the internal name with <code>set_name()</code> (lowercase, used by the game engine)</li>
+        <li>Set aliases with <code>set_alias()</code> using an array of at least 3 alternate names</li>
+        <li>Set a short description with <code>set_short()</code> (shown in inventory lists)</li>
+        <li>Set a long description with <code>set_long()</code> (at least two sentences)</li>
+        <li>Set a gold value with <code>set_value()</code> (positive integer)</li>
+        <li>Set a weight with <code>set_weight()</code> (positive integer, typically 1-5)</li>
+        <li>Add at least one <code>add_item()</code> for an examinable detail</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch14_objects/ex01_treasure.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>set_name()</code> should be lowercase and is how the game engine refers to the object internally. Players use this name (and aliases) with commands like <code>get</code>, <code>drop</code>, and <code>look at</code>.</li>
+        <li><code>set_alias()</code> takes an array of strings. Include the name itself plus shorter or alternate forms: <code>({"ring","gold ring","signet","band"})</code>.</li>
+        <li><code>set_value()</code> sets how much gold a shop will pay for the item. Typical treasures range from 10 to 500 gold.</li>
+        <li><code>add_item()</code> on an object works just like in rooms, it lets players examine sub-features of the object (e.g. <code>look at engraving</code> while holding the ring).</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 14.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 14.2: Readable Object <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-14.2" data-exercise="14.2">
+      <label for="check-14.2">Completed</label>
+    </div>
+    <p class="objective">Create a scroll or journal object that players can read.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/treasure</code></li>
+        <li>Set up standard object properties: <code>set_creator</code>, <code>set_name</code>, <code>set_alias</code> (3+ entries), <code>set_short</code>, <code>set_long</code>, <code>set_weight</code>, <code>set_value</code></li>
+        <li>Add an <code>init()</code> function that calls <code>::init()</code> then registers a read command: <code>add_action("do_read", "read")</code></li>
+        <li>Implement <code>status do_read(string str)</code> that:
+          <ul>
+            <li>Returns <code>0</code> if <code>str</code> is missing or does not match the object (use <code>if (!str || !id(str)) return 0;</code>)</li>
+            <li>Uses <code>write()</code> to display multi-line text to the player (at least 5 lines)</li>
+            <li>Returns <code>1</code> after displaying the text</li>
+          </ul>
+        </li>
+        <li>The long description should hint that the object can be read</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch14_objects/ex02_readable_object.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>init()</code> on an object is called whenever a living being enters the same environment as the object, either the room it is in, or when picked up. This is where you register custom commands.</li>
+        <li><code>id(str)</code> is inherited from the base object. It returns <code>1</code> if <code>str</code> matches the object's name or any of its aliases. This is the standard way to check if the player is referring to your object.</li>
+        <li>The <code>status</code> return type is used for true/false values in 3K codestyle (equivalent to <code>int</code> but semantically clearer).</li>
+        <li>For multi-line <code>write()</code> output, concatenate strings: <code>write("Line one.\n" "Line two.\n" "Line three.\n");</code></li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 2: Atmosphere</h3>
+    <p>
+      Every dungeon needs loot. The treasure and readable object patterns from these
+      exercises will appear throughout your capstone area, as quest items, collectibles,
+      lore scrolls, and environmental flavor. Think about what kinds of objects fit your
+      dungeon's theme.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

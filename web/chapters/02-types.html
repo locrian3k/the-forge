@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 2: Types — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 2: Types</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/types.html" target="_blank">
+        LPC Types
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>The Core Idea</h3>
+    <p>
+      A <strong>type</strong> tells the compiler what kind of data a variable holds.
+      When you write <code>int hp = 100;</code>, the compiler knows <code>hp</code> is a
+      number. When you write <code>string name = "Steve";</code>, it knows <code>name</code>
+      is text. Get the type wrong and the compiler stops you before your code ever runs —
+      that is what <code>#pragma strong_types</code> enforces.
+    </p>
+    <p>For 95% of MUD coding, you only need five types:</p>
+    <table class="type-table">
+      <tr><th>Type</th><th>What it stores</th><th>Example</th></tr>
+      <tr><td><code>int</code></td><td>Whole numbers</td><td><code>int hp = 100;</code></td></tr>
+      <tr><td><code>string</code></td><td>Text</td><td><code>string name = "Goblin";</code></td></tr>
+      <tr><td><code>object</code></td><td>Game entities</td><td><code>object player = this_player();</code></td></tr>
+      <tr><td><code>status</code></td><td>True/false (1/0)</td><td><code>status door_open = 1;</code></td></tr>
+      <tr><td><code>mixed</code></td><td>Any type</td><td><code>mixed x = "could be anything";</code></td></tr>
+    </table>
+    <p>
+      Type-checking efuns like <code>intp()</code>, <code>stringp()</code>, and
+      <code>objectp()</code> let you inspect types at runtime, essential when working with
+      <code>mixed</code> variables. Explicit casting with <code>(int)</code> or
+      <code>(string)</code> converts between types when needed.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/types.html" target="_blank">Types</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 2.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 2.1: Type Declaration Drill <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-02.01" data-exercise="02.01">
+      <label for="check-02.01">Completed</label>
+    </div>
+    <p class="objective">Create an object that declares one global variable of each basic LPC type and provides query functions to read them.</p>
+
+    <div class="requirements">
+      <h3>What You Will Build</h3>
+      <p>
+        This file builds on the structure you learned in Chapter 1 (file header comment,
+        pragma, include, inherit, create). It adds two new ideas:
+        <strong>global variables</strong> and <strong>query functions</strong>.
+      </p>
+
+      <h4>1. Preamble (same as Chapter 1)</h4>
+      <p>Start with the file header comment, pragma, include, and inherit, exactly like
+        Exercise 1.1:</p>
+<pre><code>/*
+  ex01_declare_types.c
+  YourName YYMMDD
+  Exercise 2.1, one variable of each LPC type.
+*/
+#pragma strong_types
+#include "defs.h"
+
+inherit "obj/treasure";</code></pre>
+
+      <h4>2. Global Variables (new concept)</h4>
+      <p>
+        A <strong>global variable</strong> is declared <em>outside</em> of any function,
+        between the <code>inherit</code> line and the first function. It belongs to the
+        whole object, every function in the file can read it and change it, and it
+        persists for the lifetime of the object.
+      </p>
+      <p>The syntax is the type, then the variable name, then a semicolon:</p>
+<pre><code>int score;
+status active;
+string label;</code></pre>
+      <p>
+        Notice there is no <code>=</code> here. Global variables start with a default
+        value of <code>0</code> (null) for all types &mdash; numbers, strings, objects,
+        and status alike. An uninitialized string is <code>0</code>, not <code>""</code>
+        (empty string). You will give them real values inside <code>create()</code>.
+      </p>
+      <p>You need six global variables, one of each type:</p>
+      <table class="type-table">
+        <tr><th>Type</th><th>Variable name</th><th>What it stores</th></tr>
+        <tr><td><code>int</code></td><td><code>score</code></td><td>A whole number (e.g. 42)</td></tr>
+        <tr><td><code>status</code></td><td><code>active</code></td><td>True or false (1 or 0)</td></tr>
+        <tr><td><code>string</code></td><td><code>label</code></td><td>Text (e.g. "Hello from The Forge")</td></tr>
+        <tr><td><code>float</code></td><td><code>ratio</code></td><td>A decimal number (e.g. 3.14)</td></tr>
+        <tr><td><code>object</code></td><td><code>self</code></td><td>A reference to a game entity</td></tr>
+        <tr><td><code>mixed</code></td><td><code>wildcard</code></td><td>Anything, the compiler does not check it</td></tr>
+      </table>
+
+      <h4>3. The create() Function</h4>
+      <p>
+        Inside <code>create()</code>, do three things (in this order):
+      </p>
+      <ol>
+        <li>Call <code>::create();</code> so the parent treasure initializes.</li>
+        <li>Set the object identity using the setters you learned in Chapter 1:
+          <ul>
+            <li><code>set_name("type sampler");</code></li>
+            <li><code>set_short("a type sampler");</code></li>
+            <li>Set a long description, aliases, value, and weight of your choice.</li>
+          </ul>
+        </li>
+        <li><strong>Assign values to your global variables.</strong> To assign a value to a
+          variable, use the <code>=</code> operator. Each assignment is a statement that
+          ends with a semicolon:
+<pre><code>  score = 42;
+  active = 1;
+  label = "Hello from The Forge";
+  ratio = 3.14;
+  self = this_object();
+  wildcard = "I could be anything";</code></pre>
+          <p>Key details:</p>
+          <ul>
+            <li><code>status</code> values are only ever <code>1</code> (true) or <code>0</code> (false).</li>
+            <li><code>float</code> literals must have a decimal point: <code>3.14</code>, not <code>3</code>.</li>
+            <li><code>this_object()</code> is a built-in function that returns a reference to the
+              current object. It is the simplest way to get a valid <code>object</code> value.</li>
+            <li><code>mixed</code> can hold anything, a string, an int, an object. The compiler
+              will not check what you put in it.</li>
+          </ul>
+        </li>
+      </ol>
+      <p>End <code>create()</code> with <code>return;</code> as always.</p>
+
+      <h4>4. Query Functions (new concept)</h4>
+      <p>
+        In Chapter 1, your <code>create()</code> was a <code>void</code> function, it does
+        work but does not hand a value back to its caller. A <strong>query function</strong>
+        is different: it <em>returns</em> a value. Other code in the game calls your query
+        function to read data from your object.
+      </p>
+      <p>Here is the pattern:</p>
+<pre><code>int query_score() { return score; }</code></pre>
+      <p>Breaking this down piece by piece:</p>
+      <ul>
+        <li><strong><code>int</code></strong>, the return type. This tells the compiler
+          "this function hands back a whole number."</li>
+        <li><strong><code>query_score</code></strong>, the function name. On 3K, functions
+          that read data always start with <code>query_</code>.</li>
+        <li><strong><code>()</code></strong>, empty parentheses mean it takes no arguments.</li>
+        <li><strong><code>{ return score; }</code></strong>, the body. <code>return</code>
+          sends the value of <code>score</code> back to whatever called this function.
+          The semicolon ends the statement. The braces wrap the body.</li>
+      </ul>
+      <p>
+        Because the body is just a single <code>return</code> statement, 3K codestyle allows
+        writing the entire function on one line, signature, braces, and body all together.
+        The braces <code>{ }</code> are still there, they just stay on the same line instead
+        of using Allman style (where the opening <code>{</code> would go on its own line).
+        This is the only time the same-line brace style is used.
+      </p>
+      <p>
+        <strong>The return type must match the variable type.</strong> If the variable is
+        a <code>string</code>, the function's return type must be <code>string</code>:
+      </p>
+<pre><code>string query_label() { return label; }</code></pre>
+      <p>Write one query function for each of your six global variables:</p>
+      <ul>
+        <li><code>int query_score()</code>, returns <code>score</code></li>
+        <li><code>status query_active()</code>, returns <code>active</code></li>
+        <li><code>string query_label()</code>, returns <code>label</code></li>
+        <li><code>float query_ratio()</code>, returns <code>ratio</code></li>
+        <li><code>object query_self()</code>, returns <code>self</code></li>
+        <li><code>mixed query_wildcard()</code>, returns <code>wildcard</code></li>
+      </ul>
+      <p>
+        These go <em>after</em> <code>create()</code>, at the bottom of the file.
+      </p>
+    </div>
+
+    <div class="requirements">
+      <h3>Requirements Summary</h3>
+      <ul>
+        <li>File header comment, <code>#pragma strong_types</code>, <code>#include "defs.h"</code></li>
+        <li><code>inherit "obj/treasure";</code></li>
+        <li>Six global variables: <code>int score</code>, <code>status active</code>,
+          <code>string label</code>, <code>float ratio</code>, <code>object self</code>,
+          <code>mixed wildcard</code></li>
+        <li>A <code>void create()</code> that calls <code>::create();</code>, sets the object's
+          name to <code>"type sampler"</code>, short to <code>"a type sampler"</code>, and
+          assigns a value to each global variable</li>
+        <li>Six one-line query functions, each returning the matching variable with the
+          correct return type</li>
+        <li>All 3K codestyle rules (2-space indent, Allman brackets for multi-line functions,
+          <code>return;</code> at end of <code>create()</code>)</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch02_types/ex01_declare_types.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>If you get a compile error about types, make sure the return type on each query
+          function matches the type of the variable it returns. <code>int</code> variable →
+          <code>int</code> function, <code>string</code> variable → <code>string</code>
+          function, etc.</li>
+        <li>Global variables go between <code>inherit</code> and <code>create()</code>.
+          If you declare them inside <code>create()</code>, they become local variables
+          (Chapter 3 explains the difference) and your query functions will not be able
+          to see them.</li>
+        <li>One-line query functions use braces on the same line:
+          <code>int query_score() { return score; }</code>. This is the only exception
+          to Allman bracket style in 3K codestyle.</li>
+        <li>Do not forget <code>return;</code> at the end of <code>create()</code>. The query
+          functions already have their own <code>return</code> statements with values.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 2.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 2.2: Type Conversion <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-02.02" data-exercise="02.02">
+      <label for="check-02.02">Completed</label>
+    </div>
+    <p class="objective">Write an object with utility functions that convert between LPC types.</p>
+
+    <div class="requirements">
+      <h3>What You Will Build</h3>
+      <p>
+        In Exercise 2.1 you wrote query functions that take no arguments. This exercise
+        introduces <strong>functions with parameters</strong>, functions that accept
+        input, do something with it, and return a result.
+      </p>
+
+      <h4>Functions That Take Arguments</h4>
+      <p>
+        In Exercise 2.1, your query functions looked like <code>int query_score()</code> —
+        empty parentheses, no input. Now you will write functions that receive a value
+        from their caller. The value goes inside the parentheses with its type:
+      </p>
+<pre><code>string int_to_string(int n)
+{
+  // n is an integer that was passed in by the caller.
+  // Do something with it and return a result.
+}</code></pre>
+      <p>Breaking this down:</p>
+      <ul>
+        <li><strong><code>string</code></strong>, the return type. This function hands back text.</li>
+        <li><strong><code>int_to_string</code></strong>, the function name.</li>
+        <li><strong><code>int n</code></strong>, the parameter. When someone calls
+          <code>int_to_string(42)</code>, the value <code>42</code> is stored in <code>n</code>
+          for the duration of that function call.</li>
+      </ul>
+      <p>
+        Since these functions have multiple lines, use Allman brackets (opening
+        <code>{</code> on its own line) just like <code>create()</code>.
+      </p>
+
+      <h4>Type Casting</h4>
+      <p>
+        Sometimes you need to convert a value from one type to another. In LPC, you can
+        <strong>cast</strong> a value by putting the target type in parentheses before it:
+      </p>
+<pre><code>(string)42       // converts the int 42 into the string "42"
+(int)"7"         // converts the string "7" into the int 7</code></pre>
+      <p>
+        This is called a <strong>typecast</strong>. Not all conversions work, you cannot
+        cast an array into an integer, for example, but between the basic types it
+        usually does what you expect.
+      </p>
+
+      <h4>Type-Checking Efuns</h4>
+      <p>
+        LPC provides built-in functions that test what type a value is. Each returns
+        <code>1</code> (true) or <code>0</code> (false):
+      </p>
+      <ul>
+        <li><code>intp(x)</code>, is <code>x</code> an integer?</li>
+        <li><code>stringp(x)</code>, is <code>x</code> a string?</li>
+        <li><code>floatp(x)</code>, is <code>x</code> a float?</li>
+        <li><code>objectp(x)</code>, is <code>x</code> an object?</li>
+      </ul>
+      <p>
+        These are essential when working with <code>mixed</code> variables, because the
+        compiler cannot check the type for you, you have to check at runtime.
+      </p>
+    </div>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <p>
+        Start with the standard preamble (file header comment, pragma, include) and
+        <code>inherit "obj/treasure";</code>. In <code>create()</code>, set the name to
+        <code>"type converter"</code> and short to <code>"a type converter"</code>.
+        Then write these four functions:
+      </p>
+
+      <h4><code>string int_to_string(int n)</code></h4>
+      <p>
+        Takes an integer and returns it as a string. For example, if
+        <code>n</code> is <code>42</code>, return <code>"42"</code>.
+      </p>
+
+      <h4><code>int string_to_int(string s)</code></h4>
+      <p>
+        Takes a string and returns it as an integer. For example, if
+        <code>s</code> is <code>"7"</code>, return <code>7</code>. If the string does not
+        start with digits (e.g. <code>"abc"</code>), return <code>0</code>.
+      </p>
+
+      <h4><code>status status_check(int n)</code></h4>
+      <p>
+        Takes an integer and returns <code>1</code> if it is greater than 0, otherwise
+        returns <code>0</code>.
+      </p>
+
+      <h4><code>string describe_type(mixed val)</code></h4>
+      <p>
+        Takes a <code>mixed</code> value and returns a string naming its type:
+        <code>"int"</code>, <code>"string"</code>, <code>"float"</code>,
+        <code>"object"</code>, or <code>"unknown"</code>. Use the type-checking efuns
+        listed above to figure out which type it is.
+      </p>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch02_types/ex02_type_conversion.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>int_to_string</code>: The cast <code>(string)n</code> converts an int to a
+          string. Alternatively, <code>"" + n</code> also works, adding an int to a string
+          produces a string.</li>
+        <li><code>string_to_int</code>: The cast <code>(int)s</code> converts a string to an
+          integer. <code>"42abc"</code> becomes <code>42</code>; <code>"abc"</code> becomes
+          <code>0</code>. This handles the "no digits" case automatically.</li>
+        <li><code>status_check</code>: The comparison <code>n &gt; 0</code> already produces a
+          1 or 0 result. You can return it directly: <code>return n &gt; 0;</code></li>
+        <li><code>describe_type</code>: Use <code>if</code> statements to test each type in
+          order. You have not formally learned <code>if</code> yet (that is Chapter 7), but
+          the pattern is: <code>if (intp(val)) return "int";</code>. Check int, string, float,
+          and object. If none match, return <code>"unknown"</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Understanding types is critical for every object in your dungeon. Monster stats are
+      integers, descriptions are strings, item references are objects. Getting comfortable
+      with the type system now prevents a whole class of bugs later.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

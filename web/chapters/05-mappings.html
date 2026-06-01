@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 5: Mappings &amp; Arrays — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 5: Mappings &amp; Arrays</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/mappings.html" target="_blank">
+        Mappings &amp; Arrays
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Lists and Dictionaries</h3>
+    <p>
+      Once you can store single values, you need containers for collections.
+      LPC gives you two:
+    </p>
+    <p>
+      <strong>Arrays</strong> are ordered lists: <code>({ "sword", "axe", "dagger" })</code>.
+      They are zero-indexed, <code>weapons[0]</code> is <code>"sword"</code>,
+      <code>weapons[1]</code> is <code>"axe"</code>. Use arrays when order matters or
+      you need a simple list.
+    </p>
+    <p>
+      <strong>Mappings</strong> are key→value dictionaries:
+      <code>([ "Steve" : 5, "Bob" : 2 ])</code>. Look up a value by its key:
+      <code>kills["Steve"]</code> returns <code>5</code>. Use mappings when you need
+      to associate names with data, inventories, stat blocks, scoreboards.
+    </p>
+    <p>
+      Mappings can be nested, a mapping whose values are themselves mappings. This is
+      how complex game data like monster stat blocks and bestiaries are typically stored.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/mappings.html" target="_blank">Mappings &amp; Arrays</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 5.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 5.1: Inventory Tracker <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-05.01" data-exercise="05.01">
+      <label for="check-05.01">Completed</label>
+    </div>
+    <p class="objective">Create an object that uses a mapping to track item names and their quantities.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Declare a global mapping variable <code>inventory</code> initialized as <code>([])</code> in <code>create()</code></li>
+        <li>Implement <code>void add_item(string name, int qty)</code>:
+          <ul>
+            <li>If <code>name</code> already exists, add <code>qty</code> to the existing value</li>
+            <li>If <code>name</code> does not exist, create a new entry with the given <code>qty</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>void remove_item(string name)</code>:
+          <ul>
+            <li>Delete the entry for <code>name</code> using <code>map_delete()</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>int query_item(string name)</code>:
+          <ul>
+            <li>Return the quantity for <code>name</code>, or <code>0</code> if not found</li>
+          </ul>
+        </li>
+        <li>Implement <code>string *list_items()</code>:
+          <ul>
+            <li>Return a sorted array of all item names using <code>keys()</code> and <code>sort_array()</code></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch05_mappings/ex01_inventory_tracker.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>An empty mapping is created with <code>([])</code>. Assign values with <code>mapping[key] = value</code>.</li>
+        <li>To check if a key exists, test <code>if (mapping[key])</code>, but be careful, a quantity of <code>0</code> is falsy. For this exercise, quantities are always positive when added.</li>
+        <li><code>map_delete(mapping, key)</code> removes a key-value pair. <code>keys(mapping)</code> returns a string array of all keys.</li>
+        <li><code>sort_array(array, 1)</code> sorts ascending; <code>-1</code> would mean descending.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 5.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 5.2: Monster Bestiary <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-05.02" data-exercise="05.02">
+      <label for="check-05.02">Completed</label>
+    </div>
+    <p class="objective">Build a nested mapping structure, a bestiary of monsters where each entry maps a monster name to an inner mapping of its stats.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Declare a global mapping <code>bestiary</code> and populate it in <code>create()</code> with at least 5 monsters</li>
+        <li>Each entry maps a monster name (string) to an inner mapping with keys:
+          <ul>
+            <li><code>"level"</code> : int</li>
+            <li><code>"race"</code> : string (e.g., "undead", "goblin", "dragon")</li>
+            <li><code>"aggressive"</code> : status (1 or 0)</li>
+          </ul>
+        </li>
+        <li>Implement <code>mapping lookup(string name)</code>:
+          <ul>
+            <li>Return the inner mapping for the given monster, or <code>0</code> if not found</li>
+          </ul>
+        </li>
+        <li>Implement <code>string strongest()</code>:
+          <ul>
+            <li>Iterate over all monsters and return the name of the one with the highest level</li>
+            <li>Return <code>"none"</code> if the bestiary is empty</li>
+          </ul>
+        </li>
+        <li>Implement <code>string *aggressive_list()</code>:
+          <ul>
+            <li>Return a sorted array of names where <code>"aggressive"</code> is <code>1</code></li>
+            <li>Return <code>({})</code> if none exist</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch05_mappings/ex02_bestiary.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Nested mappings look like: <code>(["goblin": (["level": 3, "race": "goblin", "aggressive": 1])])</code></li>
+        <li>Access nested values with: <code>bestiary["goblin"]["level"]</code></li>
+        <li>Use <code>foreach (string name, mapping stats in bestiary)</code> to iterate over all entries.</li>
+        <li>Build up a result array with <code>+=</code> (e.g., <code>result += ({ name })</code>) when filtering, then <code>sort_array()</code> it.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Mappings are everywhere in MUD code: room exits, monster stat blocks, item
+      properties, loot tables. Your capstone dungeon will use mappings to configure
+      rooms, define monster data, and track player progress through the area.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

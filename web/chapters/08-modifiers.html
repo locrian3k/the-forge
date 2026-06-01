@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 8: Modifiers — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 8: Modifiers</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/modifiers.html" target="_blank">
+        Modifiers
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Controlling Access and Behavior</h3>
+    <p>
+      Modifiers are keywords you put before a function or variable to control who can
+      use it and how it behaves. Think of them as permission labels:
+    </p>
+    <table class="type-table">
+      <tr><th>Modifier</th><th>Who can access</th></tr>
+      <tr><td><code>public</code></td><td>Anyone, from anywhere</td></tr>
+      <tr><td><code>protected</code></td><td>This file + child objects</td></tr>
+      <tr><td><code>static</code></td><td>No external <code>call_other()</code>, but children can access</td></tr>
+      <tr><td><code>private</code></td><td>Only this file, not even children</td></tr>
+    </table>
+    <p>
+      Three more modifiers handle special cases:
+    </p>
+    <ul>
+      <li><code>nosave</code>, variable is excluded from save/restore (runtime-only data)</li>
+      <li><code>varargs</code>, function accepts fewer arguments than declared</li>
+      <li><code>nomask</code>, children cannot override this function</li>
+    </ul>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/modifiers.html" target="_blank">Modifiers</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 8.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 8.1: Access Control <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-08.01" data-exercise="08.01">
+      <label for="check-08.01">Completed</label>
+    </div>
+    <p class="objective">Create an object that demonstrates LPC access modifiers and explain why each modifier is appropriate.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Create a <code>public</code> function <code>query_title()</code>, callable from any other object via <code>call_other</code></li>
+        <li>Create a <code>private</code> helper <code>format_name(string name)</code>, only callable internally, not from outside or from children</li>
+        <li>Create a <code>protected</code> function <code>internal_reset()</code>, accessible to children but not external objects</li>
+        <li>Create a <code>static</code> function <code>do_setup()</code>, cannot be called via <code>call_other()</code>, but children can call it</li>
+        <li>Each function must have a comment block explaining why that modifier is appropriate</li>
+        <li><code>create()</code> should call <code>do_setup()</code> to initialize the object</li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch08_modifiers/ex01_access_control.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Think about who needs to call each function: everyone (<code>public</code>), only this file (<code>private</code>), this file and children (<code>protected</code>), or everything except <code>call_other</code> (<code>static</code>).</li>
+        <li><code>private</code> functions cannot be called by children at all. Use <code>protected</code> when children need access.</li>
+        <li><code>static</code> on a function means it cannot be reached via <code>call_other()</code>, but children CAN still call it directly.</li>
+        <li>Understand that <code>format_name</code> is <code>private</code>, meaning external <code>call_other()</code> calls like <code>call_other(obj, "format_name", "test")</code> would be rejected by the driver. Only code inside the same file can call a private function.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 8.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 8.2: Nosave and Varargs <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-08.02" data-exercise="08.02">
+      <label for="check-08.02">Completed</label>
+    </div>
+    <p class="objective">Create an object that demonstrates the nosave, varargs, and nomask modifiers.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Declare <code>nosave int visit_count</code>, increments on each call to <code>do_visit()</code>, resets to 0 on reload</li>
+        <li>Declare a regular <code>string location</code> variable set in <code>create()</code> for contrast</li>
+        <li>Implement <code>varargs string do_announce(string who, string msg, int volume)</code>:
+          <ul>
+            <li>Works with 1, 2, or 3 arguments</li>
+            <li>If <code>msg</code> is not provided, default to <code>"has arrived"</code></li>
+            <li>If <code>volume</code> is not provided, default to <code>1</code></li>
+            <li>Return a formatted announcement string including all three values</li>
+          </ul>
+        </li>
+        <li>Implement <code>nomask string query_id()</code>, returns a fixed identifier that children cannot override</li>
+        <li>Implement <code>int do_visit()</code>, increments and returns <code>visit_count</code></li>
+        <li>Implement <code>int query_visit_count()</code>, returns the current count</li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch08_modifiers/ex02_nosave_varargs.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>nosave</code> goes before the type: <code>nosave int visit_count;</code>. The variable works normally in memory but is excluded from save/restore.</li>
+        <li>For <code>varargs</code>, declare as <code>varargs string do_announce(...)</code>. Check <code>if (!msg)</code> to apply defaults.</li>
+        <li><code>nomask</code> means "cannot be overridden." If a child tries to define the same function, the driver throws a compile error.</li>
+        <li>The <code>nosave</code> modifier means the variable only exists in memory. If the object were destructed and re-cloned, the counter would reset to 0 because <code>nosave</code> variables are not preserved across object lifetimes.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Modifiers protect your code's internal logic. In your capstone area, private helpers
+      will keep implementation details hidden, nosave variables will track runtime state
+      like spawn timers, and varargs will make your utility functions flexible.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

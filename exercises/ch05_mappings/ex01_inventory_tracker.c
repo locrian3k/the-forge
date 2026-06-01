@@ -1,0 +1,37 @@
+/*
+  ex01_inventory_tracker.c
+  Exercise 5.1 — Inventory Tracker
+  Demonstrates basic mapping operations: create, assign, lookup,
+  delete, and key retrieval.
+*/
+#pragma strong_types
+#include "defs.h"
+
+// TODO: Declare a global mapping variable named "inventory"
+
+void create()
+{
+  // TODO: Initialize inventory as an empty mapping: ([])
+
+  return;
+}
+
+// TODO: Implement void add_item(string name, int qty)
+//   If "name" already exists in the mapping, add qty to the existing value.
+//   If "name" does not exist, create a new entry with the given qty.
+//
+//   Hint: Check if (inventory[name]) to see if the key exists,
+//   then either inventory[name] += qty or inventory[name] = qty.
+
+// TODO: Implement void remove_item(string name)
+//   Delete the entry for "name" from the inventory.
+//   Use: map_delete(inventory, name)
+
+// TODO: Implement int query_item(string name)
+//   Return the quantity for "name", or 0 if not found.
+//   Hint: Mappings return 0 for missing keys by default.
+
+// TODO: Implement string *list_items()
+//   Return a sorted array of all item names in the inventory.
+//   Use keys() to get all keys, then sort_array() to sort them.
+//   Example: return sort_array(keys(inventory), 1);

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 11: Code Style — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 11: Code Style</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/coding/codestyle.html" target="_blank">Code Style</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Why Style Matters</h3>
+    <p>
+      Consistent code style is not cosmetic, it is how a team of builders can open
+      any file in a MUD codebase and immediately understand its structure. On 3Kingdoms,
+      every builder follows the same conventions.
+    </p>
+    <h3>The Rules at a Glance</h3>
+    <table class="type-table">
+      <tr><th>Rule</th><th>Example</th></tr>
+      <tr><td>File header comment first</td><td><code>/* file.c / Author YYMMDD / Description */</code></td></tr>
+      <tr><td><code>#pragma strong_types</code> first non-comment line</td><td></td></tr>
+      <tr><td>Spaces only, 2-space indent</td><td>No tabs ever</td></tr>
+      <tr><td>Allman brackets</td><td><code>{</code> on its own line</td></tr>
+      <tr><td><code>status</code> for booleans</td><td>Not <code>int</code></td></tr>
+      <tr><td>Explicit <code>return;</code></td><td>End of every void function</td></tr>
+      <tr><td>lowercase_underscore naming</td><td><code>query_name()</code>, <code>do_attack()</code></td></tr>
+    </table>
+    <p>
+      These exercises give you practice spotting and correcting style violations, a
+      skill you will use every time you write or review LPC code.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/codestyle.html" target="_blank">Code Style</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 11.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 11.1: Style Correction <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-11.1" data-exercise="11.1">
+      <label for="check-11.1">Completed</label>
+    </div>
+    <p class="objective">Identify and fix all codestyle violations in a broken LPC room file.</p>
+
+    <p>The following room file compiles but violates 3K codestyle in many ways.
+      Copy it into your exercise file, then fix every violation you can find.</p>
+
+    <pre><code>#include "defs.h"
+
+inherit "room/room";
+
+int isLit;
+string longDescription;
+
+void create() {
+	set_short("A dusty storeroom");
+	longDescription = "You stand in a cramped storeroom.  Dusty shelves line the walls from floor to ceiling, packed with jars of preserved herbs and bundles of dried mushrooms.  A single lantern flickers on a hook near the low doorway to the north.";
+	set_long(longDescription);
+	isLit = 1;
+	set_exits( ([ "north" : ROOMS + "hallway" ]) );
+	add_item("shelves", "Rough wooden shelves sag under the weight of countless jars and bundles.  They look like they have been here for decades.");
+	add_item("lantern", "A battered brass lantern.  Its flame dances behind a cracked glass pane.");
+}
+
+int query_lit() {
+	return isLit;
+}
+
+void do_extinguish() {
+	if (isLit == 1) {
+		isLit = 0;
+		write("You snuff out the lantern.  The room plunges into darkness.");
+	} else {
+		write("The lantern is already out.");
+	}
+}</code></pre>
+
+    <div class="requirements">
+      <h3>Violations to Fix</h3>
+      <p>There are <strong>9+ violations</strong> hiding in this file:</p>
+      <ol>
+        <li>Missing <code>#pragma strong_types</code> as the very first line</li>
+        <li>Tab characters used for indentation (should be 2-space indent)</li>
+        <li>K&amp;R bracket style (opening <code>{</code> on same line as statement)</li>
+        <li>Missing <code>return;</code> at the end of void functions</li>
+        <li><code>int</code> used where <code>status</code> would be correct (true/false value)</li>
+        <li>camelCase variable names instead of lowercase_underscore</li>
+        <li>Lines exceeding 80 characters</li>
+        <li>Missing <code>::create()</code> call in <code>create()</code></li>
+        <li>Double-spacing between sentences in strings (should be single space)</li>
+      </ol>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch11_codestyle/ex01_style_fix.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Start at the very top of the file. What line must appear before everything else in every 3K <code>.c</code> file?</li>
+        <li>Use your editor's "show whitespace" feature to spot tabs vs spaces. Every indentation level is exactly 2 spaces.</li>
+        <li>Allman bracket style means the opening <code>{</code> goes on its own line, directly below the statement it belongs to. This applies to functions, <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, and every other block.</li>
+        <li>A <code>status</code> variable holds only 1 or 0 (true/false). If a variable is only ever set to 1 or 0 and tested as a boolean, its type should be <code>status</code>, not <code>int</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 11.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 11.2: Reformat from Scratch <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-11.2" data-exercise="11.2">
+      <label for="check-11.2">Completed</label>
+    </div>
+    <p class="objective">Take a fully functional but horribly formatted monster file and reformat it entirely to match 3K codestyle.</p>
+
+    <p>The file below compiles and works correctly on 3K. However, it uses mixed tabs and spaces,
+      inconsistent indentation depths, K&amp;R brackets in some places and random newlines in others,
+      lines well over 80 characters, and has almost no comments. Your job is to make it beautiful.</p>
+
+    <pre><code>#pragma strong_types
+#include "defs.h"
+inherit "obj/monster";
+
+string *battle_cries;int attack_mode;
+
+void create(){
+        ::create();
+        set_name("iron sentinel");
+        set_short("An iron sentinel");
+        set_long("A towering construct of riveted iron plates and grinding gears, the sentinel stands motionless until a threat enters its patrol zone. Sparks crackle between the joints of its massive arms.");
+  set_race("construct");
+        set_level(18);set_hp(400);set_al(-200);
+    set_gender("neuter");
+    set_body_type("human");
+  set_wielding_limbs( ({ "right hand", "left hand" }) );
+        set_damage_type("bludgeon");
+    set_chat_chance(15);
+        set_chat( ({
+                "The sentinel's eyes flare with a dull red glow.",
+"Gears grind and click inside the sentinel's chest.",
+  "The sentinel swivels its head, scanning the area.",
+        "Steam hisses from vents along the sentinel's back.",
+     }) );
+     battle_cries = ({ "INTRUDER DETECTED.", "ENGAGING THREAT PROTOCOL.", "YOU WILL BE NEUTRALIZED." });
+   attack_mode = 0;
+}
+
+void init(){
+  ::init();
+  add_action("do_inspect", "inspect");
+}
+
+int do_inspect(string arg) {
+    if (!arg || arg != "sentinel") return 0;
+    if (attack_mode) {write("The sentinel is in full combat mode.  Its eyes burn bright red and its fists crackle with energy."); }
+else { write("The sentinel stands in patrol mode.  Its eyes glow a dim amber as it watches for intruders."); }
+return 1;
+}
+
+void
+heart_beat()
+{
+  ::heart_beat();
+  if (query_hp() &lt; 200 &amp;&amp; !attack_mode)
+  {
+          attack_mode = 1;
+          set_damage_type("electricity");
+      say("The iron sentinel roars as arcs of electricity surge across its frame!");
+  }
+}
+
+string query_battle_cry(){
+  return battle_cries[random(sizeof(battle_cries))];
+}</code></pre>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Reformat the entire file to strict 3K codestyle</li>
+        <li>Do <strong>not</strong> change any game behavior (same name, level, stats, chats, etc.)</li>
+        <li>Fix all of the following style issues:
+          <ul>
+            <li>Mixed tabs/spaces: convert everything to 2-space indentation</li>
+            <li>Inconsistent indentation depths (4, 8, and random levels used)</li>
+            <li>K&amp;R brackets: convert all to Allman style</li>
+            <li>Lines over 80 characters: wrap long strings and statements</li>
+            <li>Missing comments: add function-level comments and section headers</li>
+            <li><code>int</code> used for boolean <code>attack_mode</code>: should be <code>status</code></li>
+            <li><code>int</code> return type on <code>do_inspect</code>: should be <code>status</code></li>
+            <li><code>void</code> on a separate line from function name in <code>heart_beat</code></li>
+            <li>Multiple statements crammed onto single lines: split them</li>
+            <li>Double-spacing between sentences: convert to single spacing</li>
+            <li>Single-statement <code>if</code>/<code>else</code> should not have brackets</li>
+            <li>Add proper variable declarations section with comments</li>
+            <li>Add proper file structure order (pragma, include, inherit, globals, prototypes, create, init, other functions)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch11_codestyle/ex02_reformat.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Start with the file structure: <code>#pragma</code>, <code>#include</code>, <code>inherit</code>, then global variables with comments, then function prototypes, then functions in standard order (<code>create</code>, <code>init</code>, <code>reset</code>, others).</li>
+        <li>For long strings, break them across multiple lines using LPC string concatenation (adjacent string literals auto-concatenate). Keep each piece under 80 characters total including indentation.</li>
+        <li>Single-statement <code>if</code>/<code>else</code> blocks drop the brackets entirely in 3K style. The single statement just gets indented on the next line.</li>
+        <li>The <code>attack_mode</code> variable is only ever 0 or 1, so it is a <code>status</code> type. Similarly <code>do_inspect</code> returns only 0 or 1, so its return type should be <code>status</code>.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 2: Atmosphere</h3>
+    <p>
+      Every file you write for your capstone dungeon area must follow 3K codestyle.
+      The habits you build in these exercises, Allman brackets, 2-space indentation,
+      <code>status</code> types, proper file structure, will be expected in every room,
+      monster, and object you create from here on out.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

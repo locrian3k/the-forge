@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 6: Functions — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 6: Functions</h1>
+    <p class="primer-link">
+      Primer:
+      <a href="https://3k.org/resources/primer/coding/functions.html" target="_blank">
+        Functions
+      </a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Making Objects Do Things</h3>
+    <p>
+      Variables store data. Functions act on it. Every function declares a return type,
+      a name, and zero or more typed parameters:
+    </p>
+<pre><code>string query_name()          // takes nothing, returns text
+void set_level(int lvl)      // takes a number, returns nothing
+int do_add(int a, int b)     // takes two numbers, returns one</code></pre>
+    <p>
+      Void functions return nothing but must still end with <code>return;</code> per
+      3K codestyle.
+    </p>
+    <h3>Cross-Object Communication</h3>
+    <p>
+      The <code>-&gt;</code> operator calls a function on another object. This is how
+      the entire MUD works, objects talking to other objects:
+    </p>
+<pre><code>player->query_name()      // ask the player their name
+monster->add_hp(-10)      // damage the monster
+TP->query_level()         // check command-giver's level</code></pre>
+    <p>
+      If you remember only one thing about LPC: <strong>find the right object, call the
+      right function on it.</strong>
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/coding/functions.html" target="_blank">Functions</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 6.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 6.1: Function Basics <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-06.01" data-exercise="06.01">
+      <label for="check-06.01">Completed</label>
+    </div>
+    <p class="objective">Practice writing functions with different return types and calling one function from within another.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Implement <code>void do_greet()</code>: uses <code>write()</code> to display a greeting message. Must end with <code>return;</code></li>
+        <li>Implement <code>int do_add(int a, int b)</code>: returns the sum of <code>a</code> and <code>b</code></li>
+        <li>Implement <code>string query_title()</code>: returns a title string of your choice</li>
+        <li>Implement <code>string do_combo(int a, int b)</code>: calls <code>do_add(a, b)</code> and <code>query_title()</code>, then returns a combined string like <code>"Apprentice of the Forge reports: 3 + 5 = 8"</code></li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch06_functions/ex01_function_basics.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Every function must declare its return type before the name. <code>void</code> means it returns nothing, but still needs <code>return;</code> at the end.</li>
+        <li>Use <code>write("text\n")</code> inside <code>do_greet()</code> to output to the player.</li>
+        <li>To convert an int to a string for concatenation, use <code>"" + num</code>.</li>
+        <li><code>do_combo</code> demonstrates composition, calling your own functions from within another function.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 6.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 6.2: Cross-Object Calls <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-06.02" data-exercise="06.02">
+      <label for="check-06.02">Completed</label>
+    </div>
+    <p class="objective">Write two separate objects that communicate with each other using cross-object function calls.</p>
+    <div class="requirements">
+      <h3>Object 1: <code>scoreboard.c</code></h3>
+      <ul>
+        <li>Declare a global mapping <code>kills</code> initialized as <code>([])</code></li>
+        <li>Implement <code>void add_kill(string name)</code>: increment count for <code>name</code>, or set to 1 if new</li>
+        <li>Implement <code>int query_kills(string name)</code>: return the kill count, or 0 if not found</li>
+      </ul>
+      <h3>Object 2: <code>reporter.c</code></h3>
+      <ul>
+        <li>In <code>create()</code>, get a reference to the scoreboard using <code>find_object()</code>/<code>load_object()</code></li>
+        <li>Call <code>scoreboard-&gt;add_kill("test")</code> to register a kill</li>
+        <li>Call <code>scoreboard-&gt;query_kills("test")</code> and store the result</li>
+        <li>Implement <code>int query_result()</code> to return the stored result</li>
+      </ul>
+    </div>
+    <p>Files to create: <span class="file-path">exercises/ch06_functions/ex02_scoreboard.c</span> and <span class="file-path">exercises/ch06_functions/ex02_reporter.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>find_object(path)</code> returns the object at <code>path</code> if loaded, or <code>0</code> if not. <code>load_object(path)</code> forces it to load. Common pattern: <code>ob = find_object(path) || load_object(path);</code></li>
+        <li>The <code>-&gt;</code> operator calls a function on another object: <code>other_object-&gt;function_name(args)</code>.</li>
+        <li>Make sure the path in the reporter matches where the scoreboard file actually lives.</li>
+        <li>Store the result in a global variable so <code>query_result()</code> can return it later.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 6.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 6.3: Recursive Power <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-06.03" data-exercise="06.03">
+      <label for="check-06.03">Completed</label>
+    </div>
+    <p class="objective">Implement classic recursive algorithms in LPC.</p>
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Declare <strong>function prototypes</strong> before <code>create()</code> for both functions</li>
+        <li>Implement <code>int factorial(int n)</code>:
+          <ul>
+            <li>Base case: if <code>n &lt;= 1</code>, return <code>1</code></li>
+            <li>Recursive case: return <code>n * factorial(n - 1)</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>int fibonacci(int n)</code>:
+          <ul>
+            <li>Base case: if <code>n &lt;= 0</code>, return <code>0</code></li>
+            <li>Base case: if <code>n == 1</code>, return <code>1</code></li>
+            <li>Recursive case: return <code>fibonacci(n - 1) + fibonacci(n - 2)</code></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <p>File to create: <span class="file-path">exercises/ch06_functions/ex03_recursion.c</span></p>
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Function prototypes look like the signature followed by a semicolon: <code>int factorial(int n);</code>, placed before <code>create()</code>.</li>
+        <li>Recursion needs a base case to stop. Without it, you get infinite recursion and the driver kills your object.</li>
+        <li><code>factorial(5)</code> should return <code>120</code>. <code>fibonacci(6)</code> should return <code>8</code>.</li>
+        <li>LPC integers are 32-bit, so <code>factorial(12) = 479001600</code> works but <code>factorial(13)</code> overflows.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
+    <p>
+      Cross-object calls are the lifeblood of MUD programming. Your dungeon rooms will
+      call functions on monsters, monsters will call functions on players, and your area
+      header will coordinate everything. Mastering function calls now pays off in every
+      later chapter.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 20: Dungeon Rooms — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 20: Dungeon Rooms</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/room.html" target="_blank">Rooms</a>
+    </p>
+  </header>
+
+  <div class="extension-banner">
+    <strong>3K Extension.</strong> This chapter covers the dungeon room system specific to
+    3Kingdoms. Skip it if your MUD does not have <code>/room/dungeon/dr.c</code>.
+  </div>
+
+  <div class="concept-recap">
+    <h3>Standard Rooms vs Dungeon Rooms</h3>
+    <p>
+      In Chapter 13 you built rooms using <code>/room/room</code>. The dungeon room
+      layer, <code>/room/dungeon/dr.c</code>, extends that base with automatic level
+      scaling. Monsters spawned inside a dungeon room have their stats adjusted to
+      match the dungeon's configured level, so one monster file can serve areas of
+      different difficulty.
+    </p>
+    <p>
+      The key function is <code>set_dungeon(name, level, scale_hp, scale_damage, scale_exp)</code>:
+    </p>
+    <table class="type-table">
+      <tr><th>Parameter</th><th>Type</th><th>Purpose</th></tr>
+      <tr><td><code>name</code></td><td>string</td><td>Dungeon display name, shown in the area header</td></tr>
+      <tr><td><code>level</code></td><td>int</td><td>Base difficulty level for monster scaling</td></tr>
+      <tr><td><code>scale_hp</code></td><td>int</td><td>1 to scale monster hit points, 0 to leave raw</td></tr>
+      <tr><td><code>scale_damage</code></td><td>int</td><td>1 to scale monster damage, 0 to leave raw</td></tr>
+      <tr><td><code>scale_exp</code></td><td>int</td><td>1 to scale monster experience, 0 to leave raw</td></tr>
+    </table>
+    <p>
+      Dungeon rooms also provide the <code>add_clone()</code> helper, which clones an
+      object into the room and handles respawn bookkeeping automatically. This is more
+      convenient than the manual <code>present()</code> + <code>clone_object()</code>
+      pattern used in standard rooms.
+    </p>
+    <p>
+      <strong>When to use dungeon rooms:</strong> Use <code>/room/dungeon/dr.c</code>
+      when you want automatic level scaling for monsters and the convenience of
+      <code>add_clone()</code>. Use <code>/room/room</code> for entrance rooms, outdoor
+      areas, or any room that does not need scaling.
+    </p>
+  </div>
+
+  <!-- Exercise 20.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 20.1: Your First Dungeon Room <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-20.1" data-exercise="20.1">
+      <label for="check-20.1">Completed</label>
+    </div>
+    <p class="objective">Create a basic dungeon room using /room/dungeon/dr.c with level scaling.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/dungeon/dr.c</code></li>
+        <li>Call <code>::create()</code> at the start of your <code>create()</code> function</li>
+        <li>Call <code>set_dungeon("Training Dungeon", 5, 1, 1, 1)</code> to enable level 5 scaling with all three flags on</li>
+        <li>Set room lighting with <code>set_light(1)</code></li>
+        <li>Set a short description with <code>set_short()</code></li>
+        <li>Set a long description with <code>set_long()</code> (at least two sentences)</li>
+        <li>Add one exit using <code>add_exit(path, direction)</code></li>
+        <li>Add at least 1 <code>add_item()</code> call for scenery</li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch20_dungeon_rooms/ex01_dungeon_room.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>Dungeon rooms use <code>inherit "room/dungeon/dr.c";</code> instead of <code>/room/room</code>. All the standard room functions (exits, items, searching) are still available.</li>
+        <li><code>set_dungeon()</code> must be called in <code>create()</code> after <code>::create()</code>. The first argument is the dungeon name displayed in the area header. The second is the base level that controls monster scaling.</li>
+        <li>The three scaling flags (hp, damage, exp) are usually all set to 1. Setting one to 0 means that stat will not be adjusted by the dungeon level.</li>
+        <li>Other than <code>set_dungeon()</code>, everything else works exactly the same as a standard room from Chapter 13.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 20.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 20.2: Spawning with add_clone() <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-20.2" data-exercise="20.2">
+      <label for="check-20.2">Completed</label>
+    </div>
+    <p class="objective">Create a dungeon room that uses add_clone() to spawn objects or monsters.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/room/dungeon/dr.c</code></li>
+        <li>Call <code>set_dungeon()</code> with a dungeon name and level of your choice</li>
+        <li>Set up standard room properties (light, short, long, at least 1 exit, at least 1 item)</li>
+        <li>Use <code>add_clone(path)</code> in <code>create()</code> to spawn at least one monster into the room</li>
+        <li>Define a <code>reset()</code> that:
+          <ul>
+            <li>Calls <code>::reset()</code></li>
+            <li>Uses <code>add_clone()</code> to respawn the monster</li>
+          </ul>
+        </li>
+        <li>Create a simple monster file (inherit <code>/obj/monster</code>) for the spawned creature</li>
+      </ul>
+    </div>
+
+    <p>File to create:
+      <span class="file-path">exercises/ch20_dungeon_rooms/ex02_dungeon_features.c</span>
+    </p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>add_clone(path)</code> is a dungeon room function that clones an object and moves it into the room. It handles duplicate checking internally, so if the monster already exists, it will not create another.</li>
+        <li>The path argument should be the full MUD file path without the <code>.c</code> extension. On 3K, wizard files live under <code>/players/yourname/</code>, so the path would look like <code>add_clone(MY_PATH + "mon/cave_rat")</code> using a define from your <code>defs.h</code>. For this exercise, use any placeholder path that shows you understand the pattern.</li>
+        <li><code>reset()</code> is called periodically by the driver (roughly every 30-45 minutes). Calling <code>add_clone()</code> in <code>reset()</code> ensures monsters respawn after being killed.</li>
+        <li>Always call <code>::reset()</code> first. The parent class uses it for internal dungeon bookkeeping.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 20.3 -->
+  <section class="exercise" id="ex03">
+    <h2>Exercise 20.3: Standard vs Dungeon Room <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-20.3" data-exercise="20.3">
+      <label for="check-20.3">Completed</label>
+    </div>
+    <p class="objective">Build the same room twice, once with /room/room and once with /room/dungeon/dr.c, to see what the dungeon layer adds.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <p>Create <strong>two room files</strong> with the same theme and layout:</p>
+      <ul>
+        <li><strong><code>ex03_standard.c</code></strong>, Standard version:
+          <ul>
+            <li>Inherit from <code>/room/room</code></li>
+            <li>Set light, short, and long descriptions</li>
+            <li>Add at least 2 <code>add_item()</code> calls and 1 exit</li>
+            <li>In <code>reset()</code>, use the <code>present()</code> + <code>clone_object()</code> + <code>move_object()</code> pattern to spawn a monster</li>
+          </ul>
+        </li>
+        <li><strong><code>ex03_dungeon.c</code></strong>, Dungeon version:
+          <ul>
+            <li>Inherit from <code>/room/dungeon/dr.c</code></li>
+            <li>Call <code>set_dungeon()</code> with a name and level</li>
+            <li>Use the same descriptions, items, and exit as the standard version</li>
+            <li>In <code>reset()</code>, use <code>add_clone()</code> to spawn the same monster</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Both rooms should spawn the same monster file. The dungeon version automatically scales the monster's HP, damage, and experience based on the level you set in <code>set_dungeon()</code>, while the standard version uses the monster's raw stats unchanged. Compare the two files to see how little extra code the dungeon layer requires.</p>
+    </div>
+
+    <p>Files to create:
+      <span class="file-path">exercises/ch20_dungeon_rooms/ex03_standard.c</span><br>
+      <span class="file-path">exercises/ch20_dungeon_rooms/ex03_dungeon.c</span>
+    </p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The standard room uses the manual spawn pattern: <code>if (!present("monster_id")) { object ob = clone_object(path); move_object(ob, TO); }</code>. The dungeon room uses: <code>add_clone(path);</code>.</li>
+        <li>In the dungeon version, the room's <code>set_dungeon()</code> level automatically adjusts the monster's HP, damage, and experience. A level-10 dungeon room makes the same monster significantly tougher than a level-3 room, even though the monster file is identical.</li>
+        <li>Keep the descriptions identical between the two rooms so the only difference is the inherit and spawning mechanism. This makes the comparison clear.</li>
+        <li>The monster file itself does not need to know whether it lives in a standard or dungeon room. The dungeon scaling is applied automatically by the room.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Next Step: Dungeon Integration</h3>
+    <p>
+      Now that you understand individual dungeon rooms, <a href="21-dungeon-integration.html">Chapter 21</a>
+      shows how to combine them into a complete dungeon area with a base room, entrance,
+      and respawning monsters.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

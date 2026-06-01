@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 16: Armor — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="01-intro.html">1. Introduction</a>
+  <a href="02-types.html">2. Types</a>
+  <a href="03-variables.html">3. Variables</a>
+  <a href="04-operators.html">4. Operators</a>
+  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="06-functions.html">6. Functions</a>
+  <a href="07-control.html">7. Control Structures</a>
+  <a href="08-modifiers.html">8. Modifiers</a>
+  <a href="09-preprocessor.html">9. Preprocessor</a>
+  <a href="10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="11-codestyle.html">11. Codestyle</a>
+  <a href="12-driver-functions.html">12. Driver Functions</a>
+  <a href="13-rooms.html">13. Rooms</a>
+  <a href="14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="15-weapons.html">15. Weapons</a>
+  <a href="16-armor.html">16. Armor</a>
+  <a href="17-monsters.html">17. Monsters</a>
+  <a href="18-putting-together.html">18. Putting It Together</a>
+  <a href="19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+</nav>
+
+<main id="main-content">
+  <header>
+    <h1>Chapter 16: Armor</h1>
+    <p class="primer-link">
+      Read the primer:
+      <a href="https://3k.org/resources/primer/examples/armor.html" target="_blank">Armor</a>
+    </p>
+  </header>
+
+  <div class="concept-recap">
+    <h3>Damage Reduction Across 10 Types</h3>
+    <p>
+      Armor reduces incoming damage. On 3Kingdoms, the armor class
+      (<code>set_ac()</code>) is a <strong>10-element array</strong> matching the game's
+      damage types:
+    </p>
+<pre><code>({ edged, blunt, fire, ice, acid, electric, mind, energy, poison, radiation })</code></pre>
+    <p>
+      Each piece occupies a body slot determined by its type: helmet, shield, cloak,
+      glove, boot, armour (body), pants, belt, amulet, or ring. Note 3K uses the
+      British spelling: <code>/obj/armour</code>.
+    </p>
+    <p>
+      Advanced armor can use <strong>wear and remove hooks</strong>, callback functions
+      that fire when a player equips or unequips the item. These let you enforce level
+      requirements, display thematic messages, or toggle effects.
+    </p>
+    <p>
+      Read the
+      <a href="https://3k.org/resources/primer/examples/armor.html" target="_blank">Armor</a>
+      chapter of the primer before starting.
+    </p>
+  </div>
+
+  <!-- Exercise 16.1 -->
+  <section class="exercise" id="ex01">
+    <h2>Exercise 16.1: Basic Armor <span class="tier apprentice">Apprentice</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-16.1" data-exercise="16.1">
+      <label for="check-16.1">Completed</label>
+    </div>
+    <p class="objective">Create a piece of armor that players can wear for protection.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/armour</code> (note: British spelling with a <code>u</code>)</li>
+        <li>Call <code>::create()</code> at the start of your <code>create()</code> function</li>
+        <li>Set the creator with <code>set_creator("mimic")</code></li>
+        <li>Set the internal name with <code>set_name()</code> (lowercase)</li>
+        <li>Set aliases with <code>set_alias()</code> using an array of at least 3 entries</li>
+        <li>Set short and long descriptions (long description at least two sentences)</li>
+        <li>Set the armor type with <code>set_type()</code>, must be one of: <code>"helmet"</code>, <code>"shield"</code>, <code>"cloak"</code>, <code>"glove"</code>, <code>"boot"</code>, <code>"armour"</code>, <code>"pants"</code>, <code>"belt"</code>, <code>"amulet"</code>, <code>"ring"</code></li>
+        <li>Set the armor class with <code>set_ac()</code> using a 10-element array: <code>({edged, blunt, fire, ice, acid, elec, mind, energy, poison, rad})</code>, each value typically 0-5</li>
+        <li>Set weight with <code>set_weight()</code> (typically 1-4)</li>
+        <li>Set gold value with <code>set_value()</code></li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch16_armor/ex01_basic_armor.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li>The inherit path is <code>/obj/armour</code> with a <code>u</code>. This is a common source of errors, if you spell it "armor" the compiler will not find the file.</li>
+        <li><code>set_type()</code> determines which body slot the armor occupies. A player can only wear one item per slot. A hat is a <code>"helmet"</code>, a cape is a <code>"cloak"</code>, etc.</li>
+        <li><code>set_ac()</code> takes 10 integers: edged, blunt, fire, ice, acid, electric, mind, energy, poison, radiation. A steel helmet might have <code>({2,3,1,1,0,0,0,0,0,0})</code>.</li>
+        <li>You do not need an <code>init()</code> function for basic armor. The wear/remove commands are handled automatically by the base class.</li>
+      </ol>
+    </details>
+  </section>
+
+  <!-- Exercise 16.2 -->
+  <section class="exercise" id="ex02">
+    <h2>Exercise 16.2: Wear/Remove Hooks <span class="tier journeyman">Journeyman</span></h2>
+    <div class="progress-check">
+      <input type="checkbox" id="check-16.2" data-exercise="16.2">
+      <label for="check-16.2">Completed</label>
+    </div>
+    <p class="objective">Create a piece of armor with custom wear and remove hooks.</p>
+
+    <div class="requirements">
+      <h3>Requirements</h3>
+      <ul>
+        <li>Inherit from <code>/obj/armour</code></li>
+        <li>Set up standard armor properties: <code>set_creator</code>, <code>set_name</code>, <code>set_alias</code>, <code>set_short</code>, <code>set_long</code>, <code>set_type</code>, <code>set_ac</code>, <code>set_weight</code>, <code>set_value</code></li>
+        <li>Register wear/remove hooks in <code>create()</code>:
+          <ul>
+            <li><code>set_wear_func(TO)</code>, calls <code>do_wear()</code> when worn</li>
+            <li><code>set_remove_func(TO)</code>, calls <code>do_remove()</code> when removed</li>
+          </ul>
+        </li>
+        <li>Implement <code>status do_wear()</code>:
+          <ul>
+            <li>Check a condition (e.g. player level >= 10 using <code>(int)TP-&gt;query_level()</code>)</li>
+            <li>If the condition fails: call <code>notify_fail()</code> with an explanatory message and return <code>0</code></li>
+            <li>If the condition passes: use <code>write()</code> to show a thematic wear message and return <code>1</code></li>
+          </ul>
+        </li>
+        <li>Implement <code>status do_remove()</code>:
+          <ul>
+            <li>Use <code>write()</code> to show a thematic remove message</li>
+            <li>Return <code>1</code> (always allow removal)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>File to create: <span class="file-path">exercises/ch16_armor/ex02_wear_hooks.c</span></p>
+
+    <details class="hints">
+      <summary>Hints (click to reveal)</summary>
+      <ol>
+        <li><code>set_wear_func(TO)</code> registers this object as the handler for wear events. The driver will call <code>do_wear()</code> (no arguments) whenever a player tries to wear this armor. Return <code>1</code> to allow, <code>0</code> to deny.</li>
+        <li><code>notify_fail()</code> sets a failure message shown to the player when you return <code>0</code>. Always call it before returning <code>0</code> so the player knows why.</li>
+        <li><code>(int)TP-&gt;query_level()</code> returns the current player's level. The cast <code>(int)</code> is required by <code>#pragma strong_types</code>.</li>
+        <li><code>set_remove_func(TO)</code> works the same way but calls <code>do_remove()</code>. You almost always return <code>1</code> from remove hooks.</li>
+      </ol>
+    </details>
+  </section>
+
+  <div class="capstone-callout">
+    <h3>Capstone Connection — Phase 3: Combat</h3>
+    <p>
+      Armor drops give players a reason to explore your dungeon thoroughly. Use basic
+      armor for common monster drops and the wear hook system for special pieces that
+      require earning. A level-gated armor piece from a mini-boss makes for a satisfying
+      mid-dungeon reward.
+    </p>
+  </div>
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>
