@@ -68,7 +68,14 @@
       <li><strong>Division by zero</strong>, <code>10 / 0</code> will crash your object.
         Always check the divisor before dividing.</li>
       <li><strong>Integer division</strong>, <code>7 / 2</code> gives <code>3</code>,
-        not <code>3.5</code>. LPC truncates; there is no rounding.</li>
+        not <code>3.5</code>. LPC truncates toward zero; there is no rounding.
+        This matters in game math: if a boss has 100 HP and you calculate
+        <code>heal = max_hp / 3</code>, the result is <code>33</code>, not
+        <code>33.33</code> — that missing fraction adds up over repeated
+        calculations. Use the modulo operator (<code>%</code>) to catch
+        remainders when precision matters, or multiply first to preserve
+        accuracy: <code>hp * 75 / 100</code> is more precise than
+        <code>hp * 3 / 4</code> for small values.</li>
     </ul>
     <h3>Bitwise Operators: Packing Flags</h3>
     <p>
