@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Armor Creation &mdash; Quick Reference &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>Armor Creation &mdash; Quick Reference</h1>
+
+  <h2>Basic Armor</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit "obj/armour";
+
+void create()
+{
+  ::create();
+  set_creator("mimic");
+  set_name("chainmail");
+  set_alias(({"mail", "chain mail", "armor"}));
+  set_short("A suit of chainmail");
+  set_long("Interlocking iron rings form this sturdy armor.");
+  set_weight(5);
+  set_value(200);
+  set_ac(({ 0, 0, 0, 0, 8, 0, 0, 0, 0, 0 }));
+  set_type("body armour");
+  return;
+}</code></pre>
+
+  <h2>Core Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>set_ac(arr)</code></td><td>Armor class (10-element array)</td><td><code>set_ac(({0,0,0,0,8,0,0,0,0,0}))</code></td></tr>
+    <tr><td><code>set_type(str)</code></td><td>Armor slot type</td><td><code>set_type("helmet")</code></td></tr>
+    <tr><td><code>set_wear_func(str)</code></td><td>Wear callback name</td><td><code>set_wear_func("do_wear")</code></td></tr>
+    <tr><td><code>set_remove_func(str)</code></td><td>Remove callback name</td><td><code>set_remove_func("do_remove")</code></td></tr>
+  </table>
+
+  <h2>AC Array (10 Elements)</h2>
+
+  <p>The AC array provides protection against different damage types:</p>
+
+  <pre><code>set_ac(({
+  0,   // [0] slash
+  0,   // [1] pierce
+  0,   // [2] bludgeon
+  0,   // [3] unused
+  8,   // [4] general AC (most common to set)
+  0,   // [5] magic
+  0,   // [6] fire
+  0,   // [7] cold
+  0,   // [8] electric
+  0,   // [9] poison/acid
+}));</code></pre>
+
+  <p>For simple armor, set element [4] (general AC). For specialized armor, set specific resistances.</p>
+
+  <pre><code>// Simple: just general AC
+set_ac(({ 0, 0, 0, 0, 5, 0, 0, 0, 0, 0 }));
+
+// Fire-resistant armor
+set_ac(({ 0, 0, 0, 0, 5, 0, 4, 0, 0, 0 }));
+
+// Magic-resistant cloak
+set_ac(({ 0, 0, 0, 0, 2, 6, 0, 0, 0, 0 }));</code></pre>
+
+  <h2>Armor Types</h2>
+
+  <table class="type-table">
+    <tr><th>Type</th><th>Slot</th><th>Example</th></tr>
+    <tr><td><code>"body armour"</code></td><td>Torso</td><td>Chainmail, plate, robe</td></tr>
+    <tr><td><code>"helmet"</code></td><td>Head</td><td>Helm, crown, hood</td></tr>
+    <tr><td><code>"glove"</code></td><td>Hands</td><td>Gauntlets, gloves</td></tr>
+    <tr><td><code>"boot"</code></td><td>Feet</td><td>Boots, sandals</td></tr>
+    <tr><td><code>"cloak"</code></td><td>Back</td><td>Cloak, cape</td></tr>
+    <tr><td><code>"shield"</code></td><td>Off-hand</td><td>Buckler, tower shield</td></tr>
+    <tr><td><code>"ring"</code></td><td>Finger</td><td>Ring of protection</td></tr>
+    <tr><td><code>"amulet"</code></td><td>Neck</td><td>Amulet, necklace</td></tr>
+  </table>
+
+  <p>Only one item per slot. Shields conflict with two-handed weapons.</p>
+
+  <h2>Wear / Remove Functions</h2>
+
+  <pre><code>status do_wear()
+{
+  if ((int)TP-&gt;query_level() &lt; 5)
+  {
+    write("You lack the skill to wear this armor.\n");
+    return 0;  // prevent wearing
+  }
+  write("The chainmail settles over your shoulders.\n");
+  return 1;    // allow wearing
+}
+
+status do_remove()
+{
+  write("You remove the chainmail with a rattle of rings.\n");
+  return 1;    // allow removing
+  // return 0 to prevent removal (cursed armor!)
+}</code></pre>
+
+  <h3>Cursed Armor Example</h3>
+
+  <pre><code>status do_remove()
+{
+  write("The armor tightens around you! It won't come off!\n");
+  return 0;  // cannot remove
+}</code></pre>
+
+  <h2>Full Example with Effects</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit "obj/armour";
+
+void create()
+{
+  ::create();
+  set_creator("mimic");
+  set_name("frost helm");
+  set_alias(({"helm", "helmet", "frost helmet"}));
+  set_short("A frost-rimed helmet");
+  set_long(
+    "Ice crystals coat this steel helmet, radiating a "
+    "supernatural chill."
+  );
+  set_weight(2);
+  set_value(350);
+  set_ac(({ 0, 0, 0, 0, 4, 0, 0, 3, 0, 0 }));
+  set_type("helmet");
+  set_wear_func("do_wear");
+  set_remove_func("do_remove");
+  return;
+}
+
+status do_wear()
+{
+  write("A biting cold seeps into your skull as you don the helm.\n");
+  say((string)TP-&gt;query_name() + " puts on a frost-rimed helmet.\n");
+  return 1;
+}
+
+status do_remove()
+{
+  write("Warmth floods back as you remove the helm.\n");
+  return 1;
+}</code></pre>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

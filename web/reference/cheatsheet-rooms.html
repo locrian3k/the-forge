@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Creation &mdash; Quick Reference &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>Room Creation &mdash; Quick Reference</h1>
+
+  <h2>Basic Room</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit "room/room";
+
+void create()
+{
+  ::create();
+  set_short("A dusty corridor");
+  set_long(
+    "A narrow stone corridor stretches before you, dust motes "
+    "drifting lazily in the dim light. Cobwebs cling to the "
+    "corners of the low ceiling."
+  );
+  set_light(1);
+  add_exit("north", ROOMS + "rm2");
+  add_exit("south", ROOMS + "rm1");
+  return;
+}</code></pre>
+
+  <h2>Dungeon Room</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit DROOM;
+
+void create()
+{
+  ::create();
+  set_short("A goblin den");
+  set_long("A filthy den where goblins gather.");
+  set_light(1);
+  set_dungeon(DNAME, 8, 1, 1, 1);
+  // args: name, level, scale_hp, scale_damage, scale_exp
+  add_exit("east", ROOMS + "rm3");
+  return;
+}</code></pre>
+
+  <h2>Core Room Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>set_short(str)</code></td><td>One-line room name</td><td><code>set_short("A dark cave")</code></td></tr>
+    <tr><td><code>set_long(str)</code></td><td>Full description</td><td><code>set_long("Detailed text...")</code></td></tr>
+    <tr><td><code>set_light(n)</code></td><td>Light level (0=dark, 1=lit)</td><td><code>set_light(1)</code></td></tr>
+    <tr><td><code>add_exit(dir, path)</code></td><td>Add an exit</td><td><code>add_exit("north", ROOMS+"rm2")</code></td></tr>
+    <tr><td><code>set_dungeon(name, lvl, h, d, x)</code></td><td>Dungeon scaling</td><td><code>set_dungeon(DNAME, 8, 1, 1, 1)</code></td></tr>
+  </table>
+
+  <h2>Items (Examinable Details)</h2>
+
+  <pre><code>add_item("cobwebs",
+  "Thick cobwebs stretch between the pillars, suggesting "
+  "nothing has disturbed this place in years."
+);
+add_item(({"walls", "stone walls"}),
+  "The walls are rough-hewn granite, slick with moisture."
+);</code></pre>
+
+  <p>Array of aliases lets multiple words show the same description.</p>
+
+  <h2>Search Items</h2>
+
+  <pre><code>add_search_item("rubble", 1,
+  "You search through the rubble and find a glinting gem!",
+  0,  // search function (0 for none)
+  OBJ + "gem"  // object to clone on success
+);</code></pre>
+
+  <p>Args: id, searches_allowed, success_message, search_func, clone_path</p>
+
+  <h2>Read Items</h2>
+
+  <pre><code>add_read("sign",
+  "The sign reads: 'Beware! Goblins beyond this point.'"
+);</code></pre>
+
+  <p>Player uses <code>read sign</code> to see the text.</p>
+
+  <h2>Spawning Monsters</h2>
+
+  <pre><code>void reset()
+{
+  ::reset();
+  add_clone(MON + "goblin");      // one goblin
+  add_clone(MON + "goblin", 3);   // up to 3 goblins
+  return;
+}</code></pre>
+
+  <p><code>add_clone</code> only spawns if the room has fewer than the specified count.</p>
+
+  <p class="note"><strong>Note:</strong> Common macros like <code>TP</code>, <code>TO</code>, <code>ETO</code>, <code>ROOMS</code>, <code>MON</code>, <code>OBJ</code> are defined in <code>defs.h</code> -- see the Preprocessor cheatsheet for the full list.</p>
+
+  <h2>Interactive Features (add_action)</h2>
+
+  <pre><code>void init()
+{
+  ::init();
+  add_action("do_pull", "pull");
+  return;
+}
+
+status do_pull(string arg)
+{
+  if (arg != "lever")
+    return 0;
+  write("You pull the lever. A hidden door opens!\n");
+  say((string)TP-&gt;query_name() + " pulls a lever.\n");
+  // do something
+  return 1;
+}</code></pre>
+
+  <h2>Exits with Conditions</h2>
+
+  <pre><code>add_exit("north", ROOMS + "rm_secret", 0, "check_access");
+
+status check_access()
+{
+  if (!present("gold_key", TP))
+  {
+    write("The door is locked. You need a key.\n");
+    return 1;  // 1 = blocked
+  }
+  return 0;  // 0 = allowed
+}</code></pre>
+
+  <h2>Common Patterns</h2>
+
+  <pre><code>// Room with everything
+void create()
+{
+  ::create();
+  set_short("A forge room");
+  set_long("A blazing forge dominates the room.");
+  set_light(1);
+  set_dungeon(DNAME, 8, 1, 1, 1);
+  add_item("forge", "The forge burns with intense heat.");
+  add_item("anvil", "A heavy iron anvil sits near the forge.");
+  add_exit("south", ROOMS + "rm1");
+  add_exit("east", ROOMS + "rm3");
+  return;
+}
+
+void init()
+{
+  ::init();
+  add_action("do_forge", "forge");
+  return;
+}
+
+void reset()
+{
+  ::reset();
+  add_clone(MON + "blacksmith");
+  return;
+}</code></pre>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

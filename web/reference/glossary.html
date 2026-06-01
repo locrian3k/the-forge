@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPC / MUD Glossary &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>LPC / MUD Glossary</h1>
+
+  <h2>Object Model</h2>
+
+  <p><strong>Blueprint</strong> -- The master copy of an object loaded from a <code>.c</code> file. There is only one blueprint per file. You get it with <code>find_object()</code> or <code>load_object()</code>.</p>
+
+  <p><strong>Clone</strong> -- A copy of a blueprint created with <code>clone_object()</code>. Each clone is independent. Weapons, armor, monsters are clones. Rooms are usually blueprints.</p>
+
+  <p><strong>Living</strong> -- Any object that has been set as a "living" thing (monsters, players). Can engage in combat, have HP, carry inventory. Test with <code>living(ob)</code>.</p>
+
+  <p><strong>Non-living</strong> -- Objects that are not living: weapons, armor, treasures, rooms. They exist but do not fight or act autonomously.</p>
+
+  <p><strong>Environment</strong> -- The object that contains another object. A player's environment is the room they are in. A sword's environment is the player carrying it. Get with <code>environment(ob)</code>.</p>
+
+  <p><strong>Inventory</strong> -- The objects contained within an object. A room's inventory includes players and items on the ground. A player's inventory is everything they carry. Get with <code>all_inventory(ob)</code>.</p>
+
+  <p><strong>this_object()</strong> -- The object that is executing the current code. Abbreviated <code>TO</code> in 3K defines.</p>
+
+  <p><strong>this_player()</strong> -- The player who triggered the current action chain. Abbreviated <code>TP</code> in 3K defines.</p>
+
+  <h2>Function Types</h2>
+
+  <p><strong>efun</strong> (external function) -- Built into the driver. Available everywhere. Examples: <code>write()</code>, <code>clone_object()</code>, <code>tell_room()</code>, <code>random()</code>.</p>
+
+  <p><strong>lfun</strong> (local function) -- Defined in your <code>.c</code> file. Only directly callable within that object (or via <code>-&gt;</code> / <code>call_other</code> from outside).</p>
+
+  <p><strong>sefun</strong> (simulated efun) -- Defined in the mudlib but available everywhere like an efun. Examples: <code>capitalize()</code>, various utility functions.</p>
+
+  <p><strong>apply</strong> -- A function the driver calls on objects at specific times. You define them; the driver invokes them. Examples: <code>create()</code>, <code>init()</code>, <code>reset()</code>, <code>heart_beat()</code>.</p>
+
+  <h2>Architecture</h2>
+
+  <p><strong>Driver</strong> -- The C program (LDMud) that runs the MUD. Handles networking, memory, compiling LPC, calling applies, scheduling.</p>
+
+  <p><strong>Mudlib</strong> -- The LPC code library that defines how the MUD world works. Includes base objects, rooms, combat system, commands.</p>
+
+  <p><strong>Realm</strong> -- A builder's assigned area within the MUD. Contains rooms, objects, monsters that form a thematic zone.</p>
+
+  <p><strong>Daemon</strong> -- A persistent object that provides services (login daemon, combat daemon, mail daemon). Usually a blueprint, not cloned.</p>
+
+  <h2>Combat Terms</h2>
+
+  <p><strong>WC</strong> (Weapon Class) -- A weapon's damage rating. Set with <code>set_class()</code>. Higher = more damage.</p>
+
+  <p><strong>AC</strong> (Armor Class) -- An armor's protection rating. Set with <code>set_ac()</code>. Higher = more protection.</p>
+
+  <p><strong>HP</strong> (Hit Points) -- Health. When a living reaches 0 HP, it dies.</p>
+
+  <p><strong>SP</strong> (Spell Points) -- Mana/magic energy used to cast spells.</p>
+
+  <p><strong>GP</strong> (Guild Points) -- Energy used for guild-specific abilities.</p>
+
+  <h2>Object Properties</h2>
+
+  <p><strong>Short description</strong> -- One-line text shown in room listings and inventory. Set with <code>set_short()</code>.</p>
+
+  <p><strong>Long description</strong> -- Full text shown when a player examines something. Set with <code>set_long()</code>.</p>
+
+  <p><strong>Name</strong> -- The primary identifier used by <code>id()</code> checks. Set with <code>set_name()</code>.</p>
+
+  <p><strong>Alias</strong> -- Additional names an object responds to. Set with <code>set_alias()</code>.</p>
+
+  <p><strong>Value</strong> -- Gold coin worth for selling. Set with <code>set_value()</code>.</p>
+
+  <p><strong>Weight</strong> -- Encumbrance units. Set with <code>set_weight()</code>.</p>
+
+  <h2>Room Terms</h2>
+
+  <p><strong>Exit</strong> -- A connection from one room to another. Added with <code>add_exit()</code>.</p>
+
+  <p><strong>Item</strong> -- An examinable detail in a room or object description (not a physical object). Added with <code>add_item()</code>.</p>
+
+  <p><strong>Light level</strong> -- Whether a room is visible. 0 = dark (cannot see), 1+ = lit.</p>
+
+  <h2>MUD Concepts</h2>
+
+  <p><strong>Heartbeat</strong> -- A periodic function call (~2 seconds) on objects with <code>set_heart_beat(1)</code>. Used for ongoing effects.</p>
+
+  <p><strong>Reset</strong> -- A periodic function call (~60 minutes) by the driver. Used to respawn monsters, restock items.</p>
+
+  <p><strong>call_out</strong> -- A one-shot delayed function call. Like <code>setTimeout</code> in JavaScript.</p>
+
+  <p><strong>Alignment</strong> -- A numeric value from negative (evil) to positive (good). Affects interactions, guilds, some game mechanics.</p>
+
+  <p><strong>Aggressive</strong> -- A monster with <code>set_aggressive(1)</code> attacks players on sight when they enter the room.</p>
+
+  <p><strong>Dungeon</strong> -- A scaled area where monster stats adjust to a target level. Set up with <code>set_dungeon()</code>.</p>
+
+  <h2>Data Types</h2>
+
+  <p><strong>Mapping</strong> -- LPC's associative array / dictionary. Created with <code>([ key: value ])</code>.</p>
+
+  <p><strong>Pointer/Array</strong> -- Ordered list. Created with <code>({ element, element })</code>. Called "pointer" in some driver docs.</p>
+
+  <p><strong>Closure</strong> -- A function reference that can be stored in a variable and called later. Created with <code>#'func</code> or <code>(: expression :)</code>.</p>
+
+  <p><strong>Mixed</strong> -- A variable that can hold any type. Use when the type is not known at compile time.</p>
+
+  <p><strong>Status</strong> -- A boolean type (0 or 1). Preferred over <code>int</code> for true/false values in 3K style.</p>
+
+  <h2>File Conventions</h2>
+
+  <p><strong>defs.h</strong> -- Header file with <code>#define</code> macros for paths and shortcuts. Each area has its own, chaining up to the global one.</p>
+
+  <p><strong>create()</strong> -- Called once when an object is first loaded or cloned. Setup goes here.</p>
+
+  <p><strong>init()</strong> -- Called when a living enters an object's environment. <code>add_action</code> calls go here.</p>
+
+  <p><strong>reset()</strong> -- Called periodically by the driver. Monster respawning and item restocking go here.</p>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

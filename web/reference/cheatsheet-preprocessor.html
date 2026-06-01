@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPC Preprocessor — Quick Reference — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>LPC Preprocessor — Quick Reference</h1>
+
+  <h2>#pragma strong_types</h2>
+
+  <p>Must be the first <strong>non-comment</strong> line of every <code>.c</code> file (after the file header comment):</p>
+
+  <pre><code>#pragma strong_types</code></pre>
+
+  <p>Enables compile-time type checking. Required by 3K codestyle.</p>
+
+  <h2>#include</h2>
+
+  <pre><code>#include "defs.h"          // local include (relative to file)
+#include &lt;std.h&gt;           // system include (from mudlib include path)
+#include "../../defs.h"    // for files in subdirectories</code></pre>
+
+  <p>Use quotes for project headers, angle brackets for system headers.</p>
+
+  <h2>#define — Simple Constants</h2>
+
+  <pre><code>#define MAX_HP       1000
+#define DUNGEON_NAME "Goblin Caves"
+#define ROOM_PATH    (AREAS + "horde/rooms/")</code></pre>
+
+  <p>Convention: UPPERCASE names for defines.</p>
+
+  <h2>#define — Macros</h2>
+
+  <pre><code>#define TP    this_player()
+#define TO    this_object()
+#define ETO   environment(this_object())
+
+#define MAX(a, b)  ((a) &gt; (b) ? (a) : (b))
+#define MIN(a, b)  ((a) &lt; (b) ? (a) : (b))</code></pre>
+
+  <p><strong>Always parenthesize</strong> macro parameters and the whole expression.</p>
+
+  <p class="note"><strong>Tip:</strong> <code>TPQN</code> (This Player Query Name) is a handy macro common on many MUDs but not included in the standard 3K <code>defs.h</code>. We recommend defining it yourself:</p>
+
+  <pre><code>#define TPQN ((string)this_player()-&gt;query_name())</code></pre>
+
+  <p>This gives you a clean shorthand for the player's name in messages.</p>
+
+  <h2>#define — Multi-line</h2>
+
+  <pre><code>#define LONG_DESC \
+  "This is a very long " \
+  "description that spans " \
+  "multiple lines."</code></pre>
+
+  <p>Use <code>\</code> at end of line to continue.</p>
+
+  <h2>Conditional Compilation</h2>
+
+  <h3>#ifdef / #ifndef</h3>
+
+  <pre><code>#ifdef DEBUG
+  write("Debug mode active.\n");
+#endif
+
+#ifndef DEFS_H
+#define DEFS_H
+  // header content
+#endif</code></pre>
+
+  <h3>#if / #elif / #else</h3>
+
+  <pre><code>#if MAX_LEVEL &gt; 100
+  // high-level config
+#elif MAX_LEVEL &gt; 50
+  // mid-level config
+#else
+  // low-level config
+#endif</code></pre>
+
+  <h2>Include Guard Pattern</h2>
+
+  <p>Prevents double-inclusion of headers:</p>
+
+  <pre><code>// In defs.h:
+#ifndef __MYAREA_DEFS_H__
+#define __MYAREA_DEFS_H__
+
+#include "../../defs.h"
+
+#define DNAME   "My Area"
+#define ROOMS   (AREAS + "myarea/rooms/")
+#define OBJ     (AREAS + "myarea/obj/")
+#define MON     (AREAS + "myarea/mon/")
+
+#endif</code></pre>
+
+  <h2>#undef</h2>
+
+  <pre><code>#undef MAX_HP
+#define MAX_HP 2000</code></pre>
+
+  <p>Remove a previous definition before redefining.</p>
+
+  <h2>Typical defs.h Chain</h2>
+
+  <pre><code>include/defs.h         , global defines (AREAS, TP, TO, etc.)
+  areas/myarea/defs.h  , area defines (ROOMS, OBJ, MON, DNAME)
+    areas/myarea/rooms/rm1.c , #include "../defs.h"
+    areas/myarea/obj/sword.c , #include "../defs.h"
+    areas/myarea/obj/sub/x.c , #include "../../defs.h"</code></pre>
+
+  <h2>Gotchas</h2>
+
+  <ul>
+    <li><code>#pragma strong_types</code> must be the first non-comment line (file header comment comes first).</li>
+    <li>No semicolons after <code>#define</code> values (they become part of the value).</li>
+    <li>Macro arguments are text substitution, not evaluated. Always use parens.</li>
+    <li>Subdirectory files need extra <code>../</code> in include paths.</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

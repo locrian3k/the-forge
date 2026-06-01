@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Functions (efuns) &mdash; Quick Reference &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>Driver Functions (efuns) &mdash; Quick Reference</h1>
+
+  <h2>String Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>explode(str, del)</code></td><td>Split string into array</td><td><code>explode("a:b:c", ":") // ({"a","b","c"})</code></td></tr>
+    <tr><td><code>implode(arr, del)</code></td><td>Join array into string</td><td><code>implode(({"a","b"}), ", ") // "a, b"</code></td></tr>
+    <tr><td><code>sprintf(fmt, ...)</code></td><td>Formatted string</td><td><code>sprintf("%-20s %d", name, level)</code></td></tr>
+    <tr><td><code>sscanf(str, fmt, ...)</code></td><td>Parse string into vars</td><td><code>sscanf("hp:100", "%s:%d", key, val)</code></td></tr>
+    <tr><td><code>replace_string(str, old, new)</code></td><td>Replace all occurrences</td><td><code>replace_string(s, " ", "_")</code></td></tr>
+    <tr><td><code>capitalize(str)</code></td><td>Uppercase first char</td><td><code>capitalize("bob") // "Bob"</code></td></tr>
+    <tr><td><code>lower_case(str)</code></td><td>Lowercase entire string</td><td><code>lower_case("BOB") // "bob"</code></td></tr>
+    <tr><td><code>strlen(str)</code></td><td>String length</td><td><code>if (strlen(name) &gt; 20)</code></td></tr>
+    <tr><td><code>str[i..j]</code></td><td>Substring (inclusive)</td><td><code>"hello"[0..2] // "hel"</code></td></tr>
+  </table>
+
+  <h3>sprintf Format Codes</h3>
+
+  <table class="type-table">
+    <tr><th>Code</th><th>Type</th><th>Example</th></tr>
+    <tr><td><code>%d</code></td><td>integer</td><td><code>sprintf("%d", 42)</code></td></tr>
+    <tr><td><code>%s</code></td><td>string</td><td><code>sprintf("%s", name)</code></td></tr>
+    <tr><td><code>%O</code></td><td>any (debug)</td><td><code>sprintf("%O", mapping)</code></td></tr>
+    <tr><td><code>%-20s</code></td><td>left-align, width 20</td><td>Column formatting</td></tr>
+    <tr><td><code>%:3d</code></td><td>zero-padded, width 3</td><td><code>sprintf("%:3d", 5) // "005"</code></td></tr>
+  </table>
+
+  <h2>Array Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>sizeof(arr)</code></td><td>Number of elements</td><td><code>if (sizeof(arr) &gt; 0)</code></td></tr>
+    <tr><td><code>member(arr, val)</code></td><td>Index of val (-1 if missing)</td><td><code>member(({1,2,3}), 2) // 1</code></td></tr>
+    <tr><td><code>sort_array(arr, dir)</code></td><td>Sort (1=asc, -1=desc)</td><td><code>sort_array(arr, 1)</code></td></tr>
+    <tr><td><code>filter(arr, func)</code></td><td>Keep matching elements</td><td><code>filter(arr, #'stringp)</code></td></tr>
+    <tr><td><code>map(arr, func)</code></td><td>Transform each element</td><td><code>map(arr, #'capitalize)</code></td></tr>
+    <tr><td><code>unique_array(arr, func)</code></td><td>Group by function result</td><td><code>unique_array(obs, #'query_race)</code></td></tr>
+  </table>
+
+  <h2>Mapping Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>m_delete(map, key)</code></td><td>Remove key, return map</td><td><code>m = m_delete(m, "old")</code></td></tr>
+    <tr><td><code>m_indices(map)</code></td><td>Array of all keys</td><td><code>string *keys = m_indices(m)</code></td></tr>
+    <tr><td><code>m_values(map)</code></td><td>Array of all values</td><td><code>mixed *vals = m_values(m)</code></td></tr>
+    <tr><td><code>mkmapping(keys, vals)</code></td><td>Build from two arrays</td><td><code>mapping m = mkmapping(k, v)</code></td></tr>
+    <tr><td><code>member(map, key)</code></td><td>1 if key exists</td><td><code>if (member(m, "hp"))</code></td></tr>
+    <tr><td><code>sizeof(map)</code></td><td>Number of entries</td><td><code>int count = sizeof(m)</code></td></tr>
+  </table>
+
+  <h2>Object Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>clone_object(path)</code></td><td>Create a clone</td><td><code>object ob = clone_object(MON + "goblin")</code></td></tr>
+    <tr><td><code>destruct(ob)</code></td><td>Destroy an object</td><td><code>destruct(this_object())</code></td></tr>
+    <tr><td><code>find_object(path)</code></td><td>Find loaded object</td><td><code>object ob = find_object("/obj/weapon")</code></td></tr>
+    <tr><td><code>load_object(path)</code></td><td>Load (don't clone)</td><td><code>load_object("/room/start")</code></td></tr>
+    <tr><td><code>present(id, ob)</code></td><td>Find by id in inventory</td><td><code>present("sword", TP)</code></td></tr>
+    <tr><td><code>all_inventory(ob)</code></td><td>Array of contents</td><td><code>object *inv = all_inventory(TP)</code></td></tr>
+    <tr><td><code>environment(ob)</code></td><td>Container of ob</td><td><code>object room = environment(TP)</code></td></tr>
+    <tr><td><code>move_object(dest)</code></td><td>Move this_object</td><td><code>move_object(room)</code></td></tr>
+    <tr><td><code>this_player()</code></td><td>Current acting player</td><td><code>object tp = this_player()</code></td></tr>
+    <tr><td><code>this_object()</code></td><td>Current object</td><td><code>object to = this_object()</code></td></tr>
+  </table>
+
+  <h2>Math Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>random(n)</code></td><td>Random 0 to n-1</td><td><code>int roll = random(6) + 1</code></td></tr>
+    <tr><td><code>abs(n)</code></td><td>Absolute value</td><td><code>int dist = abs(x - y)</code></td></tr>
+  </table>
+
+  <h2>Time Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>time()</code></td><td>Seconds since epoch</td><td><code>int now = time()</code></td></tr>
+    <tr><td><code>ctime(t)</code></td><td>Human-readable time</td><td><code>string s = ctime(time())</code></td></tr>
+  </table>
+
+  <h2>File Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>read_file(path)</code></td><td>Read file contents</td><td><code>string data = read_file(path)</code></td></tr>
+    <tr><td><code>write_file(path, str)</code></td><td>Append to file</td><td><code>write_file(log, msg)</code></td></tr>
+  </table>
+
+  <h2>Output Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Target</th></tr>
+    <tr><td><code>write(str)</code></td><td>Message to this_player</td><td>Current player only</td></tr>
+    <tr><td><code>say(str)</code></td><td>Message to room except TP</td><td>Everyone else in room</td></tr>
+    <tr><td><code>tell_object(ob, str)</code></td><td>Message to specific object</td><td>One object</td></tr>
+    <tr><td><code>tell_room(room, str)</code></td><td>Message to entire room</td><td>Everyone in room</td></tr>
+    <tr><td><code>tell_room(room, str, exclude)</code></td><td>Room except excluded</td><td>Room minus array</td></tr>
+  </table>
+
+  <pre><code>write("You swing your sword!\n");
+say((string)TP-&gt;query_name() + " swings a sword!\n");
+tell_room(ETO, "A loud boom echoes!\n");
+tell_room(ETO, "You dodge!\n", ({ TP }));</code></pre>
+
+  <h2>Delayed Execution</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>call_out(func, delay, args...)</code></td><td>Call func after delay secs</td><td><code>call_out("do_explode", 3)</code></td></tr>
+    <tr><td><code>remove_call_out(func)</code></td><td>Cancel pending call_out</td><td><code>remove_call_out("do_explode")</code></td></tr>
+    <tr><td><code>find_call_out(func)</code></td><td>Time remaining (-1 if none)</td><td><code>if (find_call_out("tick") == -1)</code></td></tr>
+    <tr><td><code>set_heart_beat(flag)</code></td><td>Enable/disable heartbeat</td><td><code>set_heart_beat(1)</code></td></tr>
+  </table>
+
+  <p>Heart beat fires every 2 seconds when enabled. Use <code>heart_beat()</code> apply.</p>
+
+  <p class="note"><strong>Note:</strong> Common macros like <code>TP</code>, <code>TO</code>, and <code>ETO</code> are defined in <code>defs.h</code> -- see the Preprocessor cheatsheet for the full list.</p>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

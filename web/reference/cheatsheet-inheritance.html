@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPC Inheritance — Quick Reference — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>LPC Inheritance — Quick Reference</h1>
+
+  <h2>Basic Inherit</h2>
+
+  <pre><code>#pragma strong_types
+#include "defs.h"
+
+inherit "obj/weapon";
+
+void create()
+{
+  ::create();
+  set_name("sword");
+  return;
+}</code></pre>
+
+  <h2>:: Operator (Call Parent)</h2>
+
+  <pre><code>void create()
+{
+  ::create();          // call the inherited create()
+  // your setup here
+  return;
+}
+
+void init()
+{
+  ::init();            // always call parent init
+  add_action("do_pull", "pull");
+  return;
+}</code></pre>
+
+  <h2>Multiple Inheritance</h2>
+
+  <pre><code>inherit "std/object";
+inherit "std/container";
+
+void create()
+{
+  "/std/object"::create();
+  "/std/container"::create();
+  return;
+}</code></pre>
+
+  <p>When multiple parents define the same function, specify which to call with <code>"path"::func()</code>.</p>
+
+  <h2>Overriding Functions</h2>
+
+  <pre><code>inherit "obj/monster";
+
+// Override the parent's monster_died
+void monster_died()
+{
+  // custom death behavior
+  tell_room(ETO, "The beast explodes!\n");
+  ::monster_died();  // optionally call parent version
+  return;
+}</code></pre>
+
+  <h2>nomask — Prevent Override</h2>
+
+  <pre><code>// In parent:
+nomask int query_level() { return level; }
+
+// In child: COMPILE ERROR if you try to override</code></pre>
+
+  <h2>virtual Inheritance</h2>
+
+  <p>Solves the diamond problem, ensures only one copy of a shared ancestor:</p>
+
+  <pre><code>virtual inherit "std/base";</code></pre>
+
+  <pre><code>    /std/base
+    /       \
+  /obj/a   /obj/b     &lt;-- both virtual inherit /std/base
+    \       /
+    my_object          &lt;-- only ONE copy of /std/base</code></pre>
+
+  <h2>Common Inheritance Paths</h2>
+
+  <table class="type-table">
+    <tr>
+      <th>Object type</th>
+      <th>Inherit from</th>
+    </tr>
+    <tr>
+      <td>Room</td>
+      <td><code>/room/room</code></td>
+    </tr>
+    <tr>
+      <td>Dungeon room</td>
+      <td><code>/room/dungeon/dr</code></td>
+    </tr>
+    <tr>
+      <td>Weapon</td>
+      <td><code>/obj/weapon</code></td>
+    </tr>
+    <tr>
+      <td>Super weapon</td>
+      <td><code>/obj/super_weapon</code></td>
+    </tr>
+    <tr>
+      <td>Armor</td>
+      <td><code>/obj/armour</code></td>
+    </tr>
+    <tr>
+      <td>Monster</td>
+      <td><code>/obj/monster</code></td>
+    </tr>
+    <tr>
+      <td>Complex monster</td>
+      <td><code>/obj/complex_monster</code></td>
+    </tr>
+    <tr>
+      <td>Super monster</td>
+      <td><code>/obj/super_monster</code></td>
+    </tr>
+    <tr>
+      <td>Generic object</td>
+      <td><code>/obj/object</code></td>
+    </tr>
+    <tr>
+      <td>Treasure</td>
+      <td><code>/obj/treasure</code></td>
+    </tr>
+  </table>
+
+  <h2>Checking Inheritance</h2>
+
+  <pre><code>// From outside
+if (ob-&gt;id("weapon"))
+  write("It's a weapon.\n");
+
+// Check if an object inherits a specific file
+if (inherits("/obj/weapon", ob))
+  write("It inherits weapon.\n");</code></pre>
+
+  <h2>Gotchas</h2>
+
+  <ul>
+    <li>Always call <code>::create()</code> first in your <code>create()</code>.</li>
+    <li>Always call <code>::init()</code> first in your <code>init()</code>.</li>
+    <li>If you forget <code>::create()</code>, the parent's setup never runs.</li>
+    <li><code>private</code> functions in the parent cannot be called with <code>::</code>.</li>
+    <li><code>protected</code> functions can be called with <code>::</code> from children.</li>
+    <li>Multiple inheritance with conflicting function names requires explicit <code>"path"::func()</code> calls.</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

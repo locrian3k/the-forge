@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPC Functions — Quick Reference — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>LPC Functions — Quick Reference</h1>
+
+  <h2>Declaration Syntax</h2>
+
+  <pre><code>return_type function_name(param_type param, ...)
+{
+  // body
+  return value;
+}</code></pre>
+
+  <pre><code>int add(int a, int b)
+{
+  return a + b;
+}
+
+void greet(string name)
+{
+  write("Hello, " + name + "!\n");
+  return;
+}</code></pre>
+
+  <h2>Void Functions</h2>
+
+  <p>Always end with explicit <code>return;</code> (3K codestyle rule).</p>
+
+  <pre><code>void do_something()
+{
+  write("Done.\n");
+  return;
+}</code></pre>
+
+  <h2>Short Query/Set Functions</h2>
+
+  <p>Simple one-liners stay on one line:</p>
+
+  <pre><code>int query_level() { return level; }
+void set_level(int x) { level = x; return; }
+string query_name() { return name; }</code></pre>
+
+  <h2>Prototypes</h2>
+
+  <p>Declare before use if defined later in the file:</p>
+
+  <pre><code>void helper_func(string arg);  // prototype
+
+void create()
+{
+  helper_func("test");
+  return;
+}
+
+void helper_func(string arg)
+{
+  write(arg + "\n");
+  return;
+}</code></pre>
+
+  <h2>Varargs</h2>
+
+  <pre><code>varargs void announce(string msg, int loud)
+{
+  if (loud)
+    write("!!! " + msg + " !!!\n");
+  else
+    write(msg + "\n");
+  return;
+}
+
+announce("hello");       // loud defaults to 0
+announce("hello", 1);    // loud = 1</code></pre>
+
+  <h2>Calling Patterns</h2>
+
+  <h3>Direct call (same object)</h3>
+
+  <pre><code>int result = my_function(arg1, arg2);</code></pre>
+
+  <h3>Arrow operator (other object)</h3>
+
+  <pre><code>string name = (string)ob-&gt;query_name();
+ob-&gt;take_damage(50);</code></pre>
+
+  <h3>call_other (dynamic)</h3>
+
+  <pre><code>mixed result = call_other(ob, "query_name");
+call_other(ob, "take_damage", 50);</code></pre>
+
+  <h3>this_object() calls</h3>
+
+  <pre><code>this_object()-&gt;query_name();  // call on self via external interface</code></pre>
+
+  <h2>Object Lifecycle Functions</h2>
+
+  <table class="type-table">
+    <tr>
+      <th>Function</th>
+      <th>When called</th>
+    </tr>
+    <tr>
+      <td><code>create()</code></td>
+      <td>When object is first loaded/cloned</td>
+    </tr>
+    <tr>
+      <td><code>init()</code></td>
+      <td>When a living enters the environment</td>
+    </tr>
+    <tr>
+      <td><code>reset()</code></td>
+      <td>Periodically by the driver (~60 min)</td>
+    </tr>
+  </table>
+
+  <pre><code>void create()
+{
+  ::create();  // call parent's create
+  // setup code
+  return;
+}
+
+void init()
+{
+  ::init();
+  add_action("do_pull", "pull");
+  return;
+}
+
+void reset()
+{
+  ::reset();
+  // respawn/refresh logic
+  return;
+}</code></pre>
+
+  <h2>Common Return Patterns</h2>
+
+  <pre><code>// Boolean success/failure
+status do_action(string arg)
+{
+  if (!arg)
+    return 0;  // failure: let driver try other actions
+  // do stuff
+  return 1;    // success: action handled
+}
+
+// Return 1 from init actions to claim the verb
+// Return 0 to let other objects try</code></pre>
+
+  <h2>apply vs efun vs lfun vs sefun</h2>
+
+  <ul>
+    <li><strong>efun</strong>: driver-provided (write, clone_object, tell_room)</li>
+    <li><strong>lfun</strong>: locally defined in the current object</li>
+    <li><strong>sefun</strong>: simulated efun, available everywhere like an efun</li>
+    <li><strong>apply</strong>: driver calls these on objects (create, init, reset, heart_beat)</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

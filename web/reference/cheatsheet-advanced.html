@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Patterns &mdash; Quick Reference &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>Advanced Patterns &mdash; Quick Reference</h1>
+
+  <h2>heart_beat</h2>
+
+  <p>Fires every 2 seconds when enabled. Use for continuous effects.</p>
+
+  <pre><code>// Enable
+set_heart_beat(1);
+
+// Disable
+set_heart_beat(0);
+
+// The apply, defined in your object
+void heart_beat()
+{
+  // Check if room is empty (optimization)
+  if (!sizeof(filter(all_inventory(ETO), #'interactive)))
+  {
+    set_heart_beat(0);
+    return;
+  }
+
+  // Do periodic work
+  do_periodic_thing();
+  return;
+}</code></pre>
+
+  <h3>Re-enable on player entry</h3>
+
+  <pre><code>void init()
+{
+  ::init();
+  if (interactive(this_player()))
+    set_heart_beat(1);
+  return;
+}</code></pre>
+
+  <h2>call_out</h2>
+
+  <p>Schedule a function call after a delay (in seconds).</p>
+
+  <pre><code>// Basic usage
+call_out("do_explode", 5);           // call do_explode in 5 seconds
+call_out("say_msg", 3, "Hello!\n");  // with argument
+
+void do_explode()
+{
+  tell_room(ETO, "BOOM! The barrel explodes!\n");
+  return;
+}</code></pre>
+
+  <h3>Prevent duplicate call_outs</h3>
+
+  <pre><code>void start_timer()
+{
+  if (find_call_out("tick") == -1)  // -1 means no pending call
+    call_out("tick", 10);
+  return;
+}</code></pre>
+
+  <h3>Cancel a call_out</h3>
+
+  <pre><code>remove_call_out("do_explode");  // cancel pending call</code></pre>
+
+  <h3>Repeating call_out</h3>
+
+  <pre><code>void tick()
+{
+  // do work
+  do_thing();
+
+  // schedule next tick
+  call_out("tick", 10);
+  return;
+}</code></pre>
+
+  <h3>Cleanup on destruct</h3>
+
+  <pre><code>void remove()
+{
+  remove_call_out("tick");
+  remove_call_out("do_explode");
+  ::remove();
+  return;
+}</code></pre>
+
+  <h2>add_action Pattern</h2>
+
+  <p>Register custom commands when a living enters the room/picks up the object.</p>
+
+  <pre><code>void init()
+{
+  ::init();
+  add_action("do_push", "push");
+  add_action("do_search", "search");
+  return;
+}
+
+status do_push(string arg)
+{
+  if (arg != "button")
+    return 0;  // not our command, let others try
+  write("You push the button.\n");
+  say((string)TP-&gt;query_name() + " pushes a button.\n");
+  return 1;    // handled
+}</code></pre>
+
+  <p><strong>Key rules:</strong></p>
+  <ul>
+    <li>Return <code>1</code> = command handled, stop searching.</li>
+    <li>Return <code>0</code> = not handled, driver tries other objects.</li>
+    <li>Always check <code>arg</code> before acting.</li>
+  </ul>
+
+  <h2>Closures</h2>
+
+  <p>Closures are function references. Two syntaxes:</p>
+
+  <h3>#' syntax (efun/lfun references)</h3>
+
+  <pre><code>// Reference to an efun
+closure cl = #'write;
+
+// Use with filter/map
+string *names = filter(names, #'stringp);
+string *upper = map(names, #'capitalize);
+
+// Sort with comparison
+int *sorted = sort_array(nums, #'&gt;);</code></pre>
+
+  <h3>(: :) syntax (inline closures)</h3>
+
+  <pre><code>// Inline closure with $1, $2 for arguments
+string *long_names = filter(names, (: strlen($1) &gt; 5 :));
+
+// With local variable capture
+int min_level = 10;
+object *strong = filter(monsters,
+  (: (int)$1-&gt;query_level() &gt;= min_level :)
+);
+
+// In sort_array
+sort_array(players,
+  (: (int)$1-&gt;query_level() - (int)$2-&gt;query_level() :)
+);</code></pre>
+
+  <h3>funcall / apply</h3>
+
+  <pre><code>closure cl = #'write;
+funcall(cl, "Hello!\n");     // call the closure
+
+closure add = (: $1 + $2 :);
+int result = funcall(add, 3, 4);  // result = 7</code></pre>
+
+  <h2>Lambda (Rare)</h2>
+
+  <pre><code>// Lambda creates closures at runtime, rarely needed
+closure cl = lambda(({'x, 'y}), ({#'+, 'x, 'y}));
+int result = funcall(cl, 3, 4);  // 7</code></pre>
+
+  <p>Prefer <code>(: :)</code> syntax over lambda in almost all cases.</p>
+
+  <h2>Common Combined Patterns</h2>
+
+  <h3>Delayed room message sequence</h3>
+
+  <pre><code>void begin_sequence()
+{
+  tell_room(ETO, "The ground begins to shake...\n");
+  call_out("step_two", 3);
+  return;
+}
+
+void step_two()
+{
+  tell_room(ETO, "Rocks tumble from the ceiling!\n");
+  call_out("step_three", 2);
+  return;
+}
+
+void step_three()
+{
+  tell_room(ETO, "A passage opens in the north wall!\n");
+  // add a new exit or change room state
+  return;
+}</code></pre>
+
+  <h3>Timed puzzle with heart_beat</h3>
+
+  <pre><code>nosave int timer;
+
+void start_puzzle()
+{
+  timer = 30;
+  set_heart_beat(1);
+  return;
+}
+
+void heart_beat()
+{
+  timer -= 2;  // heart_beat fires every 2 seconds
+  if (timer &lt;= 0)
+  {
+    tell_room(this_object(), "Time's up! The door slams shut.\n");
+    set_heart_beat(0);
+  }
+  else if (timer == 10)
+    tell_room(this_object(), "You hear a ticking sound speeding up.\n");
+  return;
+}</code></pre>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

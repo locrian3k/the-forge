@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3K Codestyle — Quick Reference — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>3K Codestyle — Quick Reference</h1>
+
+  <h2>File Structure Order</h2>
+
+  <ol>
+    <li>File header comment: <code>/* filename.c / Author YYMMDD / Description */</code></li>
+    <li><code>#pragma strong_types</code> (first non-comment line)</li>
+    <li><code>#include "defs.h"</code></li>
+    <li><code>#define</code> macros</li>
+    <li><code>inherit</code> statements</li>
+    <li>Global variables</li>
+    <li>Function prototypes</li>
+    <li><code>create()</code></li>
+    <li><code>init()</code></li>
+    <li><code>reset()</code></li>
+    <li>Other functions</li>
+  </ol>
+
+  <h2>Braces — Allman Style</h2>
+
+  <p>Opening brace on its OWN line:</p>
+
+  <pre><code>void create()
+{
+  ::create();
+  return;
+}
+
+if (x &gt; 5)
+{
+  do_thing();
+  do_other();
+}</code></pre>
+
+  <p><strong>Never</strong> same-line braces: <s><code>void create() {</code></s></p>
+
+  <h2>Indentation</h2>
+
+  <ul>
+    <li><strong>Spaces only</strong>, no tabs</li>
+    <li><strong>2-space</strong> indent levels</li>
+  </ul>
+
+  <h2>Single-Statement if/else</h2>
+
+  <p>No braces for single statements:</p>
+
+  <pre><code>if (x &gt; 5)
+  do_thing();
+else
+  do_other();</code></pre>
+
+  <h2>Void Functions</h2>
+
+  <p>Always end with explicit <code>return;</code>:</p>
+
+  <pre><code>void setup()
+{
+  set_name("thing");
+  return;
+}</code></pre>
+
+  <h2>Short Functions</h2>
+
+  <p>Simple query/set on one line:</p>
+
+  <pre><code>int query_level() { return level; }
+void set_level(int x) { level = x; return; }</code></pre>
+
+  <h2>status Type</h2>
+
+  <p>Use <code>status</code> for true/false values, not <code>int</code>:</p>
+
+  <pre><code>status is_active = 1;
+status do_action(string arg)
+{
+  if (!arg)
+    return 0;
+  return 1;
+}</code></pre>
+
+  <h2>Naming Conventions</h2>
+
+  <ul>
+    <li><strong>Lowercase with underscores</strong>: <code>my_variable</code>, <code>do_action</code></li>
+    <li><strong>Function prefixes</strong>: <code>query_</code>, <code>set_</code>, <code>clear_</code>, <code>reset_</code>, <code>do_</code></li>
+    <li><strong>UPPERCASE</strong> for <code>#define</code> macros: <code>MAX_HP</code>, <code>ROOM_PATH</code></li>
+  </ul>
+
+  <h2>Variables</h2>
+
+  <ul>
+    <li>List by type, alphabetically</li>
+    <li>Pointers after standard vars</li>
+    <li>Remove unused declarations</li>
+  </ul>
+
+  <pre><code>int count;
+int level;
+string name;
+int *scores;
+string *names;</code></pre>
+
+  <h2>Lines</h2>
+
+  <ul>
+    <li>Under 80 characters when possible</li>
+    <li>Strings over 40-50 chars: wrap to player's COLS setting</li>
+    <li>Single spacing between sentences in strings</li>
+  </ul>
+
+  <h2>Comments</h2>
+
+  <ul>
+    <li>Comment your code thoroughly</li>
+    <li>Use <code>//</code> for single-line, <code>/* */</code> for multi-line</li>
+  </ul>
+
+  <h2>Function Type</h2>
+
+  <p>Type on same line as function name:</p>
+
+  <pre><code>void create()     // correct</code></pre>
+
+  <p>Not split across lines: <s><code>void\ncreate()</code></s></p>
+
+  <h2>Screenreader</h2>
+
+  <p>Check SCREENREADER property; skip decorative/ASCII art strings:</p>
+
+  <pre><code>if (!(int)TP-&gt;query_property("SCREENREADER"))
+  write(ascii_art_string);</code></pre>
+
+  <h2>Quick Checklist</h2>
+
+  <ul>
+    <li>File header comment block first?</li>
+    <li><code>#pragma strong_types</code> as first non-comment line?</li>
+    <li>Allman braces (own line)?</li>
+    <li>2-space indent, no tabs?</li>
+    <li>Void functions end with <code>return;</code>?</li>
+    <li><code>status</code> for booleans?</li>
+    <li>No braces on single-statement if/else?</li>
+    <li>Variables declared by type, alphabetically?</li>
+    <li>No unused variables?</li>
+    <li>Lines under 80 chars?</li>
+    <li>Functions follow naming conventions?</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

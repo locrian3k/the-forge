@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LPC Mappings — Quick Reference — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>LPC Mappings — Quick Reference</h1>
+
+  <h2>Creating Mappings</h2>
+
+  <pre><code>// Empty mapping
+mapping m = ([]);
+
+// With values
+mapping stats = ([
+  "strength": 18,
+  "dexterity": 14,
+  "wisdom": 10,
+]);
+
+// From parallel arrays
+string *keys = ({ "a", "b", "c" });
+int *vals = ({ 1, 2, 3 });
+mapping m = mkmapping(keys, vals);</code></pre>
+
+  <h2>Accessing Values</h2>
+
+  <pre><code>int str = stats["strength"];        // returns 18
+stats["charisma"] = 12;             // add/set a key
+int missing = stats["nonexist"];    // returns 0 (not an error)</code></pre>
+
+  <h2>Key Functions</h2>
+
+  <table class="type-table">
+    <tr>
+      <th>Function</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td><code>m_indices(m)</code></td>
+      <td>All keys as array</td>
+      <td><code>string *k = m_indices(m);</code></td>
+    </tr>
+    <tr>
+      <td><code>m_values(m)</code></td>
+      <td>All values as array</td>
+      <td><code>mixed *v = m_values(m);</code></td>
+    </tr>
+    <tr>
+      <td><code>sizeof(m)</code></td>
+      <td>Number of key-value pairs</td>
+      <td><code>if (sizeof(m) &gt; 0)</code></td>
+    </tr>
+    <tr>
+      <td><code>member(m, key)</code></td>
+      <td>1 if key exists, 0 if not</td>
+      <td><code>if (member(m, "hp"))</code></td>
+    </tr>
+    <tr>
+      <td><code>m_delete(m, key)</code></td>
+      <td>Remove a key, returns modified map</td>
+      <td><code>m = m_delete(m, "old");</code></td>
+    </tr>
+    <tr>
+      <td><code>mkmapping(keys, vals)</code></td>
+      <td>Build from two arrays</td>
+      <td><code>mapping m = mkmapping(k, v);</code></td>
+    </tr>
+    <tr>
+      <td><code>widthof(m)</code></td>
+      <td>Number of values per key</td>
+      <td><code>int w = widthof(m);</code></td>
+    </tr>
+  </table>
+
+  <h2>Iteration</h2>
+
+  <h3>foreach (preferred)</h3>
+
+  <pre><code>// Keys and values
+foreach (string key, int val : stats)
+{
+  write(key + ": " + val + "\n");
+}
+
+// Keys only
+foreach (string key : stats)
+{
+  write(key + "\n");
+}</code></pre>
+
+  <h3>Manual iteration</h3>
+
+  <pre><code>string *keys = m_indices(stats);
+for (int i = 0; i &lt; sizeof(keys); i++)
+{
+  write(keys[i] + ": " + stats[keys[i]] + "\n");
+}</code></pre>
+
+  <h2>Nested Mappings</h2>
+
+  <pre><code>mapping inventory = ([
+  "weapons": ([
+    "sword": 1,
+    "dagger": 3,
+  ]),
+  "potions": ([
+    "healing": 5,
+    "mana": 2,
+  ]),
+]);
+
+// Access nested
+int swords = inventory["weapons"]["sword"];
+
+// Set nested
+inventory["weapons"]["axe"] = 1;</code></pre>
+
+  <h2>Multi-Value Mappings</h2>
+
+  <pre><code>// Mappings can have multiple values per key (width &gt; 1)
+// Less common, but supported by the driver
+mapping m = m_allocate(0, 2);  // width 2
+m_add(m, "key", "val1", "val2");</code></pre>
+
+  <h2>Common Patterns</h2>
+
+  <pre><code>// Check before access
+if (member(m, key))
+  val = m[key];
+
+// Merge two mappings (second wins on conflicts)
+mapping combined = m1 + m2;
+
+// Copy a mapping
+mapping copy = m + ([]);
+
+// Remove multiple keys
+foreach (string key : remove_list)
+  m = m_delete(m, key);</code></pre>
+
+  <h2>Gotchas</h2>
+
+  <ul>
+    <li>Uninitialized mapping is <code>0</code>, not <code>([])</code>. Always initialize.</li>
+    <li><code>m[key]</code> returns <code>0</code> for missing keys, same as integer default.</li>
+    <li>Use <code>member(m, key)</code> to distinguish "key missing" from "key has value 0".</li>
+    <li>Mappings are passed by reference. Modifying a mapping modifies all references.</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

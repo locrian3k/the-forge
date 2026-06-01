@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monster Creation &mdash; Quick Reference &mdash; The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="glossary.html">Glossary</a>
+  <a href="cheatsheet-types.html">Types</a>
+  <a href="cheatsheet-operators.html">Operators</a>
+  <a href="cheatsheet-functions.html">Functions</a>
+  <a href="cheatsheet-control.html">Control</a>
+  <a href="cheatsheet-mappings.html">Mappings</a>
+  <a href="cheatsheet-modifiers.html">Modifiers</a>
+  <a href="cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="cheatsheet-inheritance.html">Inheritance</a>
+  <a href="cheatsheet-codestyle.html">Codestyle</a>
+  <a href="cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="cheatsheet-rooms.html">Rooms</a>
+  <a href="cheatsheet-objects.html">Objects</a>
+  <a href="cheatsheet-weapons.html">Weapons</a>
+  <a href="cheatsheet-armor.html">Armor</a>
+  <a href="cheatsheet-monsters.html">Monsters</a>
+  <a href="cheatsheet-advanced.html">Advanced</a>
+</nav>
+
+<main id="main-content">
+  <h1>Monster Creation &mdash; Quick Reference</h1>
+
+  <h2>Monster Tiers</h2>
+
+  <table class="type-table">
+    <tr><th>Inherit</th><th>Use for</th><th>Features</th></tr>
+    <tr><td><code>/obj/monster</code></td><td>Basic mobs</td><td>Chat, spells, simple behavior</td></tr>
+    <tr><td><code>/obj/complex_monster</code></td><td>Mid-tier</td><td>Extra attacks, conditions</td></tr>
+    <tr><td><code>/obj/super_monster</code></td><td>Bosses</td><td>Multi-life, modify_damage, full control</td></tr>
+  </table>
+
+  <h2>Basic Monster (/obj/monster)</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit "obj/monster";
+
+void create()
+{
+  ::create();
+  set_name("goblin");
+  set_alias(({"green goblin", "mob"}));
+  set_short("A snarling goblin");
+  set_long("A small green-skinned goblin with beady eyes.");
+  set_level(8);
+  set_race("goblin");
+  set_aggressive(1);
+  set_gender(1);       // 0=neuter, 1=male, 2=female
+  set_alignment(-50);  // negative=evil, positive=good
+  load_chat(20, ({
+    "The goblin snarls at you.\n",
+    "The goblin picks its nose.\n",
+  }));
+  load_a_chat(30, ({
+    "The goblin shrieks a battle cry!\n",
+  }));
+  return;
+}</code></pre>
+
+  <h2>Core Functions</h2>
+
+  <table class="type-table">
+    <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+    <tr><td><code>set_level(n)</code></td><td>Monster level</td><td><code>set_level(12)</code></td></tr>
+    <tr><td><code>set_race(str)</code></td><td>Race name</td><td><code>set_race("orc")</code></td></tr>
+    <tr><td><code>set_aggressive(n)</code></td><td>Auto-attack (0/1)</td><td><code>set_aggressive(1)</code></td></tr>
+    <tr><td><code>set_gender(n)</code></td><td>0=neuter,1=M,2=F</td><td><code>set_gender(2)</code></td></tr>
+    <tr><td><code>set_alignment(n)</code></td><td>Evil(-) to Good(+)</td><td><code>set_alignment(-100)</code></td></tr>
+    <tr><td><code>set_hp(n)</code></td><td>Set current HP</td><td><code>set_hp(500)</code></td></tr>
+    <tr><td><code>set_max_hp(n)</code></td><td>Set max HP</td><td><code>set_max_hp(500)</code></td></tr>
+  </table>
+
+  <h2>Chat Messages</h2>
+
+  <pre><code>// Idle chat: percentage chance per heartbeat, array of messages
+load_chat(15, ({
+  "The guard yawns.\n",
+  "The guard adjusts his helmet.\n",
+}));
+
+// Combat chat: fires during combat
+load_a_chat(25, ({
+  "The guard shouts: Take that!\n",
+  "The guard parries your blow!\n",
+}));</code></pre>
+
+  <h2>Spell System</h2>
+
+  <pre><code>set_spell_mess1("The mage hurls a fireball at you!");
+set_spell_mess2("The mage hurls a fireball at $N!");
+// $N = target name in mess2
+set_spell_dam(40);       // spell damage
+set_spell_type("fire");  // damage type
+set_chance(30);          // % chance per round</code></pre>
+
+  <h2>Monster Equipment</h2>
+
+  <pre><code>void create()
+{
+  ::create();
+  // ... basic setup ...
+
+  // Give monster equipment
+  object weapon = clone_object(OBJ + "rusty_sword");
+  weapon-&gt;move(this_object());
+  command("wield sword");
+
+  object armor = clone_object(OBJ + "leather");
+  armor-&gt;move(this_object());
+  command("wear leather");
+  return;
+}</code></pre>
+
+  <h2>Super Monster (Boss)</h2>
+
+  <pre><code>#pragma strong_types
+#include "../defs.h"
+
+inherit "obj/super_monster";
+
+nosave int lives;
+
+void create()
+{
+  ::create();
+  set_name("dragon");
+  set_alias(({"red dragon", "beast"}));
+  set_short("A massive red dragon");
+  set_long("A towering red dragon with scales like shields.");
+  set_level(25);
+  set_race("dragon");
+  set_aggressive(1);
+  lives = 2;
+  return;
+}</code></pre>
+
+  <h2>modify_damage (Super Monster)</h2>
+
+  <p>Intercept and modify incoming damage:</p>
+
+  <pre><code>int modify_damage(int dam, string dam_type, int *att_wc)
+{
+  // Damage reduction
+  if (dam &gt; 50)
+    dam = 50 + (dam - 50) / 2;
+
+  // Counter-attack
+  if (random(100) &lt; 20)
+  {
+    object attacker = (object)this_object()-&gt;query_attacker();
+    tell_object(attacker, "The dragon breathes fire at you!\n");
+    attacker-&gt;do_damage("fire", 30 + random(20));
+  }
+
+  return dam;  // return modified damage
+}</code></pre>
+
+  <h2>monster_died</h2>
+
+  <p>Called when the monster reaches 0 HP:</p>
+
+  <pre><code>void monster_died()
+{
+  tell_room(ETO, "The beast lets out a final roar!\n");
+
+  // Drop loot
+  object loot = clone_object(OBJ + "dragon_scale");
+  loot-&gt;move(ETO);
+
+  // Spawn next phase
+  object phase2 = clone_object(MON + "dragon_spirit");
+  phase2-&gt;move(ETO);
+
+  return;
+}</code></pre>
+
+  <h2>Multi-Life Boss Pattern</h2>
+
+  <pre><code>int modify_damage(int dam, string dam_type, int *att_wc)
+{
+  if ((int)this_object()-&gt;query_hp() - dam &lt;= 0 &amp;&amp; lives &gt; 1)
+  {
+    lives--;
+    this_object()-&gt;set_hp((int)this_object()-&gt;query_max_hp());
+    tell_room(ETO, "The dragon roars and regenerates!\n");
+    return 0;  // negate killing blow
+  }
+  return dam;
+}</code></pre>
+
+  <h2>Spawning in Rooms</h2>
+
+  <pre><code>// In room's reset():
+void reset()
+{
+  ::reset();
+  add_clone(MON + "goblin");       // max 1
+  add_clone(MON + "goblin", 3);    // up to 3
+  return;
+}</code></pre>
+
+  <h2>extra_look</h2>
+
+  <p>Add text when players look at the monster:</p>
+
+  <pre><code>string extra_look()
+{
+  if (lives &gt; 1)
+    return "It looks barely wounded.\n";
+  return "It is breathing heavily.\n";
+}</code></pre>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>
