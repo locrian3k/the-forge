@@ -32,14 +32,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Total exercises across all chapters
+  const TOTAL_EXERCISES = 56;
+
   // Update progress counter if present
   function updateProgressCount() {
     const counter = document.getElementById('progress-count');
     if (!counter) return;
     const p = loadProgress();
-    const total = document.querySelectorAll('.progress-check input').length;
     const done = Object.values(p).filter(Boolean).length;
-    counter.textContent = `${done}/${total}`;
+    const pageTotal = document.querySelectorAll('.progress-check input').length;
+    counter.textContent = pageTotal > 0 ? `${done}/${TOTAL_EXERCISES}` : `${done}/${TOTAL_EXERCISES}`;
+
+    // Show completion banner if all exercises are done
+    checkCompletion(done);
+  }
+
+  function checkCompletion(done) {
+    const banner = document.getElementById('completion-banner');
+    if (!banner) return;
+    if (done >= TOTAL_EXERCISES) {
+      banner.style.display = 'block';
+    } else {
+      banner.style.display = 'none';
+    }
   }
 
   updateProgressCount();

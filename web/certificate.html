@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Generator — The Forge</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cert-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      max-width: 500px;
+    }
+    .cert-form label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .cert-form input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: var(--font-body);
+    }
+    .cert-form input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .cert-form button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .cert-form button:hover { opacity: 0.9; }
+
+    /* Certificate Preview */
+    #cert-preview {
+      display: none;
+      margin: 2rem 0;
+    }
+    .certificate {
+      width: 800px;
+      min-height: 560px;
+      background: #fefefe;
+      color: #1a1a2e;
+      border: 4px double #c9a84c;
+      padding: 3rem;
+      text-align: center;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      position: relative;
+    }
+    .certificate .ornament {
+      color: #c9a84c;
+      font-size: 2rem;
+      letter-spacing: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .certificate h1 {
+      font-size: 2.2rem;
+      color: #1a1a2e;
+      margin: 0.5rem 0;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .certificate .subtitle {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .certificate .present-to {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 0.25rem;
+    }
+    .certificate .recipient {
+      font-size: 2rem;
+      color: #1a1a2e;
+      border-bottom: 2px solid #c9a84c;
+      display: inline-block;
+      padding: 0 2rem 0.25rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .certificate .description {
+      font-size: 0.95rem;
+      color: #444;
+      max-width: 550px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+    .certificate .details {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+    .certificate .detail-block {
+      text-align: center;
+    }
+    .certificate .detail-block .line {
+      border-top: 1px solid #999;
+      width: 180px;
+      margin: 0 auto;
+      padding-top: 0.25rem;
+    }
+    .certificate .detail-block .label {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .certificate .detail-block .value {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+
+    .print-btn {
+      background: var(--pass);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-family: var(--font-body);
+    }
+    .print-btn:hover { opacity: 0.9; }
+
+    @media print {
+      body { background: #fff; }
+      nav.sidebar, .nav-toggle, .skip-link,
+      main > *:not(#cert-preview),
+      .print-btn { display: none !important; }
+      main { margin: 0; padding: 0; max-width: none; }
+      #cert-preview { display: block !important; }
+      .certificate { border-width: 4px; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="index.html">Home</a>
+</nav>
+
+<main id="main-content">
+  <h1>Certificate Generator</h1>
+  <p>Enter the student's details to generate a printable certificate of completion.</p>
+
+  <div class="cert-form">
+    <label for="cert-name">Student Name</label>
+    <input type="text" id="cert-name" placeholder="e.g., Adventurer">
+    <label for="cert-date">Date of Completion</label>
+    <input type="date" id="cert-date">
+    <button onclick="generateCert()">Generate Certificate</button>
+  </div>
+
+  <div id="cert-preview">
+    <div class="certificate" id="certificate">
+      <div class="ornament">&#9733; &#9733; &#9733;</div>
+      <h1>The Forge</h1>
+      <div class="subtitle">LPC Programming Curriculum for 3Kingdoms</div>
+      <div class="present-to">This certificate is presented to</div>
+      <div class="recipient" id="cert-recipient-name"></div>
+      <div class="description">
+        For successfully completing all 21 chapters and 56 exercises of
+        The Forge LPC coding curriculum, demonstrating proficiency in
+        LPC programming, 3Kingdoms codestyle, and MUD area development.
+      </div>
+      <div class="details">
+        <div class="detail-block">
+          <div class="value" id="cert-date-display"></div>
+          <div class="line"></div>
+          <div class="label">Date</div>
+        </div>
+        <div class="detail-block">
+          <div class="value">Mimic</div>
+          <div class="line"></div>
+          <div class="label">Instructor</div>
+        </div>
+      </div>
+    </div>
+    <button class="print-btn" onclick="window.print()">&#128424; Print / Save as PDF</button>
+  </div>
+</main>
+
+<script>
+function generateCert() {
+  const name = document.getElementById('cert-name').value.trim();
+  const date = document.getElementById('cert-date').value;
+  if (!name) { alert('Please enter a student name.'); return; }
+
+  document.getElementById('cert-recipient-name').textContent = name;
+
+  const dateStr = date
+    ? new Date(date + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('cert-date-display').textContent = dateStr;
+
+  document.getElementById('cert-preview').style.display = 'block';
+  document.getElementById('cert-preview').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
