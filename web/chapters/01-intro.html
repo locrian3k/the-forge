@@ -237,9 +237,9 @@
     <details class="hints">
       <summary>Hints (click to reveal)</summary>
       <ol>
-        <li>If your file will not compile, check that every statement ends with a semicolon, including <code>::create();</code> and <code>return;</code>.</li>
+        <li>Every statement must end with a semicolon — missing one would cause a compile error on the MUD. Double-check <code>::create();</code> and <code>return;</code>.</li>
         <li>Make sure your opening braces <code>{</code> are each on their own line, not on the same line as <code>void create()</code>.</li>
-        <li>The alias array uses LPC array syntax: <code>({"item1", "item2"})</code>. If you forget the <code>({</code> and <code>})</code> wrappers, it will not compile.</li>
+        <li>The alias array uses LPC array syntax: <code>({"item1", "item2"})</code>. If you forget the <code>({</code> and <code>})</code> wrappers, the code would not compile on the MUD.</li>
         <li>Your long description can be any text you like. Just make sure it is wrapped in double quotes and ends with a semicolon.</li>
       </ol>
     </details>
@@ -289,7 +289,7 @@ int query_is_broken()
       <h3>Requirements</h3>
       <ul>
         <li>Find and fix all <strong>8 bugs</strong></li>
-        <li>The fixed file must compile without errors</li>
+        <li>The fixed file should have no syntax errors that would prevent compilation</li>
         <li>The fixed file must follow all 3K codestyle rules from Exercise 1.1</li>
         <li>Do not change the object's name, descriptions, value, or weight, only fix the structural and style issues</li>
       </ul>
@@ -352,7 +352,7 @@ int query_is_broken()
     <p>
       These introductory exercises establish the file structure you will use for every
       single file in your capstone dungeon area. Getting the preamble and bracket style
-      right now saves you from chasing compile errors later.
+      right now saves you from chasing errors later.
     </p>
   </div>
 </main>
