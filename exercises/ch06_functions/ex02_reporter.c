@@ -5,7 +5,7 @@
   cross-object communication. Stores the result for verification.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Define a path to the scoreboard object.
 //   Adjust this to match where your scoreboard file lives.

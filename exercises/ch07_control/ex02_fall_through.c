@@ -5,7 +5,7 @@
   multiple damage types share the same message.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 void create()
 {

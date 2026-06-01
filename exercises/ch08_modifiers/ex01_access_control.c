@@ -5,7 +5,7 @@
   Each function should use the modifier best suited to its role.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare two global string variables for title and owner name.
 

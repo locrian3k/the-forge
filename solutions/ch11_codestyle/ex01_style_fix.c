@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // A dusty storeroom - corrected to 3K codestyle.
 // Fixes applied:

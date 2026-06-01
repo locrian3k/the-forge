@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 //
 // Exercise 9.1: Define and Include

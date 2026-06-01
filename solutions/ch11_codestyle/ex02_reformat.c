@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Iron Sentinel - a construct monster that shifts into
 // an electrified combat mode when damaged below half HP.

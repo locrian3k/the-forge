@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // String Toolbox - utility object with common string
 // manipulation functions using LPC driver efuns.

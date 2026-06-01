@@ -5,7 +5,7 @@
   to demonstrate equivalent branching approaches.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 void create()
 {

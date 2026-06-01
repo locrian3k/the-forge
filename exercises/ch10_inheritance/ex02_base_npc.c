@@ -5,7 +5,7 @@
   can override and extend using the :: operator.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global string variable: npc_type
 

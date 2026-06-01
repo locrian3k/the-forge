@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 17.2, Chat and Spells
 // A dark mage with a multi-spell attack system.

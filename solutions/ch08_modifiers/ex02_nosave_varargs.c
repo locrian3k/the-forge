@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 //
 // Exercise 8.2: Nosave and Varargs

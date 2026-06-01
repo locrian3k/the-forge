@@ -8,7 +8,7 @@
 */
 
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare global arrays for processing:
 //       An int array for numbers, a string array for names,

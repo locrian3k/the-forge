@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/treasure";
 
 // Exercise 13.4 - Hidden Amulet (companion treasure object)

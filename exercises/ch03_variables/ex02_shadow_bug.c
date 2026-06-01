@@ -6,7 +6,7 @@
   Find the variable shadowing bug and fix it.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

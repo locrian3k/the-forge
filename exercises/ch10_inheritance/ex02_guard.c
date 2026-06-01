@@ -5,7 +5,7 @@
   using :: to extend the parent's behavior rather than replace it.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Inherit the base NPC file (ex02_base_npc)
 //   Use __DIR__ + "filename" to build the path.

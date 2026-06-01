@@ -5,7 +5,7 @@
   Demonstrates ::create(), inherited functions, and child-specific additions.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Inherit the base creature file (ex01_base_creature)
 //   Use __DIR__ + "filename" to build the path.

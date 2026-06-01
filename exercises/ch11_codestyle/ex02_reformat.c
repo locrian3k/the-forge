@@ -22,7 +22,7 @@
     - Add proper file structure order
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/monster";
 
 string *battle_cries;int attack_mode;

@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 //
 // Exercise 10.2: Override and Extend, Guard (Child)

@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 19.1, Heartbeat Timer
 // A room with periodic ambient messages driven by heart_beat().

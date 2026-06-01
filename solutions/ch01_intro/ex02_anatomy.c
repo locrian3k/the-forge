@@ -15,7 +15,7 @@
     8. Fixed tab indentation in query_is_broken
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

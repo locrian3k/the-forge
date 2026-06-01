@@ -7,7 +7,7 @@
 */
 
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // This room inherits the base droom from exercise 18.3
 inherit TRAINING_ROOM + "droom";

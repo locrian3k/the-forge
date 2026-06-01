@@ -4,7 +4,7 @@
   Basic arithmetic operations with division-by-zero protection.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

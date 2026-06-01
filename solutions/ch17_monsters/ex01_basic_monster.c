@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 17.1, Basic Monster
 // A simple cave goblin using /obj/monster.

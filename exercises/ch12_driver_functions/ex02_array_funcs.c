@@ -5,7 +5,7 @@
   with closure comparators.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global int array variable for monster levels.
 

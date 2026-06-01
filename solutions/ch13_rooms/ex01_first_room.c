@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "room/room";
 
 // Exercise 13.1 - Your First Room

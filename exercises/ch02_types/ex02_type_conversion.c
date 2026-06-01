@@ -4,7 +4,7 @@
   Utility functions demonstrating explicit type conversion in LPC.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

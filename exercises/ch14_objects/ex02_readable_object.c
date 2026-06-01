@@ -4,7 +4,7 @@
   A scroll or journal that players can read using add_action().
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/treasure";
 
 void create()

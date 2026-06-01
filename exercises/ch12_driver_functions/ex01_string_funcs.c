@@ -5,7 +5,7 @@
   using LPC driver efuns.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Add function prototypes for all three functions below.
 

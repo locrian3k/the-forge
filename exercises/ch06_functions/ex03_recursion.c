@@ -6,7 +6,7 @@
   knows about them before they are referenced.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare function prototypes (forward declarations).
 //   These go before create() so the compiler knows the functions exist.

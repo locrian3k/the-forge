@@ -7,7 +7,7 @@
     while   - conditional iteration with early exit
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare two global variables:
 //   A string array for monster names

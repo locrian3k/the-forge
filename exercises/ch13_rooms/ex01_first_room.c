@@ -5,7 +5,7 @@
   and leave through an exit.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "room/room";
 
 void create()

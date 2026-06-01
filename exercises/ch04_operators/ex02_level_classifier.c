@@ -5,7 +5,7 @@
   into title strings.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

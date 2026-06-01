@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 4.3, Bitwise Flags
 // A permission system using bitwise operators.

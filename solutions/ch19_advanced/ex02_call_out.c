@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 19.2, Call Out Trap
 // A room with a delayed trap that fires 3 seconds after entry.

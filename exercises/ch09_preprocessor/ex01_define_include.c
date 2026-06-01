@@ -5,7 +5,7 @@
   with path defines, a string constant, and a utility macro.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Include your custom header file (ex01_my_defs.h)
 

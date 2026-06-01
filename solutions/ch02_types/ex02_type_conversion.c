@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 2.2, Type Conversion
 // Utility functions demonstrating explicit type conversion in LPC.

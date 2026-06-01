@@ -5,7 +5,7 @@
   and combining mapping data.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Add function prototypes for both functions below.
 

@@ -5,7 +5,7 @@
   at compile time based on defines in the header.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Include your configuration header (ex02_conditional.h)
 

@@ -5,7 +5,7 @@
   Children inherit this to get creature_name for free.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global string variable: creature_name
 

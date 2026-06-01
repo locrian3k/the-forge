@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 4.2, Level Classifier
 // Uses comparison operators and if/else to classify player levels.

@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Array Operations - demonstrates foreach iteration,
 // filter(), and sort_array() with closure comparators.

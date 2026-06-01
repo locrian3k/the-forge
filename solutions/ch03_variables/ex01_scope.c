@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 3.1, Scope Matters
 // Demonstrates the difference between global and local variable scope.

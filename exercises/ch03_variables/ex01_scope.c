@@ -4,7 +4,7 @@
   Demonstrates the difference between global and local variable scope.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

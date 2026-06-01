@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 //
 // Exercise 10.3: Multiple Inheritance, Parent 1 (Describable)

@@ -5,7 +5,7 @@
   delete, and key retrieval.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global mapping variable named "inventory"
 

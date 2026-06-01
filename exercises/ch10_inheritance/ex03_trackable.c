@@ -5,7 +5,7 @@
   the ability to store and return a location string.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global string variable: location
 

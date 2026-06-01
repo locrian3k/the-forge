@@ -5,7 +5,7 @@
   one function from another (composition).
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 void create()
 {

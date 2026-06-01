@@ -6,7 +6,7 @@
   to demonstrate cross-object communication.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a global mapping named "kills"
 

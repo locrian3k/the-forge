@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/armour";
 
 // Exercise 16.1 - Basic Armor

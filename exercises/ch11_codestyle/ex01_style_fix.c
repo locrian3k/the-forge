@@ -15,7 +15,7 @@
     8. Missing ::create() call in create()
     9. Double-spacing between sentences in strings (should be single)
 */
-#include "defs.h"
+#include "../defs.h"
 
 inherit "room/room";
 

@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 19.3, Command Hook
 // A forge room where players can craft a sword from an iron bar.

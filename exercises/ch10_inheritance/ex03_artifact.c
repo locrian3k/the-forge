@@ -5,7 +5,7 @@
   management and location tracking into a single object.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Inherit BOTH parent files (ex03_describable and ex03_trackable)
 //   Use __DIR__ + "filename" to build each path.

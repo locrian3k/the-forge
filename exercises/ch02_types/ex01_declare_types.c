@@ -5,7 +5,7 @@
   basic LPC type and provides query functions to read them.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";
 

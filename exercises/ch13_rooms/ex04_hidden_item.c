@@ -5,7 +5,7 @@
   a player performs the custom command.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/treasure";
 
 void create()

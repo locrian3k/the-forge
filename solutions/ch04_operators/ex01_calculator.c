@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 4.1, Calculator Object
 // Basic arithmetic operations with division-by-zero protection.

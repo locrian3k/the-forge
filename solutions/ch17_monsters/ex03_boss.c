@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 17.3, Boss Monster
 // An iron golem boss with damage reduction and death narrative.

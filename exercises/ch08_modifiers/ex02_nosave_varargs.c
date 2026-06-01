@@ -5,7 +5,7 @@
   and nomask (override protection) modifiers.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // TODO: Declare a nosave int variable called visit_count.
 //   Syntax: nosave type varname;

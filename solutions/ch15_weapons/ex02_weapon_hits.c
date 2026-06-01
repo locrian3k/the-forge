@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/super_weapon";
 
 // Exercise 15.2 - Weapon Hits

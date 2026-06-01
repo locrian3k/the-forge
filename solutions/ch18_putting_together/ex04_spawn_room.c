@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 18.4, Reset Spawning
 // An area room that respawns monsters on reset using clone_object().

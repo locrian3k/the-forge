@@ -5,7 +5,7 @@
   treasure into the player's inventory.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "room/room";
 
 void create()

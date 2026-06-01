@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/treasure";
 
 // Exercise 14.1 - Treasure Object

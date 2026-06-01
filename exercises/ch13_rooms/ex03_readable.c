@@ -5,7 +5,7 @@
   callback function. Includes SCREENREAD support.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "room/room";
 
 void create()

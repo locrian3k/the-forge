@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 19.4, Closures
 // Demonstrates efun closures, inline filter, and inline map.

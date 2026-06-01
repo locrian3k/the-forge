@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Exercise 18.2, Area Layout: Room 3
 // Central training chamber with exits west and north.

@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 // Mapping Utilities - demonstrates iterating over mappings,
 // building new mappings, and combining mapping data.

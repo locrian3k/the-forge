@@ -5,7 +5,7 @@
   and sell to shops. Includes examinable sub-details.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 inherit "obj/treasure";
 
 void create()
