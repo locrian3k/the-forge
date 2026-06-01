@@ -22,9 +22,8 @@ void create()
 
   // TODO: Add examinable items (torches, walls, etc.)
 
-  // TODO: Add exits:
-  //       add_exit(TRAINING_ROOM + "ex02_entrance", "south");
-  //       add_exit(TRAINING_ROOM + "ex02_rm3", "east");
+  // TODO: Add exits south to the entrance and east to Room 3.
+  //       Use the TRAINING_ROOM path constant.
 
   return;
 }

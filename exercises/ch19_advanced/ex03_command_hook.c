@@ -30,9 +30,9 @@ void init()
   ::init();
 
   // TODO: Register a custom command for players in this room.
-  //       add_action("do_forge", "forge");
-  //       This means when a player types "forge <arg>", the
-  //       function do_forge(arg) will be called.
+  //       Syntax: add_action("handler", "verb");
+  //       This means when a player types "verb <arg>", the
+  //       handler function is called with the argument.
 
   return;
 }
@@ -45,26 +45,21 @@ int do_forge(string arg)
 {
   object bar, sword;
 
-  // TODO: Check for valid syntax. If arg is missing or wrong:
-  //       notify_fail("Usage: forge sword\n");
-  //       return 0;
+  // TODO: Check for valid syntax. If arg is missing or wrong,
+  //       use notify_fail() and return 0.
 
   // TODO: Check if the player has the required material.
-  //       bar = present("iron bar", TP);
-  //       If not found:
-  //       notify_fail("You need an iron bar to forge a sword.\n");
-  //       return 0;
+  //       Use present() to look in TP's inventory.
+  //       If not found, use notify_fail() and return 0.
 
-  // TODO: Consume the material: destruct(bar);
+  // TODO: Consume the material using destruct().
 
-  // TODO: Create the result and give it to the player:
-  //       sword = clone_object("/obj/weapon");
-  //       move_object(sword, TP);
+  // TODO: Create the result using clone_object() and move it to TP.
 
   // TODO: Print a success message to the player with write().
 
-  // TODO: Print a room message (excluding the player) with
-  //       tell_room(TO, message, ({TP}));
+  // TODO: Print a room message (excluding the player).
+  //       Syntax: tell_room(TO, message, ({TP}));
   //       The ({TP}) array excludes the player from the message.
 
   return 1;

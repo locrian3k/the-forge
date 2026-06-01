@@ -15,7 +15,6 @@ void create()
 
 // TODO: Implement void do_greet()
 //   Use write() to display a greeting message to the player.
-//   Example: write("Hello, adventurer! Welcome to the Forge.\n");
 //   Void functions must end with an explicit return;
 
 // TODO: Implement int do_add(int a, int b)
@@ -34,4 +33,3 @@ void create()
 //      "Apprentice of the Forge reports: 3 + 5 = 8"
 //
 //   Hint: LPC auto-converts ints to strings when concatenated with +
-//   Example: title + " reports: " + a + " + " + b + " = " + sum

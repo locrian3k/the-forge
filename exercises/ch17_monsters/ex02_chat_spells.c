@@ -21,29 +21,21 @@ void create()
 
   // TODO: Set spell attack messages seen by the room.
   //       $N$ is replaced with the target's name.
-  //       set_spell_mess1(({
-  //         "The mage hurls fire at $N$!\n",
-  //         "The mage blasts $N$ with ice!\n",
-  //         "The mage curses $N$!\n",
-  //       }));
+  //       Use set_spell_mess1() with an array of message strings.
 
   // TODO: Set spell attack messages seen by the target (use "you").
   //       Must have the same number of entries as spell_mess1.
-  //       set_spell_mess2(({
-  //         "The mage hurls fire at you!\n",
-  //         "The mage blasts you with ice!\n",
-  //         "The mage curses you!\n",
-  //       }));
+  //       Use set_spell_mess2() with an array of message strings.
 
   // TODO: Set damage types, one per spell.
-  //       set_spell_type(({"fire", "ice", "mind"}));
+  //       Use set_spell_type() with an array of type strings.
 
   // TODO: Set base damage values. Negative means level-scaled.
-  //       set_spell_dam(({-80, -80, -80}));
+  //       Use set_spell_dam() with an array of integers.
 
   // TODO: Set spell probabilities (relative weights).
   //       Higher number = more frequent.
-  //       set_spell_probabilities(({3, 2, 1}));
+  //       Use set_spell_probabilities() with an array of integers.
 
   // TODO: Load combat chat using load_a_chat(chance, array)
   //       These messages appear during combat.
@@ -60,9 +52,7 @@ string extra_look()
 {
   // TODO: Return different descriptions based on combat state.
   //       Use query_attack() to check if the monster is fighting.
-  //       if (query_attack())
-  //         return "combat description\n";
-  //       return "idle description\n";
+  //       Return one string if in combat, another if idle.
 
   return "";
 }

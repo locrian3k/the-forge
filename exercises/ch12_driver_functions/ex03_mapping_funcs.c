@@ -7,18 +7,16 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Add function prototypes:
-//   mapping invert_mapping(mapping m);
-//   mapping merge_mappings(mapping a, mapping b);
+// TODO: Add function prototypes for both functions below.
 
 // TODO: Implement invert_mapping(mapping m)
 //   Swap keys and values of a mapping.
 //   Example: ([ "a":1, "b":2 ]) -> ([ 1:"a", 2:"b" ])
 //
 //   Steps:
-//     1. Create an empty result mapping: mapping result = ([ ]);
-//     2. Use foreach (mixed key, mixed val : m) to iterate
-//     3. Assign result[val] = key for each entry
+//     1. Create an empty result mapping
+//     2. Use foreach to iterate over the input mapping
+//     3. For each entry, swap the key and value in the result
 //     4. Return result
 
 // TODO: Implement merge_mappings(mapping a, mapping b)

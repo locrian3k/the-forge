@@ -14,20 +14,7 @@ inherit "room/room";
 // TODO: Declare a mapping of all compass directions for wall-blocking.
 //       This is used by block_them() to detect when a player tries
 //       to move in a direction that has no exit.
-//
-//       mapping all_dirs_map =
-//       ([
-//         "north",
-//         "south",
-//         "east",
-//         "west",
-//         "northeast",
-//         "northwest",
-//         "southeast",
-//         "southwest",
-//         "up",
-//         "down"
-//       ]);
+//       Include all 10 compass directions (n/s/e/w, diagonals, up/down).
 
 void create()
 {
@@ -49,8 +36,7 @@ status block_them(string arg)
 
   // TODO: Check if the verb is a valid exit or hidden exit.
   //       If so, return 0 to allow movement.
-  //       Use: member(query_exits(), verb)
-  //            member(query_hidden(), verb)
+  //       Hint: Use member() to check query_exits() and query_hidden().
 
   // TODO: Check if the verb is a compass direction (in all_dirs_map)
   //       but has no exit. If so:
@@ -66,7 +52,7 @@ void init()
   ::init();
 
   // TODO: Register block_them to catch all player input.
-  //       add_action("block_them", "", 1);
+  //       Syntax: add_action("func", "", 1);
   //       The empty string with flag 1 matches every command.
 
   return;

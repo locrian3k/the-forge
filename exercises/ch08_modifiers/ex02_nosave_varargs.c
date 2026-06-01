@@ -8,6 +8,7 @@
 #include "defs.h"
 
 // TODO: Declare a nosave int variable called visit_count.
+//   Syntax: nosave type varname;
 //   nosave means it resets to 0 on reload (transient runtime data).
 
 // TODO: Declare a regular string variable called location.

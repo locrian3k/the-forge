@@ -10,9 +10,7 @@
 
 // TODO: Declare function prototypes (forward declarations).
 //   These go before create() so the compiler knows the functions exist.
-//
-//   int factorial(int n);
-//   int fibonacci(int n);
+//   Declare prototypes for both factorial and fibonacci.
 
 void create()
 {

@@ -9,7 +9,7 @@
 
 // TODO: Define a path to the scoreboard object.
 //   Adjust this to match where your scoreboard file lives.
-//   Example: #define SCOREBOARD (EXERCISES + "ch06_functions/ex02_scoreboard")
+//   Use EXERCISES + "ch06_functions/ex02_scoreboard" as the path.
 
 // TODO: Declare a global int variable named "result"
 
@@ -20,16 +20,13 @@ void create()
   // TODO: Load the scoreboard object:
   //   1. Try find_object(SCOREBOARD) first (returns 0 if not loaded)
   //   2. If not found, use load_object(SCOREBOARD) to load it
-  //
-  //   scoreboard = find_object(SCOREBOARD);
-  //   if (!scoreboard)
-  //     scoreboard = load_object(SCOREBOARD);
 
-  // TODO: Register a test kill via cross-object call:
-  //   scoreboard->add_kill("test");
+  // TODO: Register a test kill via cross-object call.
+  //   Use the -> operator to call add_kill() on the scoreboard.
 
-  // TODO: Query the kill count back and store it:
-  //   result = (int)scoreboard->query_kills("test");
+  // TODO: Query the kill count back and store it in result.
+  //   Use the -> operator to call query_kills() on the scoreboard.
+  //   Cast the result to (int) since cross-object calls return mixed.
 
   return;
 }

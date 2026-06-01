@@ -7,10 +7,7 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Add function prototypes for all three functions:
-//   string title_case(string s);
-//   int word_count(string s);
-//   string pad_right(string s, int width);
+// TODO: Add function prototypes for all three functions below.
 
 // TODO: Implement title_case(string s)
 //   Capitalize the first letter of every word in a string.
@@ -31,5 +28,5 @@
 //   Pad a string with trailing spaces to reach the given width.
 //   Steps:
 //     1. If strlen(s) >= width, return s as-is
-//     2. Otherwise use sprintf("%-*s", width, s) to pad
+//     2. Otherwise use sprintf() with a left-aligned format to pad
 //   Example: pad_right("gold", 10) -> "gold      "

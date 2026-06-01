@@ -12,25 +12,22 @@ void create()
 {
   ::create();
 
-  // TODO: Set the creator
-  //   set_creator("mimic");
+  // TODO: Set the creator using set_creator()
 
   // TODO: Set the internal name (lowercase, used by the game engine)
-  //   set_name("gold ring");
+  //   using set_name()
 
   // TODO: Set aliases with at least 3 alternate names
-  //   set_alias(({"ring","gold ring","signet","signet ring","band"}));
+  //   using set_alias()
 
   // TODO: Set a short description (shown in inventory lists)
-  //   set_short("A Gold Signet Ring");
+  //   using set_short()
 
   // TODO: Set a long description (at least two sentences)
-  //   Describe what the object looks like in detail.
+  //   using set_long(). Describe what the object looks like in detail.
 
   // TODO: Add at least one add_item() for an examinable detail
-  //   on the object. Example:
-  //   add_item(({"signet","seal","face","crest"}),
-  //     "The signet depicts a rearing griffin...");
+  //   on the object.
 
   // TODO: Set a gold value with set_value() (positive integer)
 

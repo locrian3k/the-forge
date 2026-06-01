@@ -11,14 +11,12 @@
 #include "defs.h"
 
 // TODO: Declare global arrays for processing:
-//       int *numbers;
-//       string *names;
-//       int *high_values;
+//       An int array for numbers, a string array for names,
+//       and an int array for filtered high values.
 
 // TODO: Implement sort_numbers()
 //       Sort the numbers array in ascending order using an efun closure.
-//       #'< is a reference to the built-in less-than operator.
-//       numbers = sort_array(numbers, #'<);
+//       Hint: #'< is a reference to the built-in less-than operator.
 void sort_numbers()
 {
   // TODO: Sort numbers using sort_array() with #'< closure
@@ -28,9 +26,8 @@ void sort_numbers()
 
 // TODO: Implement filter_high()
 //       Filter the numbers array to keep only values above 20.
-//       Use an inline closure with filter():
-//       high_values = filter(numbers, (: $1 > 20 :));
-//       $1 refers to each element as filter() iterates.
+//       Use an inline closure with filter().
+//       Hint: $1 refers to each element as filter() iterates.
 void filter_high()
 {
   // TODO: Filter numbers using filter() with an inline closure
@@ -40,8 +37,7 @@ void filter_high()
 
 // TODO: Implement title_names()
 //       Append " the Brave" to each name using map() with an
-//       inline closure:
-//       names = map(names, (: $1 + " the Brave" :));
+//       inline closure.
 void title_names()
 {
   // TODO: Transform names using map() with an inline closure
@@ -51,16 +47,12 @@ void title_names()
 
 void create()
 {
-  // TODO: Initialize numbers with an unsorted array of integers:
-  //       numbers = ({42, 7, 99, 3, 55, 18});
+  // TODO: Initialize numbers with an unsorted array of at least 6 integers.
 
-  // TODO: Initialize names with an array of name strings:
-  //       names = ({"Gandalf", "Frodo", "Arwen", "Sam"});
+  // TODO: Initialize names with an array of at least 4 name strings.
 
-  // TODO: Call the three processing functions:
-  //       sort_numbers();
-  //       filter_high();
-  //       title_names();
+  // TODO: Call the three processing functions in order:
+  //       sort_numbers, filter_high, title_names.
 
   return;
 }

@@ -16,16 +16,14 @@ void create()
   ::create();
 
   // TODO: Register this room with the dungeon system.
-  //       set_dungeon(name, level, scale_hp, scale_damage, scale_exp)
+  //       Syntax: set_dungeon(name, level, scale_hp, scale_damage, scale_exp)
   //         name         - The dungeon's display name (string)
   //         level        - Base difficulty level (int, e.g. 5)
   //         scale_hp     - HP multiplier for monsters (1 = normal)
   //         scale_damage - Damage multiplier for monsters (1 = normal)
   //         scale_exp    - Experience multiplier (1 = normal)
-  //
-  //       Example: set_dungeon("The Training Dungeon", 5, 1, 1, 1);
 
-  // TODO: Set light so the room is visible: set_light(1);
+  // TODO: Set light so the room is visible.
 
   // TODO: Set short and long descriptions for a dungeon passage.
 

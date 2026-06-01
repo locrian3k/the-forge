@@ -7,9 +7,7 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Declare two global string variables:
-//   string title;
-//   string owner_name;
+// TODO: Declare two global string variables for title and owner name.
 
 //
 // format_name - A helper function used only inside this file.

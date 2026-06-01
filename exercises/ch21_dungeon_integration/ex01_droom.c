@@ -13,29 +13,15 @@
 inherit "room/dungeon/dr.c";
 
 // TODO: Declare a mapping of all compass directions for blocking.
-//       mapping all_dirs_map =
-//       ([
-//         "north",
-//         "south",
-//         "east",
-//         "west",
-//         "northeast",
-//         "northwest",
-//         "southeast",
-//         "southwest",
-//         "up",
-//         "down"
-//       ]);
+//       Include all 10 compass directions (n/s/e/w, diagonals, up/down).
 
 void create()
 {
   ::create();
 
-  // TODO: Register with the dungeon system using the DNAME constant:
-  //       set_dungeon(DNAME, 8, 1, 1, 1);
+  // TODO: Register with the dungeon system using the DNAME constant.
 
-  // TODO: Set light so all inheriting rooms start lit:
-  //       set_light(1);
+  // TODO: Set light so all inheriting rooms start lit.
 
   return;
 }
@@ -45,8 +31,8 @@ void create()
 // instead of: add_clone(TRAINING_MOBS + "goblin");
 void monster(string path)
 {
-  // TODO: Call add_clone() with the full monster path:
-  //       add_clone(TRAINING_MOBS + path);
+  // TODO: Call add_clone() with the full monster path.
+  //       Use TRAINING_MOBS + path to build it.
 
   return;
 }
@@ -56,8 +42,8 @@ void monster(string path)
 // instead of: add_clone(TRAINING_ITEM + "treasure");
 void item(string path)
 {
-  // TODO: Call add_clone() with the full item path:
-  //       add_clone(TRAINING_ITEM + path);
+  // TODO: Call add_clone() with the full item path.
+  //       Use TRAINING_ITEM + path to build it.
 
   return;
 }
@@ -71,15 +57,10 @@ status block_them(string arg)
   verb = query_verb();
 
   // TODO: If the verb is a valid exit or hidden exit, return 0.
-  //       if (member(query_exits(), verb) || member(query_hidden(), verb))
-  //         return 0;
+  //       Use member() to check query_exits() and query_hidden().
 
-  // TODO: If the verb is a compass direction with no exit:
-  //       if (member(all_dirs_map, verb))
-  //       {
-  //         write("Solid stone blocks your way in that direction.\n");
-  //         return 1;
-  //       }
+  // TODO: If the verb is a compass direction with no exit,
+  //       write a wall message and return 1 to block.
 
   return 0;
 }
@@ -89,7 +70,7 @@ void init()
   ::init();
 
   // TODO: Catch all player input so block_them can check directions.
-  //       add_action("block_them", "", 1);
+  //       Syntax: add_action("func", "", 1); matches every command.
 
   return;
 }

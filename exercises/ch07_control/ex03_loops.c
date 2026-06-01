@@ -10,30 +10,15 @@
 #include "defs.h"
 
 // TODO: Declare two global variables:
-//   string *monsters;    (an array of monster names)
-//   mapping levels;      (monster_name -> level)
+//   A string array for monster names
+//   A mapping of monster names to level values
 
 void create()
 {
-  // TODO: Populate the monsters array with at least 4 names.
-  //   Example:
-  //   monsters = ({
-  //     "goblin",
-  //     "orc",
-  //     "troll",
-  //     "dragon",
-  //     "skeleton",
-  //   });
+  // TODO: Populate the monsters array with at least 4 monster names.
 
   // TODO: Populate the levels mapping with matching entries.
-  //   Example:
-  //   levels = ([
-  //     "goblin": 3,
-  //     "orc": 7,
-  //     "troll": 15,
-  //     "dragon": 50,
-  //     "skeleton": 4,
-  //   ]);
+  //   Each monster name should map to an integer level.
 
   return;
 }

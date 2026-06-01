@@ -17,7 +17,6 @@ void create()
 
   // TODO: Register with the dungeon system.
   //       This is the key difference from ex03_standard.c.
-  //       set_dungeon("The Training Dungeon", 5, 1, 1, 1);
 
   // TODO: Set light, short, and long descriptions.
   //       Use the SAME descriptions as ex03_standard.c so the

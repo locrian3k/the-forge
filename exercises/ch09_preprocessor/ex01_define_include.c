@@ -7,14 +7,11 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Include your custom header file
-//   #include "ex01_my_defs.h"
+// TODO: Include your custom header file (ex01_my_defs.h)
 
 // TODO: Declare global variables to store computed values:
-//   string area_name;
-//   string room_path;
-//   string mob_path;
-//   int max_result;
+//   One string each for area name, room path, and mob path.
+//   One int for the max result.
 
 void create()
 {

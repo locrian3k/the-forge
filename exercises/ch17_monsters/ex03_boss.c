@@ -21,12 +21,11 @@ void create()
   //       Bosses are typically high level (15+).
 
   // TODO: Set boss-specific properties:
-  //       add_property("NOPEACE");   // Prevents players from using "peace"
-  //       set_dead_ob(TO);           // Enables monster_died() callback
+  //       - Prevent players from using "peace" with add_property()
+  //       - Enable the monster_died() callback with set_dead_ob()
 
-  // TODO: Set loot using add_clone()
-  //       add_clone("/obj/weapon"); clones a weapon into the boss's
-  //       inventory. When the boss dies, monster_died() should move
+  // TODO: Set loot using add_clone().
+  //       When the boss dies, monster_died() should move
   //       inventory to the room.
 
   // TODO: Set spell attacks (spell_mess1, spell_mess2, spell_type,
@@ -59,11 +58,12 @@ int modify_damage(int dam, string dam_type, int *att_wc)
 // Use it to narrate the death and handle loot.
 void monster_died()
 {
-  // TODO: Use tell_room(environment(TO), "message") to narrate
-  //       the boss's death to everyone in the room.
+  // TODO: Narrate the boss's death to everyone in the room.
+  //       Syntax: tell_room(environment(TO), "message");
 
-  // TODO: Move all inventory (loot) from the boss to the room:
-  //       map(all_inventory(TO), #'move_object, environment(TO));
+  // TODO: Move all inventory (loot) from the boss to the room.
+  //       Hint: Use map() with all_inventory(TO), #'move_object,
+  //       and environment(TO) to move all items at once.
 
   return;
 }

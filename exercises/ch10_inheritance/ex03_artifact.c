@@ -7,9 +7,8 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Inherit BOTH parent files
-//   inherit __DIR__ + "ex03_describable";
-//   inherit __DIR__ + "ex03_trackable";
+// TODO: Inherit BOTH parent files (ex03_describable and ex03_trackable)
+//   Use __DIR__ + "filename" to build each path.
 
 // TODO: Declare a global string variable: artifact_name
 
@@ -17,8 +16,7 @@ void create()
 {
   // TODO: Call BOTH parent creates using the named form.
   //   A plain ::create() would only call the first parent's create.
-  //   Use: describable::create();
-  //        trackable::create();
+  //   Syntax: parentname::create();
 
   // TODO: Set artifact_name to something, e.g. "The Ember Crystal"
 
@@ -35,10 +33,8 @@ void create()
 //   Combines capabilities from both parents into a single
 //   formatted string. This demonstrates the power of multiple
 //   inheritance: the artifact "is a" describable AND "is a" trackable.
-//
-//   Return: artifact_name + "\n" +
-//     "Description: " + query_description() + "\n" +
-//     "Location: " + query_location()
+//   Include the artifact name, the description from the describable
+//   parent, and the location from the trackable parent.
 
 // TODO: Implement query_artifact_name()
 //   Artifact-specific function not in either parent.

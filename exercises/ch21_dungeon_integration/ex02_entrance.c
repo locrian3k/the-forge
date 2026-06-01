@@ -24,8 +24,8 @@ void create()
   //       sign, etc.) using add_item().
 
   // TODO: Add an exit north into the dungeon.
-  //       The first interior room is ex02_rm2:
-  //       add_exit(TRAINING_ROOM + "ex02_rm2", "north");
+  //       The first interior room is ex02_rm2.
+  //       Use the TRAINING_ROOM path constant.
 
   return;
 }

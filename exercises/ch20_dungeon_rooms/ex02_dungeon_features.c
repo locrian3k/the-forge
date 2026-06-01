@@ -24,18 +24,13 @@ void create()
   // TODO: Add exits.
 
   // TODO: Use add_clone() to spawn objects in this room.
-  //       add_clone(path) spawns one object (100% chance).
-  //       add_clone(path, numerator, denominator) spawns with
-  //       a probability of numerator/denominator.
+  //       Syntax: add_clone(path) — spawns one object (100% chance).
+  //       Syntax: add_clone(path, numerator, denominator) — probability.
   //
   //       add_clone() differs from clone_object()->move() because:
   //         1. It checks for duplicates automatically
   //         2. It only spawns during reset cycles
   //         3. Monsters benefit from dungeon-level scaling
-  //
-  //       Example:
-  //       add_clone("/obj/treasure");
-  //       add_clone("/obj/treasure", 1, 2);  // 50% chance
 
   return;
 }

@@ -15,19 +15,9 @@ void create()
   //   Each entry maps a monster name (string) to an inner mapping
   //   with keys: "level" (int), "race" (string), "aggressive" (int 1/0).
   //
-  //   Example structure:
-  //   bestiary = ([
-  //     "goblin": ([
-  //       "level": 3,
-  //       "race": "goblin",
-  //       "aggressive": 1,
-  //     ]),
-  //     "skeleton": ([
-  //       "level": 5,
-  //       "race": "undead",
-  //       "aggressive": 1,
-  //     ]),
-  //     ... add at least 3 more ...
+  //   Syntax for nested mappings:
+  //   mapping = ([
+  //     "key": ([ "inner_key": value, "inner_key2": value ]),
   //   ]);
 
   return;
@@ -36,7 +26,6 @@ void create()
 // TODO: Implement mapping lookup(string name)
 //   Return the inner stat mapping for the given monster name.
 //   Return 0 if the monster is not in the bestiary.
-//   Hint: Check if (!bestiary[name]) return 0;
 
 // TODO: Implement string strongest()
 //   Iterate over all monsters and return the name of the one with

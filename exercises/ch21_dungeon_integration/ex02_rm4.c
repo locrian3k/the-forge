@@ -19,8 +19,8 @@ void create()
 
   // TODO: Add examinable items (rubble, carvings, etc.)
 
-  // TODO: Add a single exit south back to Room 3:
-  //       add_exit(TRAINING_ROOM + "ex02_rm3", "south");
+  // TODO: Add a single exit south back to Room 3.
+  //       Use the TRAINING_ROOM path constant.
 
   return;
 }

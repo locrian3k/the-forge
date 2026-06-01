@@ -11,18 +11,13 @@ void create()
 {
   ::create();
 
-  // TODO: Set the creator
-  //   set_creator("mimic");
+  // TODO: Set the creator using set_creator()
 
-  // TODO: Set the internal name
-  //   set_name("scroll");
+  // TODO: Set the internal name using set_name()
 
-  // TODO: Set aliases with at least 3 alternate names
-  //   set_alias(({"tattered scroll","old scroll","parchment",
-  //     "ancient scroll"}));
+  // TODO: Set aliases with at least 3 alternate names using set_alias()
 
-  // TODO: Set a short description
-  //   set_short("A Tattered Scroll");
+  // TODO: Set a short description using set_short()
 
   // TODO: Set a long description (hint that it can be read)
   //   The description should mention that the scroll has
@@ -38,7 +33,7 @@ void init()
   ::init();
 
   // TODO: Register the "read" command using add_action()
-  //   add_action("do_read", "read");
+  //   Syntax: add_action("handler_function", "verb");
 
   return;
 }
@@ -46,22 +41,9 @@ void init()
 // TODO: Implement the read handler.
 //   Return type: status (1 if handled, 0 if not)
 //
-// status do_read(string str)
-// {
-//   // Return 0 if str is missing or doesn't match this object.
-//   // Use id(str) to check if the string matches our name/aliases.
-//   if (!str || !id(str))
-//     return 0;
-//
-//   // Display the scroll's contents using write().
-//   // Include at least 5 lines of multi-line text.
-//   write(
-//     "You carefully unroll the brittle parchment and read:\n"
-//     "\n"
-//     "  Line one of the scroll text...\n"
-//     "  Line two...\n"
-//     "  Line three...\n"
-//     "\n"
-//     "The rest of the text is too faded to decipher.\n");
-//   return 1;
-// }
+//   Steps:
+//   1. Return 0 if str is missing or doesn't match this object.
+//      Use id(str) to check if the string matches our name/aliases.
+//   2. Display the scroll's contents using write().
+//      Include at least 5 lines of multi-line text.
+//   3. Return 1 to indicate the command was handled.

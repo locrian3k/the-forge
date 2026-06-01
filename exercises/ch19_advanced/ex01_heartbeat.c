@@ -11,15 +11,10 @@
 
 inherit "room/room";
 
-// TODO: Declare a counter variable to track heartbeat cycles.
-//       int beat_counter;
+// TODO: Declare an int counter variable to track heartbeat cycles.
 
-// TODO: Declare an array of ambient message strings.
-//       string *ambient_messages = ({
-//         "A cold draft whistles through a crack in the stone.\n",
-//         "Water drips from the ceiling.\n",
-//         // ... add at least 3-5 messages
-//       });
+// TODO: Declare a string array of ambient message strings.
+//       Include at least 3-5 atmospheric messages, each ending with \n.
 
 void create()
 {
@@ -35,7 +30,7 @@ void create()
 
   // TODO: Initialize the heartbeat counter to 0.
 
-  // TODO: Start the heartbeat with set_heart_beat(1);
+  // TODO: Start the heartbeat using set_heart_beat().
 
   return;
 }
@@ -46,15 +41,14 @@ void heart_beat()
   // TODO: Increment the beat counter.
 
   // TODO: Every N beats (e.g. every 5 beats = ~10 seconds),
-  //       display a random ambient message to the room using
-  //       tell_room(TO, message).
-  //       Use beat_counter % 5 == 0 to check.
-  //       Pick a random message with random(sizeof(ambient_messages)).
+  //       display a random ambient message to the room.
+  //       Hint: Use modulo (%) to check intervals, random() to
+  //       pick a message, and tell_room() to display it.
 
   // TODO: If the room is empty (no living objects), stop the
-  //       heartbeat to save CPU: set_heart_beat(0);
-  //       Use filter(all_inventory(TO), #'living) to find living
-  //       objects, and sizeof() to check if the result is empty.
+  //       heartbeat to save CPU.
+  //       Hint: Use filter() with #'living to find living objects,
+  //       and sizeof() to check if the result is empty.
 
   return;
 }
@@ -64,7 +58,7 @@ void init()
 {
   ::init();
 
-  // TODO: Restart the heartbeat: set_heart_beat(1);
+  // TODO: Restart the heartbeat.
 
   return;
 }

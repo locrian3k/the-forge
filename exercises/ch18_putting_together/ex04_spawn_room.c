@@ -22,8 +22,8 @@ void create()
 
   // TODO: Add exits to adjacent rooms.
 
-  // TODO: Spawn an initial monster using clone_object():
-  //       clone_object(TRAINING_MOBS + "goblin")->move(TO);
+  // TODO: Spawn an initial monster using clone_object().
+  //       Use TRAINING_MOBS path constant and move it to TO.
 
   return;
 }
@@ -35,14 +35,11 @@ void reset()
 {
   ::reset();
 
-  // TODO: Respawn a goblin guard if none exists:
-  //       if (!present("goblin"))
-  //         clone_object(TRAINING_MOBS + "goblin")->move(TO);
+  // TODO: Respawn a goblin guard if none exists.
+  //       Use present() to check, clone_object() to create, ->move(TO) to place.
 
   // TODO: Optionally spawn a second monster type with a random
-  //       chance, e.g. 50% chance:
-  //       if (!present("goblin_scout") && random(2))
-  //         clone_object(TRAINING_MOBS + "goblin_scout")->move(TO);
+  //       chance (e.g. 50% using random(2)).
 
   return;
 }

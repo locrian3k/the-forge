@@ -26,12 +26,5 @@ void create()
 //
 //   Comment every intentional fall-through with: // fall through
 //
-//   Pattern:
-//   case "fire":
-//     // fall through, fire and acid share the same message
-//   case "acid":
-//     result = "It burns!";
-//     break;
-//
 //   Hint: Declare a local string result; variable, assign in each
 //   branch, and return result at the end.

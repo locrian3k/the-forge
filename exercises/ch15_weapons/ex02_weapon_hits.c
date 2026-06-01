@@ -18,8 +18,7 @@ void create()
   // TODO: Set creator, name, aliases, short, long, type, weight, value
   //       (same as a basic weapon)
 
-  // TODO: Register this object as its own hits callback:
-  //       set_hits_func(TO);
+  // TODO: Register this object as its own hits callback.
   //       This tells the combat system to call weapon_hits() on
   //       this object every combat round.
 
@@ -40,21 +39,12 @@ int *weapon_hits(object target)
 
   // TODO: Implement at least two special procs using the roll value.
   //
-  // Example structure:
-  //   if (roll < 10)    // 10% chance
-  //   {
-  //     // Print a message to the wielder with write()
-  //     // Print a message to the room with say()
-  //     // Return a damage array with bonus elemental damage
-  //     // e.g. return ({0, 0, 0, 18, 0, 0, 0, 0, 0, 0}); for ice
-  //   }
-  //
-  //   if (roll < 15)    // 5% chance (rolls 10-14)
-  //   {
-  //     // Another special effect, e.g. life steal
-  //     // TP->heal_self(15); heals the wielder
-  //     // Return a damage array
-  //   }
+  //   For each proc:
+  //     - Check if the roll falls within a probability range
+  //     - Print a message to the wielder with write()
+  //     - Print a message to the room with say()
+  //     - Return a 10-element damage array with bonus damage
+  //       in the appropriate element position
 
   // Default: no bonus damage (base wc still applies)
   return ({0, 0, 0, 0, 0, 0, 0, 0, 0, 0});

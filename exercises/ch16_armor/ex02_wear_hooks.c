@@ -17,9 +17,7 @@ void create()
   // TODO: Set creator, name, aliases, short, long, type, ac,
   //       weight, and value (same as basic armor)
 
-  // TODO: Register wear and remove hook functions:
-  //       set_wear_func(TO);
-  //       set_remove_func(TO);
+  // TODO: Register wear and remove hook functions.
   //       This tells the system to call do_wear() and do_remove()
   //       on this object when a player wears or removes it.
 

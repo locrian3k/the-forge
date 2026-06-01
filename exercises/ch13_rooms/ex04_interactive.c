@@ -35,9 +35,9 @@ void init()
   ::init();
 
   // TODO: Register a custom command verb using add_action().
-  //   Example: add_action("do_dig", "dig");
-  //   This means when a player types "dig <anything>", the
-  //   function do_dig(string str) is called.
+  //   Syntax: add_action("handler_function", "verb");
+  //   This means when a player types "verb <anything>", the
+  //   handler function is called with the argument string.
 
   return;
 }
@@ -45,35 +45,12 @@ void init()
 // TODO: Implement the command handler function.
 //   Return type: int (return 1 if handled, 0 if not)
 //
-// int do_dig(string str)
-// {
-//   object item;
+//   Steps:
+//   1. Check if str is missing or doesn't match valid keywords — return 0
+//   2. Check for duplicates using present() in TP and TO — prevent farming
+//   3. Clone the hidden item object and move it to the player
+//   4. Print messages to the player with write() and the room with say()
+//   5. Return 1 on success
 //
-//   // Return 0 if no argument or argument doesn't match
-//   if (!str)
-//     return 0;
-//   if (member(({"rubble","rocks","debris","pile"}), str) == -1)
-//     return 0;
-//
-//   // Check for duplicates: prevent farming unlimited copies
-//   // Use present("item_name", TP) to check player inventory
-//   // and present("item_name", TO) to check room
-//   if (present("amulet", TP) || present("amulet", TO))
-//   {
-//     write("You dig again but find nothing else.\n");
-//     return 1;
-//   }
-//
-//   // Clone the treasure object and move it to the player
-//   item = clone_object(EXERCISES + "ch13_rooms/ex04_hidden_item");
-//   if (item)
-//   {
-//     move_object(item, TP);
-//     write("You dig and find something!\n");
-//     say(capitalize((string)TP->query_name()) +
-//       " digs through the rubble.\n");
-//     return 1;
-//   }
-//
-//   return 0;
-// }
+//   Useful efuns: present(), clone_object(), move_object(),
+//   write(), say(), capitalize()

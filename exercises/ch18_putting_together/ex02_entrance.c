@@ -22,12 +22,10 @@ void create()
   //       or cave entrance, and any scenery like signs or runes.
 
   // TODO: Add examinable scenery items using add_item().
-  //       add_item(({"keyword", "keyword2"}), "Description text");
   //       Include at least 2-3 items players can look at.
 
   // TODO: Add an exit leading north into the area.
-  //       Use the path constant from defs.h:
-  //       add_exit(TRAINING_ROOM + "rm2", "north");
+  //       Use the TRAINING_ROOM path constant from defs.h.
 
   return;
 }

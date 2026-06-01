@@ -7,20 +7,14 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Declare a global array variable:
-//   int *levels;
+// TODO: Declare a global int array variable for monster levels.
 
-// TODO: Add function prototypes:
-//   void create();
-//   int average_level();
-//   int *filter_above(int threshold);
-//   int *sort_descending();
+// TODO: Add function prototypes for all functions in this file.
 
 // Initialize the levels array with sample monster data.
 void create()
 {
-  // TODO: Set levels to an array of at least 8 integer values
-  //   Example: levels = ({ 5, 12, 3, 18, 7, 25, 14, 9 });
+  // TODO: Set levels to an array of at least 8 integer values.
 
   return;
 }
@@ -34,15 +28,10 @@ void create()
 
 // TODO: Implement filter_above(int threshold)
 //   Return only the levels strictly above the threshold.
-//   Use the filter() efun with a closure comparator:
-//     return filter(levels, (: $1 > $(threshold) :));
-//
-//   The $() syntax captures the local variable's value into
-//   the closure at creation time.
+//   Use the filter() efun with an inline closure comparator.
+//   Hint: $1 refers to each element, $(varname) captures a local variable.
 
 // TODO: Implement sort_descending()
 //   Return a copy of levels sorted from highest to lowest.
-//   Use sort_array() with a descending closure:
-//     return sort_array(copy(levels), (: $2 - $1 :));
-//
-//   Use copy() to avoid modifying the original array.
+//   Use sort_array() with a descending closure.
+//   Hint: Use copy() to avoid modifying the original array.

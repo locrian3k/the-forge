@@ -7,13 +7,12 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Inherit the base creature file
-//   inherit __DIR__ + "ex01_base_creature";
+// TODO: Inherit the base creature file (ex01_base_creature)
+//   Use __DIR__ + "filename" to build the path.
 
 void create()
 {
   // TODO: Call the parent's create first to initialize creature_name
-  //   ::create();
 
   // TODO: Customize: change the default "creature" to "goblin"
   //   Use set_creature_name() inherited from the parent.
@@ -28,5 +27,3 @@ void create()
 // TODO: Implement query_description()
 //   Build a description string that uses query_creature_name()
 //   inherited from the parent class.
-//   Example: "A fierce " + query_creature_name() +
-//     " snarls and brandishes a rusty blade."

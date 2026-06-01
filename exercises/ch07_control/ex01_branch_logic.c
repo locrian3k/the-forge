@@ -24,9 +24,7 @@ void create()
 //   4     "snowy"
 //   other "unknown"
 //
-//   Pattern: if (code == 0) return "clear";
-//            else if (code == 1) return "cloudy";
-//            ... and so on, ending with else return "unknown";
+//   Use if/else if/else chain ending with else return "unknown";
 
 // TODO: Implement string describe_weather_switch(int code)
 //   Use switch/case to produce identical output to the if/else version.
@@ -35,17 +33,3 @@ void create()
 //
 //   Hint: Declare a local string result; variable, assign in each
 //   branch, and return result at the end.
-//
-//   Pattern:
-//   switch (code)
-//   {
-//     case 0:
-//       result = "clear";
-//       break;
-//     case 1:
-//       ...
-//     default:
-//       result = "unknown";
-//       break;
-//   }
-//   return result;

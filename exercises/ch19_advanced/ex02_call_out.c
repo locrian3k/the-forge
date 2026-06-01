@@ -32,21 +32,16 @@ void init()
   ::init();
 
   // TODO: Only trigger for living objects (players, monsters).
-  //       if (!living(TP))
-  //         return;
+  //       Use living(TP) to check.
 
   // TODO: Prevent duplicate call_outs if a trap is already pending.
-  //       if (find_call_out("trigger_trap") != -1)
-  //         return;
+  //       Use find_call_out() to check if one exists (-1 means none).
 
-  // TODO: Schedule the trap to fire after a delay:
-  //       call_out("trigger_trap", 3);
-  //       The 3 means 3 seconds.
+  // TODO: Schedule the trap to fire after a delay.
+  //       Syntax: call_out("function_name", seconds);
 
   // TODO: Add actions on exit directions so do_leave() can cancel
-  //       the trap when the player moves to leave:
-  //       add_action("do_leave", "north");
-  //       add_action("do_leave", "south");
+  //       the trap when the player moves to leave.
 
   return;
 }
@@ -57,18 +52,14 @@ void trigger_trap()
   object *victims;
 
   // TODO: Find all living objects still in the room.
-  //       victims = filter(all_inventory(TO), #'living);
-  //       if (!sizeof(victims))
-  //         return;
+  //       Use filter() with all_inventory(TO) and #'living.
+  //       Return early if no victims remain.
 
   // TODO: Describe the trap going off using tell_room().
 
-  // TODO: Damage each victim in the room:
-  //       foreach (object victim : victims)
-  //       {
-  //         tell_object(victim, "A dart strikes you!\n");
-  //         victim->hit_player(20, 0, "blunt");
-  //       }
+  // TODO: Damage each victim in the room.
+  //       Loop through victims, tell each one about the hit,
+  //       and call victim->hit_player(damage, 0, type) on each.
 
   return;
 }
@@ -77,8 +68,7 @@ void trigger_trap()
 // Return 0 so normal exit processing still continues.
 status do_leave(string arg)
 {
-  // TODO: Cancel the pending trap:
-  //       remove_call_out("trigger_trap");
+  // TODO: Cancel the pending trap using remove_call_out().
 
   return 0;
 }

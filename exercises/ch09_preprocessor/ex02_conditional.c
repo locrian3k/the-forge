@@ -7,8 +7,7 @@
 #pragma strong_types
 #include "defs.h"
 
-// TODO: Include your configuration header
-//   #include "ex02_conditional.h"
+// TODO: Include your configuration header (ex02_conditional.h)
 
 void create()
 {
@@ -21,9 +20,10 @@ void create()
 //
 // TODO: Use #ifdef DEBUG / #else / #endif to implement:
 //   When DEBUG is defined:
-//     return "DEBUG active: version=" + VERSION + ", title=" + AREA_TITLE;
+//     Return a string containing the word "DEBUG" plus the VERSION
+//     and AREA_TITLE values from the header.
 //   When DEBUG is NOT defined:
-//     return "no debug";
+//     Return "no debug".
 //
 
 //
@@ -31,10 +31,8 @@ void create()
 // the VERSION level.
 //
 // TODO: Use #if VERSION >= 2 / #else / #endif to implement:
-//   When VERSION is 2 or higher:
-//     return "enhanced";
-//   When VERSION is below 2:
-//     return "basic";
+//   When VERSION is 2 or higher: return "enhanced"
+//   When VERSION is below 2: return "basic"
 //
 
 //

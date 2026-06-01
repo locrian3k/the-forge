@@ -20,17 +20,13 @@ void create()
 
   // TODO: Add an add_item() for the readable feature so players
   //   can examine it. Hint in the description that it can be read.
-  //   add_item(({"tablet","stone tablet","inscription"}),
-  //     "A flat slab of polished grey stone... "
-  //     "You could read it for the full text.");
 
   // TODO: Add other add_item() entries for room features
 
   // TODO: Use add_read() with a callback reference to a function
   //   in this object. The @ prefix tells the driver to call the
-  //   named function:
-  //   add_read(({"tablet","stone tablet","inscription"}),
-  //     "@read_tablet");
+  //   named function.
+  //   Syntax: add_read(({"keywords"}), "@function_name");
 
   // TODO: Optionally add a search_item and an exit
 
@@ -48,19 +44,3 @@ void create()
 //
 //   The returned string should be multi-line (at least 3 lines
 //   of actual content).
-//
-// string read_tablet()
-// {
-//   if (TP && TP->query_property("SCREENREAD"))
-//   {
-//     return
-//       "Inscription on the Stone Tablet:\n"
-//       "Line one...\n"
-//       "Line two...\n";
-//   }
-//   return
-//     "+============================+\n"
-//     "|  Line one...               |\n"
-//     "|  Line two...               |\n"
-//     "+============================+\n";
-// }

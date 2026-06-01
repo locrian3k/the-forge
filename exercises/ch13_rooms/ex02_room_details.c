@@ -19,19 +19,15 @@ void create()
   //   players might want to examine, and mention the available exits)
 
   // TODO: Add at least 3 add_item() calls, each with an alias array
-  //   and a descriptive string. Example:
-  //   add_item(({"table","oak table","heavy table"}),
-  //     "A heavy oak table, its surface scarred with countless "
-  //     "knife marks and grooves.");
+  //   and a descriptive string.
+  //   Syntax: add_item(({"keyword","keyword2"}), "Description text");
 
   // TODO: Add at least 2 add_search_item() calls for discoverable
-  //   details when the player types "search <keyword>". Example:
-  //   add_search_item(({"table","oak table"}),
-  //     "Rummaging under the table, you find a dull copper coin.");
+  //   details when the player types "search <keyword>".
+  //   Syntax: add_search_item(({"keyword","keyword2"}), "Discovery text");
 
   // TODO: Add at least 3 exits. You can loop them back to this
   //   room or connect to your ex01 room for testing.
-  //   add_exit(EXERCISES + "ch13_rooms/ex02_room_details", "north");
 
   return;
 }

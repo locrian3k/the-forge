@@ -23,9 +23,7 @@ void create()
   // TODO: Add exits to adjacent rooms.
 
   // TODO: Spawn an initial monster using the monster() helper
-  //       from the base droom:
-  //       monster("goblin");
-  //       This calls add_clone(TRAINING_MOBS + "goblin").
+  //       from the base droom.
 
   return;
 }
@@ -39,11 +37,9 @@ void reset()
 
   // TODO: Always try to respawn the goblin guard.
   //       add_clone() skips if one already exists.
-  //       add_clone(TRAINING_MOBS + "goblin");
 
   // TODO: Optionally spawn a second monster type with a probability.
-  //       add_clone(path, numerator, denominator) sets the chance.
-  //       add_clone(TRAINING_MOBS + "goblin_scout", 1, 2);  // 50%
+  //       Syntax: add_clone(path, numerator, denominator) sets the chance.
 
   return;
 }

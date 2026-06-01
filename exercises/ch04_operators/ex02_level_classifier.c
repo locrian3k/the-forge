@@ -37,6 +37,3 @@ void create()
 //   0 or below      "unknown"
 //
 //   Hint: Check from highest to lowest so each branch is clean.
-//   Example: if (level >= 100) return "legend";
-//            else if (level >= 61) return "hero";
-//            ... and so on
