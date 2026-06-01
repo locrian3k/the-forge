@@ -95,6 +95,38 @@ a:hover { text-decoration: underline; }
 ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
 li { margin-bottom: 0.3rem; }
 
+/* --- Type Tables --- */
+.type-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0 1.25rem;
+  font-size: 0.9rem;
+}
+
+.type-table th {
+  text-align: left;
+  padding: 0.4rem 0.75rem;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.type-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.type-table tr:last-child td {
+  border-bottom: none;
+}
+
+.type-table code {
+  font-size: 0.85em;
+}
+
 /* --- Tier Badges --- */
 .tier {
   display: inline-block;
