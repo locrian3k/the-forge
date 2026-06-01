@@ -263,6 +263,46 @@ p.note {
   margin-top: 0;
 }
 
+/* --- Chapter Downloads --- */
+.chapter-downloads {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.chapter-downloads h3 {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.chapter-downloads ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.chapter-downloads li {
+  margin-bottom: 0.25rem;
+}
+
+.chapter-downloads a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.chapter-downloads .zip-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+}
+
 /* --- Progress Checkboxes --- */
 .progress-check {
   display: flex;
