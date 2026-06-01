@@ -47,9 +47,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Highlight active sidebar link
   const currentPage = window.location.pathname.split('/').pop();
   document.querySelectorAll('nav.sidebar a').forEach(link => {
-    if (link.getAttribute('href') === currentPage ||
-        link.getAttribute('href') === 'chapters/' + currentPage) {
+    const href = link.getAttribute('href') || '';
+    if (href.endsWith(currentPage)) {
       link.classList.add('active');
     }
   });
+
+  // Preserve sidebar scroll position across page loads
+  const sidebar = document.querySelector('nav.sidebar');
+  if (sidebar) {
+    const savedScroll = sessionStorage.getItem('forge-sidebar-scroll');
+    if (savedScroll) {
+      sidebar.scrollTop = parseInt(savedScroll, 10);
+    }
+    sidebar.addEventListener('scroll', () => {
+      sessionStorage.setItem('forge-sidebar-scroll', sidebar.scrollTop);
+    });
+  }
 });

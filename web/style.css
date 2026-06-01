@@ -68,12 +68,14 @@ nav.sidebar a.active {
 }
 
 nav.sidebar .section-label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
-  padding: 0.75rem 1.25rem 0.25rem;
-  font-weight: 600;
+  color: var(--text);
+  padding: 1rem 1.25rem 0.35rem;
+  font-weight: 700;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
 }
 
 /* --- Main Content --- */
