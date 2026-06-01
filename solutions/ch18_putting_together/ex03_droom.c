@@ -1,5 +1,5 @@
 #pragma strong_types
-#include "../defs.h"
+#include "defs.h"
 
 // Exercise 18.3, Base Area Room
 // Inheritable base room for the Training Grounds area.

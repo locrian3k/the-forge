@@ -1,13 +1,8 @@
-// Training Grounds area definitions
-// solutions/ch18_putting_together/defs.h
-
 #pragma strong_types
-#include "../defs.h"
 
-// Area root path
-#define TRAINING      (AREAS + "training/")
+// Minimal header for Forge curriculum exercises.
+// You will build a full area defs.h in Chapter 9 and Chapter 18.
 
-// Subdirectory paths for rooms, monsters, and objects
-#define TRAINING_ROOM (TRAINING + "rooms/")
-#define TRAINING_MOBS (TRAINING + "mon/")
-#define TRAINING_ITEM (TRAINING + "obj/")
+#define TO        this_object()
+#define TP        this_player()
+#define ETO       environment()
