@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 4: The Boss — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="../reference/cheatsheet-types.html">Types</a>
+  <a href="../reference/cheatsheet-operators.html">Operators</a>
+  <a href="../reference/cheatsheet-functions.html">Functions</a>
+  <a href="../reference/cheatsheet-control.html">Control</a>
+  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
+  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
+  <a href="../reference/cheatsheet-objects.html">Objects</a>
+  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
+  <a href="../reference/cheatsheet-armor.html">Armor</a>
+  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
+  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
+  <div class="section-label">Capstone</div>
+  <a href="index.html">Overview</a>
+  <a href="phase1.html">Phase 1: Foundation</a>
+  <a href="phase2.html">Phase 2: Atmosphere</a>
+  <a href="phase3.html">Phase 3: Combat</a>
+  <a href="phase4.html">Phase 4: The Boss</a>
+  <a href="phase5.html">Phase 5: Polish</a>
+</nav>
+
+<main id="main-content">
+  <h1>Phase 4: The Boss</h1>
+
+  <p><strong>Prerequisite:</strong> Chapters 18-19 completed, Phases 1-3 complete<br>
+  <strong>Goal:</strong> Create a boss encounter with special mechanics, a unique drop,
+  and an interactive boss room.</p>
+
+  <h2>Background</h2>
+
+  <p>Every dungeon needs a climax. The Haunted Mine's boss is the <strong>Foreman</strong> —
+  the ghost of the mine's cruel overseer, bound to the deepest shaft by his
+  own greed and rage. This phase is about making a memorable fight with
+  mechanics that go beyond "kill monster, get loot."</p>
+
+  <h2>Requirements</h2>
+
+  <h3>1. Create <code>mon/foreman.c</code>, Boss Monster</h3>
+
+  <p>The Foreman inherits from <code>/obj/super_monster</code> (or <code>/obj/complex_monster</code>
+  at minimum). This is the area's final challenge.</p>
+
+  <p>Requirements:</p>
+  <ul>
+    <li>Inherit <code>"obj/super_monster"</code></li>
+    <li><code>set_name("the Foreman")</code>, <code>set_short()</code>, <code>set_long()</code></li>
+    <li><code>set_level()</code>, higher than regular monsters (12-15 range)</li>
+    <li><code>set_alias()</code> with multiple keywords</li>
+  </ul>
+
+  <p><strong>Special mechanics (implement at least 3):</strong></p>
+
+  <ul>
+    <li><strong><code>modify_damage()</code></strong>, reduce incoming damage, add flavor text
+    (e.g., "Your blade passes through the Foreman's spectral form!")</li>
+    <li><strong><code>monster_died()</code></strong>, narrative death sequence instead of just dropping
+    dead. Tell a story: the ghost wails, the mine shakes, the spirit fades</li>
+    <li><strong><code>extra_look()</code></strong>, dynamic description that changes based on the
+    Foreman's health (full health vs wounded vs near death)</li>
+    <li><strong>Spells/special attacks</strong>, <code>set_chance()</code>, <code>set_spell_dam()</code>,
+    and/or <code>set_spell_mess1()</code>/<code>set_spell_mess2()</code> for themed attacks
+    (ghostly chains, mine collapse, spectral pickaxe)</li>
+    <li><strong><code>load_chat()</code></strong>, boss-specific combat dialogue (threats, lore drops,
+    taunts referencing the mine's history)</li>
+  </ul>
+
+  <h3>2. Create a Timed Mechanic</h3>
+
+  <p>Implement at least one timed element using <code>call_out()</code> or <code>heart_beat()</code>.</p>
+
+  <p>Examples:</p>
+  <ul>
+    <li>The Foreman becomes invulnerable for 5 seconds, then drops his guard
+    (use <code>call_out</code> to toggle a flag checked in <code>modify_damage</code>)</li>
+    <li>The room periodically shakes (environmental messages via <code>heart_beat</code>)</li>
+    <li>The boss enrages after a time limit, dealing increased damage</li>
+    <li>A cave-in mechanic that blocks the exit temporarily</li>
+  </ul>
+
+  <h3>3. Create the Boss Room with Interactive Mechanics</h3>
+
+  <p>The boss room (<code>rm7</code> or wherever you place the Foreman) should have an
+  interactive element using <code>add_action()</code> in <code>init()</code>.</p>
+
+  <p>Examples:</p>
+  <ul>
+    <li>A <strong>lever</strong> that must be pulled to weaken the Foreman's shield</li>
+    <li>A <strong>lantern</strong> that must be lit to make the ghost vulnerable</li>
+    <li><strong>Mine supports</strong> that can be collapsed onto the boss</li>
+    <li>A <strong>ritual circle</strong> that must be activated before the boss can be killed</li>
+  </ul>
+
+  <p>Implementation pattern:</p>
+
+  <pre><code>void init()
+{
+  ::init();
+  add_action("do_pull_lever", "pull");
+  return;
+}
+
+status do_pull_lever(string arg)
+{
+  if (arg != "lever") return 0;
+  // ... mechanic logic ...
+  return 1;
+}</code></pre>
+
+  <p>The mechanic should affect the fight in a meaningful way, not just
+  flavor text, but an actual gameplay impact.</p>
+
+  <h3>4. Create a Unique Boss Drop</h3>
+
+  <p>The Foreman drops a unique weapon or armor when killed.</p>
+
+  <p><strong>Example: <code>obj/foreman_lantern.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"obj/weapon"</code> or <code>"obj/armour"</code></li>
+    <li>Unique name, short, long description with lore</li>
+    <li>Higher stats than the regular pickaxe/helmet from Phase 3</li>
+    <li>At least one special feature:
+      <ul>
+        <li><code>weapon_hits()</code>, bonus effects on hit (cold damage messages,
+        chance to terrify, life drain flavor)</li>
+        <li><code>wear_func()</code> / <code>remove_func()</code>, effects when equipped/removed</li>
+        <li>A custom ability via <code>add_action()</code> in <code>init()</code></li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>The boss drop should feel rewarding and thematic, a trophy from the
+  mine's final challenge.</p>
+
+  <h3>5. Boss Spawning</h3>
+
+  <p>The boss should spawn in its room via <code>reset()</code>. Since it is a super_monster,
+  make sure only one spawns at a time (use the <code>add_clone</code> duplicate
+  prevention flag).</p>
+
+  <h2>Deliverables</h2>
+
+  <ul>
+    <li><code>mon/foreman.c</code>, compiles, inherits super_monster</li>
+    <li>Foreman has <code>modify_damage()</code> with flavor text</li>
+    <li>Foreman has <code>monster_died()</code> with narrative death</li>
+    <li>Foreman has <code>extra_look()</code> with health-based descriptions</li>
+    <li>Foreman has spells or special attacks</li>
+    <li>At least 1 timed mechanic (<code>call_out</code> or <code>heart_beat</code>)</li>
+    <li>Boss room has <code>add_action()</code> interactive mechanic</li>
+    <li>Interactive mechanic affects the fight meaningfully</li>
+    <li><code>obj/foreman_lantern.c</code> (or similar), unique boss drop with a
+    special feature</li>
+    <li>Boss spawns in its room via <code>reset()</code></li>
+  </ul>
+
+  <h2>Self-Check</h2>
+
+  <p>Review your work against these criteria:</p>
+
+  <ol>
+    <li>The Foreman inherits from <code>"obj/super_monster"</code></li>
+    <li><code>modify_damage()</code> uses the correct signature: <code>int modify_damage(int dam, string dam_type, int *att_wc)</code></li>
+    <li><code>monster_died()</code> uses <code>tell_room()</code> to narrate the death</li>
+    <li><code>extra_look()</code> returns different strings based on health</li>
+    <li>The boss room has an <code>add_action()</code> mechanic in <code>init()</code></li>
+    <li>At least one <code>call_out()</code> or <code>heart_beat()</code> timed mechanic exists</li>
+    <li>The unique boss drop has a special feature (<code>weapon_hits()</code>, <code>wear_func()</code>, etc.)</li>
+    <li>The boss spawns via <code>add_clone()</code> in <code>reset()</code> with duplicate prevention</li>
+  </ol>
+
+  <p>When you become a wizard, you can test the full boss fight in-game
+  with <code>update</code>, <code>goto</code>, <code>kill</code>, and <code>exa</code> commands. For now, focus on
+  getting the code right.</p>
+
+  <h2>Hints</h2>
+
+  <ul>
+    <li><code>super_monster</code> gives you <code>int modify_damage(int dam, string dam_type, int *att_wc)</code>.
+    Return the modified damage value. Return 0 to block all damage.</li>
+    <li><code>monster_died()</code> is called when the monster reaches 0 HP. Use
+    <code>tell_room()</code> to narrate the death to everyone present.</li>
+    <li><code>extra_look()</code> should return a string that gets appended to the
+    monster's look description.</li>
+    <li>For timed invulnerability: set a status flag, check it in
+    <code>modify_damage()</code>, use <code>call_out("end_invulnerable", 5)</code> to clear it.</li>
+    <li><code>weapon_hits()</code> is called every time the weapon deals damage, keep
+    the special effect chance reasonable (1 in 3 or 1 in 5).</li>
+    <li>Test the boss fight at the intended dungeon level to make sure it is
+    challenging but not impossible.</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

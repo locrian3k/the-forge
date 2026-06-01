@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capstone Project — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="../reference/cheatsheet-types.html">Types</a>
+  <a href="../reference/cheatsheet-operators.html">Operators</a>
+  <a href="../reference/cheatsheet-functions.html">Functions</a>
+  <a href="../reference/cheatsheet-control.html">Control</a>
+  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
+  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
+  <a href="../reference/cheatsheet-objects.html">Objects</a>
+  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
+  <a href="../reference/cheatsheet-armor.html">Armor</a>
+  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
+  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
+  <div class="section-label">Capstone</div>
+  <a href="index.html">Overview</a>
+  <a href="phase1.html">Phase 1: Foundation</a>
+  <a href="phase2.html">Phase 2: Atmosphere</a>
+  <a href="phase3.html">Phase 3: Combat</a>
+  <a href="phase4.html">Phase 4: The Boss</a>
+  <a href="phase5.html">Phase 5: Polish</a>
+</nav>
+
+<main id="main-content">
+  <h1>The Forge: Capstone Project</h1>
+
+  <h2>Overview</h2>
+
+  <p>The capstone is your chance to build a complete area from scratch, bringing
+  together everything you have learned across the curriculum. You will create
+  rooms, monsters, objects, a boss encounter, and interactive mechanics.</p>
+
+  <p>There are two tracks to choose from. Both follow the same 5 phases and
+  produce a fully playable area.</p>
+
+  <h2>Capstone Tracks</h2>
+
+  <h3>Standard Area (capstone/standard/)</h3>
+
+  <p>The standard track uses <code>/room/room</code> for all rooms and works on any LPC MUD.
+  You write a <code>base_room.c</code> inheritable that your interior rooms inherit from,
+  giving you shared descriptions, a direction blocker, and a clean foundation
+  to build on.</p>
+
+  <p>Choose this track if you have completed Chapters 1 through 19.</p>
+
+  <h3>Dungeon Area (capstone/dungeon/)</h3>
+
+  <p>The dungeon track uses <code>/room/dungeon/dr.c</code> with <code>set_dungeon()</code> scaling,
+  which auto-adjusts monster stats and loot to the area's level. You write a
+  <code>droom.c</code> inheritable that your interior rooms inherit from, with dungeon
+  registration, shared descriptions, and helper functions for spawning.</p>
+
+  <p>Choose this track if you have completed Chapters 1 through 21 (Ch 20-21
+  cover dungeon scaling). This track is 3K-specific.</p>
+
+  <h2>The 5 Phases</h2>
+
+  <p>Both tracks follow the same phases. The focus of each phase shifts slightly
+  depending on which track you chose.</p>
+
+  <table class="type-table">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Name</th>
+        <th>After Chapters</th>
+        <th>Standard Focus</th>
+        <th>Dungeon Focus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>The Foundation</td>
+        <td>Ch 1-9</td>
+        <td>defs.h, entrance, base_room, layout</td>
+        <td>defs.h, entrance, droom, layout</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Atmosphere</td>
+        <td>Ch 10-14</td>
+        <td>Items, searches, readables</td>
+        <td>Items, searches, readables</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Combat</td>
+        <td>Ch 15-17</td>
+        <td>Monsters, weapons, armor</td>
+        <td>Monsters, weapons, armor</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>The Boss</td>
+        <td>Ch 18-19</td>
+        <td>Boss fight, unique drop, mechanics</td>
+        <td>Boss fight, unique drop, mechanics</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Polish</td>
+        <td>All chapters</td>
+        <td>Integration, disease, paths, testing</td>
+        <td>Integration, disease, paths, testing</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Area Requirements</h2>
+
+  <p>A completed capstone area should have:</p>
+
+  <ul>
+    <li>8+ rooms with distinct descriptions and atmosphere</li>
+    <li>2 branching paths that converge at the boss</li>
+    <li>3+ examinable items per room</li>
+    <li>Searchable items and readable objects</li>
+    <li>Multiple monster types that spawn on reset</li>
+    <li>A boss with special mechanics (narrative death, timed abilities, or
+    damage modification)</li>
+    <li>A unique boss-drop item</li>
+    <li>At least 1 disease or status effect</li>
+    <li>Clean 3K codestyle throughout</li>
+    <li>A playable, thematic experience</li>
+  </ul>
+
+  <h2>Getting Started</h2>
+
+  <ol>
+    <li>Pick your track (standard or dungeon)</li>
+    <li>Read <a href="phase1.html">Phase 1</a> to begin</li>
+    <li>Use the starter templates in your chosen track folder as your foundation</li>
+    <li>Build, test, iterate, each phase builds on the last</li>
+    <li>Refer back to your chapter exercises whenever you need a refresher</li>
+  </ol>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

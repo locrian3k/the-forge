@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 5: Polish — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="../reference/cheatsheet-types.html">Types</a>
+  <a href="../reference/cheatsheet-operators.html">Operators</a>
+  <a href="../reference/cheatsheet-functions.html">Functions</a>
+  <a href="../reference/cheatsheet-control.html">Control</a>
+  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
+  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
+  <a href="../reference/cheatsheet-objects.html">Objects</a>
+  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
+  <a href="../reference/cheatsheet-armor.html">Armor</a>
+  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
+  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
+  <div class="section-label">Capstone</div>
+  <a href="index.html">Overview</a>
+  <a href="phase1.html">Phase 1: Foundation</a>
+  <a href="phase2.html">Phase 2: Atmosphere</a>
+  <a href="phase3.html">Phase 3: Combat</a>
+  <a href="phase4.html">Phase 4: The Boss</a>
+  <a href="phase5.html">Phase 5: Polish</a>
+</nav>
+
+<main id="main-content">
+  <h1>Phase 5: Polish</h1>
+
+  <p><strong>Prerequisite:</strong> All chapters completed, Phases 1-4 complete<br>
+  <strong>Goal:</strong> Tie everything together into a complete, polished dungeon area
+  with branching paths, a disease mechanic, full monster spawning, and
+  clean code.</p>
+
+  <h2>Background</h2>
+
+  <p>You have built the pieces. Now you connect them into a whole. This phase
+  is about finishing the area: filling in the remaining rooms, creating
+  two distinct paths to the boss, adding a disease effect, ensuring every
+  room spawns appropriately, and cleaning up your code to pass codestyle
+  checks.</p>
+
+  <h2>Requirements</h2>
+
+  <h3>1. Minimum 8 Rooms Total</h3>
+
+  <p>Your area must have at least 8 rooms:</p>
+  <ul>
+    <li><code>entrance.c</code>, outdoor entrance (already built)</li>
+    <li><code>rooms/rm2.c</code>, Mine Entrance Hall (already built)</li>
+    <li><code>rooms/rm3.c</code>, The Junction (already built)</li>
+    <li><code>rooms/rm4.c</code>, Flooded Tunnel (west path)</li>
+    <li><code>rooms/rm5.c</code>, Collapsed Gallery (east path)</li>
+    <li><code>rooms/rm6.c</code>, The Deep Shaft (paths converge)</li>
+    <li><code>rooms/rm7.c</code>, The Foreman's Office / boss room (already built)</li>
+    <li>1+ additional room(s), your choice</li>
+  </ul>
+
+  <p>Each new room needs: short, long, 3+ add_item, exits, and atmospheric
+  details consistent with its theme.</p>
+
+  <p><strong>rm4, Flooded Tunnel:</strong></p>
+  <ul>
+    <li>Water-themed: ankle-deep water, dripping ceiling, slippery footing</li>
+    <li>Natural hazards: cave spiders, slime</li>
+  </ul>
+
+  <p><strong>rm5, Collapsed Gallery:</strong></p>
+  <ul>
+    <li>Rubble-themed: fallen timbers, crushed ore carts, unstable ceiling</li>
+    <li>Undead hazards: ghost miners, cold spots, whispers</li>
+  </ul>
+
+  <p><strong>rm6, The Deep Shaft:</strong></p>
+  <ul>
+    <li>Where both paths meet. A vertical shaft descending into darkness.</li>
+    <li>Transition room before the boss: ominous, foreboding</li>
+  </ul>
+
+  <h3>2. Two Branching Paths to the Boss</h3>
+
+  <p>From rm3 (The Junction), there must be two distinct routes to reach
+  rm6 (The Deep Shaft):</p>
+  <ul>
+    <li><strong>West path:</strong> rm3 -&gt; rm4 -&gt; rm6</li>
+    <li><strong>East path:</strong> rm3 -&gt; rm5 -&gt; rm6</li>
+  </ul>
+
+  <p>Each path should have a different feel and different enemies. Players
+  can choose their route. You may add extra rooms to either branch to
+  extend the dungeon.</p>
+
+  <h3>3. At Least 1 Disease/Status Effect</h3>
+
+  <p>Create a disease object in <code>obj/disease/</code>.</p>
+
+  <p><strong>Example: <code>obj/disease/mine_dust.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"obj/disease"</code> (or your MUD's disease base)</li>
+    <li><code>set_name()</code>, <code>set_short()</code>, <code>set_alias()</code></li>
+    <li><code>set_filename()</code> pointing to the actual file path</li>
+    <li>Periodic damage or stat reduction (coughing, wheezing, reduced vision)</li>
+    <li><code>set_heal_msg()</code>, <code>set_catch_msg()</code>, <code>set_damage()</code></li>
+    <li>Applied by a monster attack, room hazard, or search result</li>
+  </ul>
+
+  <p>The disease should be thematic: mine dust in the lungs, ghostly chill,
+  spider venom, cave damp.</p>
+
+  <p>Apply the disease through one of:</p>
+  <ul>
+    <li>A monster's attack (in <code>heart_beat()</code> or spell)</li>
+    <li>A room hazard (searching something dangerous)</li>
+    <li>An environmental trigger (entering a specific room)</li>
+  </ul>
+
+  <h3>4. <code>reset()</code> Spawning in All Combat Rooms</h3>
+
+  <p>Every room that should have monsters must spawn them via <code>reset()</code>.</p>
+
+  <p>Requirements:</p>
+  <ul>
+    <li>At least 4 rooms spawn monsters on reset</li>
+    <li>Use <code>add_clone(path, count, 0, 1)</code> to prevent duplicate spawning</li>
+    <li>Different rooms should spawn different monster types where appropriate:
+      <ul>
+        <li>Flooded tunnel: cave spiders</li>
+        <li>Collapsed gallery: ghost miners</li>
+        <li>Deep shaft: mix of both</li>
+        <li>Boss room: the Foreman only</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>5. All Files Pass 3K Codestyle</h3>
+
+  <p>Review every file in your area for codestyle compliance:</p>
+
+  <ul>
+    <li><code>#pragma strong_types</code> as the first line of every <code>.c</code> file</li>
+    <li><code>#include "defs.h"</code> (with correct relative path for subdirs)</li>
+    <li>Spaces only, no tabs, 2-space indentation</li>
+    <li>Allman bracket style (opening <code>{</code> on its own line)</li>
+    <li><code>void</code> functions end with explicit <code>return;</code></li>
+    <li><code>status</code> type for boolean values</li>
+    <li><code>lowercase_underscore</code> naming throughout</li>
+    <li>Lines under 80 characters where possible</li>
+    <li>Comments explaining non-obvious logic</li>
+    <li>File structure: pragma, include, defines, inherit, globals,
+    prototypes, create(), init(), reset(), other functions</li>
+  </ul>
+
+  <h3>6. Area README</h3>
+
+  <p>Write a brief description of your area that could be shown to other
+  players. Include:</p>
+  <ul>
+    <li>The theme/story (2-3 sentences)</li>
+    <li>Recommended level range</li>
+    <li>Number of rooms</li>
+    <li>Notable features (boss, unique loot, branching paths)</li>
+  </ul>
+
+  <p>This can be a comment block at the top of <code>entrance.c</code> or a separate
+  text file.</p>
+
+  <h2>Final Checklist</h2>
+
+  <h3>Structure</h3>
+  <ul>
+    <li><code>defs.h</code> with correct include chain and all path defines</li>
+    <li><code>entrance.c</code>, outdoor room, no dungeon scaling</li>
+    <li><code>rooms/droom.c</code>, base inheritable, dungeon level 8</li>
+    <li>7+ dungeon rooms (rm2 through rm7+)</li>
+    <li>2 branching paths converging at the boss</li>
+  </ul>
+
+  <h3>Objects</h3>
+  <ul>
+    <li>2+ treasure objects in <code>obj/</code></li>
+    <li>1+ readable object or room feature</li>
+    <li>1 regular weapon in <code>obj/</code></li>
+    <li>1 regular armor in <code>obj/</code></li>
+    <li>1 unique boss drop with special feature</li>
+    <li>1 disease in <code>obj/disease/</code></li>
+  </ul>
+
+  <h3>Monsters</h3>
+  <ul>
+    <li><code>mon/hm_mob.c</code> base inheritable</li>
+    <li>2+ regular monster types with <code>load_chat()</code></li>
+    <li>1 boss (super_monster) with modify_damage, monster_died,
+    extra_look, spells, timed mechanic</li>
+  </ul>
+
+  <h3>Rooms</h3>
+  <ul>
+    <li>8+ total rooms</li>
+    <li>Every room: short, long, 3+ add_item</li>
+    <li>2+ rooms with add_search_item</li>
+    <li>1+ room with add_read</li>
+    <li>4+ rooms spawn monsters via reset()</li>
+    <li>Boss room has interactive add_action mechanic</li>
+  </ul>
+
+  <h3>Code Quality</h3>
+  <ul>
+    <li>All files follow 3K codestyle</li>
+    <li>No compilation errors</li>
+    <li>No runtime errors during play</li>
+    <li>Area README/description written</li>
+  </ul>
+
+  <h2>Self-Check</h2>
+
+  <p>Final review of your complete area:</p>
+
+  <ol>
+    <li>All rooms have short, long, and 3+ <code>add_item()</code> calls</li>
+    <li>Exits form two complete paths: entrance -&gt; rm2 -&gt; rm3 -&gt; rm4 -&gt; rm6 -&gt; rm7
+    and entrance -&gt; rm2 -&gt; rm3 -&gt; rm5 -&gt; rm6 -&gt; rm7</li>
+    <li>At least 4 rooms spawn monsters via <code>reset()</code>/<code>add_clone()</code></li>
+    <li>The disease object has <code>set_filename()</code> pointing to its actual file path</li>
+    <li>All files follow 3K codestyle (pragma, includes, Allman braces, etc.)</li>
+    <li>No compilation errors in any file</li>
+  </ol>
+
+  <p>When you become a wizard, do a full playthrough: walk both paths,
+  search items, read features, fight monsters, contract the disease,
+  defeat the Foreman, and check the game log for errors.</p>
+
+  <h2>Congratulations</h2>
+
+  <p>You have built a complete dungeon area from scratch, rooms, atmosphere,
+  combat, a boss encounter, and polish. This is everything a 3Kingdoms
+  area needs to be playable and enjoyable. You now have the skills to
+  build any area you can imagine.</p>
+
+  <p>Welcome to the ranks of 3Kingdoms area builders.</p>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

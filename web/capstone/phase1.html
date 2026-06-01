@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1: The Foundation — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="../reference/cheatsheet-types.html">Types</a>
+  <a href="../reference/cheatsheet-operators.html">Operators</a>
+  <a href="../reference/cheatsheet-functions.html">Functions</a>
+  <a href="../reference/cheatsheet-control.html">Control</a>
+  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
+  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
+  <a href="../reference/cheatsheet-objects.html">Objects</a>
+  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
+  <a href="../reference/cheatsheet-armor.html">Armor</a>
+  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
+  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
+  <div class="section-label">Capstone</div>
+  <a href="index.html">Overview</a>
+  <a href="phase1.html">Phase 1: Foundation</a>
+  <a href="phase2.html">Phase 2: Atmosphere</a>
+  <a href="phase3.html">Phase 3: Combat</a>
+  <a href="phase4.html">Phase 4: The Boss</a>
+  <a href="phase5.html">Phase 5: Polish</a>
+</nav>
+
+<main id="main-content">
+  <h1>Phase 1: The Foundation</h1>
+
+  <p><strong>Prerequisite:</strong> Chapters 1-9 completed<br>
+  <strong>Goal:</strong> Create the area skeleton, defines, entrance, base room, and 2
+  connected dungeon rooms.</p>
+
+  <h2>Background</h2>
+
+  <p>Every area starts with its bones: the include chain, the entrance, and the
+  base inheritable room. In this phase you will set up the Haunted Mine's
+  directory structure and create the first rooms a player walks through.</p>
+
+  <h2>Requirements</h2>
+
+  <h3>1. Create <code>haunted_mine/defs.h</code></h3>
+
+  <p>Your area's header file wires into the global include chain and defines
+  path shortcuts used by every file in the area.</p>
+
+  <ul>
+    <li>Include the parent <code>defs.h</code> with <code>#include "../defs.h"</code></li>
+    <li>Define these path macros:
+      <ul>
+        <li><code>HM</code>, base area path (e.g., <code>AREAS + "haunted_mine/"</code>)</li>
+        <li><code>HM_ROOM</code>, rooms subdirectory (<code>HM + "rooms/"</code>)</li>
+        <li><code>HM_ITEM</code>, objects subdirectory (<code>HM + "obj/"</code>)</li>
+        <li><code>HM_MOBS</code>, monsters subdirectory (<code>HM + "mon/"</code>)</li>
+        <li><code>DNAME</code>, dungeon name string: <code>"Haunted Mine"</code></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>2. Create <code>haunted_mine/entrance.c</code></h3>
+
+  <p>The entrance is an outdoor room, the abandoned minehead on a hillside.
+  It does NOT use dungeon scaling (no <code>set_dungeon</code> call).</p>
+
+  <p>Requirements:</p>
+  <ul>
+    <li><code>#pragma strong_types</code> as the first line</li>
+    <li><code>#include "defs.h"</code> and <code>inherit "room/dungeon/dr.c";</code></li>
+    <li><code>set_light(1)</code>, it is outdoors</li>
+    <li><code>set_short()</code>, a brief room title</li>
+    <li><code>set_long()</code>, 2-3 sentences describing the abandoned mine entrance</li>
+    <li>At least 3 <code>add_item()</code> calls for examinable details (the mine entrance,
+    the hillside, old equipment, etc.)</li>
+    <li>One exit going south to <code>HM_ROOM + "rm2"</code> (into the mine)</li>
+  </ul>
+
+  <h3>3. Create <code>haunted_mine/rooms/droom.c</code></h3>
+
+  <p>The base dungeon room that all mine rooms will inherit. This sets the
+  dungeon scaling and default atmosphere.</p>
+
+  <p>Requirements:</p>
+  <ul>
+    <li><code>#pragma strong_types</code>, <code>#include "../defs.h"</code>, inherit dungeon room</li>
+    <li><code>set_dungeon(DNAME, 8, 1, 1, 1)</code>, level 8 dungeon</li>
+    <li><code>set_light(1)</code></li>
+    <li>At least 2 default <code>add_item()</code> calls that apply to every mine room
+    (e.g., "tunnel", "walls", "floor", "darkness")</li>
+    <li>A <code>set_block_message()</code> for invalid directions</li>
+  </ul>
+
+  <h3>4. Create <code>haunted_mine/rooms/rm2.c</code> and <code>rooms/rm3.c</code></h3>
+
+  <p>Two basic dungeon rooms that inherit from <code>droom.c</code>.</p>
+
+  <p><strong>rm2.c, Mine Entrance Hall:</strong></p>
+  <ul>
+    <li>Inherits <code>"droom"</code> (local inherit)</li>
+    <li><code>set_short()</code>, <code>set_long()</code>, describe the first room inside the mine</li>
+    <li>At least 3 <code>add_item()</code> calls (old rails, support beams, dust, etc.)</li>
+    <li>Exits: north to <code>entrance.c</code>, south to <code>rm3</code></li>
+  </ul>
+
+  <p><strong>rm3.c, The Junction:</strong></p>
+  <ul>
+    <li>Inherits <code>"droom"</code> (local inherit)</li>
+    <li><code>set_short()</code>, <code>set_long()</code>, a room where the tunnel splits</li>
+    <li>At least 3 <code>add_item()</code> calls</li>
+    <li>Exits: north to <code>rm2</code>, west (to future rm4), east (to future rm5)
+      <ul>
+        <li>For now, west and east can point to placeholder comments or simply
+        be omitted until Phase 5</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Deliverables</h2>
+
+  <ul>
+    <li><code>haunted_mine/defs.h</code>, compiles without errors</li>
+    <li><code>haunted_mine/entrance.c</code>, loads, has short/long/items/exit</li>
+    <li><code>haunted_mine/rooms/droom.c</code>, compiles, sets dungeon scaling</li>
+    <li><code>haunted_mine/rooms/rm2.c</code>, loads, connects to entrance and rm3</li>
+    <li><code>haunted_mine/rooms/rm3.c</code>, loads, connects to rm2</li>
+  </ul>
+
+  <h2>Self-Check</h2>
+
+  <p>Before moving on, review your work against these criteria:</p>
+
+  <ol>
+    <li>Each room has a <code>set_short()</code> and <code>set_long()</code> description</li>
+    <li>Every <code>add_item()</code> keyword has a description (no "You see nothing special")</li>
+    <li>Exits connect correctly (entrance -&gt; rm2 -&gt; rm3 and back)</li>
+    <li>rm2 and rm3 inherit from <code>droom.c</code> which sets dungeon scaling</li>
+  </ol>
+
+  <p>When you become a wizard, you can test in-game with commands like
+  <code>update</code>, <code>goto</code>, and <code>exa</code>. For now, focus on getting the code right.</p>
+
+  <h2>Hints</h2>
+
+  <ul>
+    <li>Look at the starter templates in the <code>standard/</code> and <code>dungeon/</code> capstone
+    directories for scaffolding</li>
+    <li>The entrance does NOT inherit droom, it inherits <code>"room/dungeon/dr.c"</code>
+    directly (no dungeon scaling for the outdoor room)</li>
+    <li>rm2 and rm3 inherit from the local <code>"droom"</code> file, not the full path</li>
+    <li>For word-wrapped long descriptions, you can define helper macros in
+    your defs.h: <code>#define str_f(str) sprintf("%-=72s\n", str)</code> and
+    <code>#define set_long_f(str) set_long(str_f(str))</code> — these wrap text to
+    72 columns so it reads well on any terminal</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3: Combat — The Forge</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+
+<nav class="sidebar" aria-label="Chapter navigation">
+  <h1>The Forge</h1>
+  <a href="../index.html">Home</a>
+  <div class="section-label">Overview</div>
+  <a href="../chapters/00-big-picture.html">0. The Big Picture</a>
+  <div class="section-label">Language Basics</div>
+  <a href="../chapters/01-intro.html">1. Introduction</a>
+  <a href="../chapters/02-types.html">2. Types</a>
+  <a href="../chapters/03-variables.html">3. Variables</a>
+  <a href="../chapters/04-operators.html">4. Operators</a>
+  <a href="../chapters/05-mappings.html">5. Mappings &amp; Arrays</a>
+  <a href="../chapters/06-functions.html">6. Functions</a>
+  <a href="../chapters/07-control.html">7. Control Structures</a>
+  <a href="../chapters/08-modifiers.html">8. Modifiers</a>
+  <a href="../chapters/09-preprocessor.html">9. Preprocessor</a>
+  <a href="../chapters/10-inheritance.html">10. Inheritance</a>
+  <div class="section-label">Building Blocks</div>
+  <a href="../chapters/11-codestyle.html">11. Codestyle</a>
+  <a href="../chapters/12-driver-functions.html">12. Driver Functions</a>
+  <a href="../chapters/13-rooms.html">13. Rooms</a>
+  <a href="../chapters/14-objects.html">14. Objects</a>
+  <div class="section-label">Game Systems</div>
+  <a href="../chapters/15-weapons.html">15. Weapons</a>
+  <a href="../chapters/16-armor.html">16. Armor</a>
+  <a href="../chapters/17-monsters.html">17. Monsters</a>
+  <a href="../chapters/18-putting-together.html">18. Putting It Together</a>
+  <a href="../chapters/19-advanced.html">19. Advanced Topics</a>
+  <div class="section-label">3K Extensions</div>
+  <a href="../chapters/20-dungeon-rooms.html">20. Dungeon Rooms</a>
+  <a href="../chapters/21-dungeon-integration.html">21. Dungeon Integration</a>
+  <div class="section-label">Reference</div>
+  <a href="../reference/glossary.html">Glossary</a>
+  <a href="../reference/cheatsheet-types.html">Types</a>
+  <a href="../reference/cheatsheet-operators.html">Operators</a>
+  <a href="../reference/cheatsheet-functions.html">Functions</a>
+  <a href="../reference/cheatsheet-control.html">Control</a>
+  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
+  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
+  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
+  <a href="../reference/cheatsheet-objects.html">Objects</a>
+  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
+  <a href="../reference/cheatsheet-armor.html">Armor</a>
+  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
+  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
+  <div class="section-label">Capstone</div>
+  <a href="index.html">Overview</a>
+  <a href="phase1.html">Phase 1: Foundation</a>
+  <a href="phase2.html">Phase 2: Atmosphere</a>
+  <a href="phase3.html">Phase 3: Combat</a>
+  <a href="phase4.html">Phase 4: The Boss</a>
+  <a href="phase5.html">Phase 5: Polish</a>
+</nav>
+
+<main id="main-content">
+  <h1>Phase 3: Combat</h1>
+
+  <p><strong>Prerequisite:</strong> Chapters 15-17 completed, Phases 1-2 complete<br>
+  <strong>Goal:</strong> Populate the mine with enemies, weapons, and armor.</p>
+
+  <h2>Background</h2>
+
+  <p>The Haunted Mine has atmosphere, but no danger. In this phase you bring
+  the mine to life (or unlife) with monsters, equippable loot, and combat
+  encounters. You will create a base monster inheritable, specific enemy
+  types, and equipment for players to find.</p>
+
+  <h2>Requirements</h2>
+
+  <h3>1. Create <code>mon/hm_mob.c</code>, Base Monster Inheritable</h3>
+
+  <p>A shared base file that all Haunted Mine monsters inherit from. This
+  keeps common setup in one place.</p>
+
+  <p>Requirements:</p>
+  <ul>
+    <li>Inherit <code>"obj/monster"</code></li>
+    <li>In <code>create()</code>, set baseline properties that all mine monsters share:
+      <ul>
+        <li><code>set_race()</code>, a default race (can be overridden by children)</li>
+        <li><code>set_alignment()</code>, evil or chaotic</li>
+        <li><code>set_gender()</code>, random or fixed</li>
+        <li><code>set_chance()</code> and <code>set_spell_dam()</code> if desired</li>
+      </ul>
+    </li>
+    <li>Include a helper function or shared <code>load_chat()</code> messages that
+    children can extend</li>
+  </ul>
+
+  <h3>2. Create 2+ Monster Types</h3>
+
+  <p>Create at least two distinct monster files that inherit from <code>hm_mob.c</code>.</p>
+
+  <p><strong>Example: <code>mon/ghost_miner.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"hm_mob"</code></li>
+    <li><code>set_name("ghost miner")</code>, <code>set_short()</code>, <code>set_long()</code></li>
+    <li><code>set_level()</code> appropriate for a level 8 dungeon (6-10 range)</li>
+    <li><code>load_chat(3, ...)</code> with at least 3 atmospheric chat messages
+    (ghostly moans, whispered warnings, rattling chains)</li>
+    <li><code>set_alias()</code> with multiple keywords (<code>({"ghost", "miner", "spirit"})</code>)</li>
+  </ul>
+
+  <p><strong>Example: <code>mon/cave_spider.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"hm_mob"</code></li>
+    <li>Different theme, a natural hazard rather than undead</li>
+    <li>Its own <code>load_chat()</code> messages (skittering, hissing, web-spinning)</li>
+    <li>Different level than the ghost miner (variety in difficulty)</li>
+  </ul>
+
+  <p>Each monster must have:</p>
+  <ul>
+    <li>Unique name, short, long description</li>
+    <li><code>load_chat()</code> with 3+ messages</li>
+    <li><code>set_alias()</code> with multiple keywords</li>
+    <li>A level appropriate for the dungeon</li>
+  </ul>
+
+  <h3>3. Create 1 Weapon and 1 Armor in <code>obj/</code></h3>
+
+  <p><strong>Weapon example: <code>obj/rusty_pickaxe.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"obj/weapon"</code></li>
+    <li><code>set_short()</code>, <code>set_long()</code>, <code>set_name()</code>, <code>set_alias()</code>, <code>set_weight()</code></li>
+    <li><code>set_class()</code>, damage class appropriate for the dungeon level</li>
+    <li><code>set_type()</code>, weapon type ("club", "axe", etc.)</li>
+    <li><code>set_value()</code></li>
+  </ul>
+
+  <p><strong>Armor example: <code>obj/miners_helmet.c</code></strong></p>
+  <ul>
+    <li>Inherit <code>"obj/armour"</code></li>
+    <li><code>set_short()</code>, <code>set_long()</code>, <code>set_name()</code>, <code>set_alias()</code>, <code>set_weight()</code></li>
+    <li><code>set_ac()</code>, armor class appropriate for the dungeon level</li>
+    <li><code>set_type()</code>, armor slot ("helmet", "armour", "shield", etc.)</li>
+    <li><code>set_value()</code></li>
+  </ul>
+
+  <h3>4. Spawn Monsters in Rooms via <code>reset()</code></h3>
+
+  <p>Update your dungeon rooms to spawn monsters when the room resets.</p>
+
+  <p>In <code>droom.c</code> or individual rooms, add <code>reset()</code> with <code>add_clone()</code>:</p>
+
+  <pre><code>void reset()
+{
+  ::reset();
+  add_clone(HM_MOBS + "ghost_miner", 1, 0, 1);
+  return;
+}</code></pre>
+
+  <p>Or create helper functions in <code>droom.c</code> (like the Horde's <code>addc()</code>):</p>
+
+  <pre><code>varargs object *addc(string x, int y)
+{
+  return add_clone(sprintf("%s%s", HM_MOBS, x), (y ? y : 1), 0, 1);
+}</code></pre>
+
+  <p>Requirements:</p>
+  <ul>
+    <li>At least 2 rooms should spawn monsters on reset</li>
+    <li>Different rooms can spawn different monster types</li>
+    <li>Use the 4th argument to <code>add_clone()</code> (set to 1) to prevent duplicates</li>
+  </ul>
+
+  <h2>Deliverables</h2>
+
+  <ul>
+    <li><code>mon/hm_mob.c</code>, compiles, sets shared monster properties</li>
+    <li><code>mon/ghost_miner.c</code>, loads, has name/short/long/chat/level</li>
+    <li><code>mon/cave_spider.c</code> (or similar), loads, distinct from ghost_miner</li>
+    <li><code>obj/rusty_pickaxe.c</code> (or similar weapon), equippable, correct type</li>
+    <li><code>obj/miners_helmet.c</code> (or similar armor), equippable, correct slot</li>
+    <li>At least 2 rooms spawn monsters via <code>reset()</code>/<code>add_clone()</code></li>
+    <li>All monsters have <code>load_chat()</code> with 3+ messages</li>
+  </ul>
+
+  <h2>Self-Check</h2>
+
+  <p>Review your work against these criteria:</p>
+
+  <ol>
+    <li>Every monster has <code>set_name()</code>, <code>set_alias()</code>, <code>set_short()</code>, <code>set_long()</code>, <code>set_level()</code></li>
+    <li>Every monster has <code>load_chat()</code> with 3+ messages</li>
+    <li>Monster levels are in the 6-10 range for a level 8 dungeon</li>
+    <li>Weapon has <code>set_class()</code> and <code>set_type()</code></li>
+    <li>Armor has <code>set_ac()</code> and <code>set_type()</code></li>
+    <li>At least 2 rooms call <code>add_clone()</code> in <code>reset()</code></li>
+  </ol>
+
+  <p>When you become a wizard, you can test in-game with <code>update</code>, <code>goto</code>,
+  <code>kill</code>, and <code>reset</code> commands. For now, focus on getting the code right.</p>
+
+  <h2>Hints</h2>
+
+  <ul>
+    <li>The <code>load_chat(chance, ({...}))</code> function takes a 1-in-N chance and an
+    array of message strings, messages display during combat rounds</li>
+    <li><code>add_clone(path, count, 0, 1)</code>, the last argument (1) means "only
+    clone if not already present," preventing monster stacking on reset</li>
+    <li>Keep monster levels in the 6-10 range for a level 8 dungeon; the
+    dungeon scaling will adjust them for the player</li>
+    <li>Chat messages are a great place for lore: a ghost miner might whisper
+    about the foreman, the collapse, or beg players to leave</li>
+  </ul>
+
+</main>
+
+<script src="../exercises.js"></script>
+</body>
+</html>
