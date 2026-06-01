@@ -441,6 +441,21 @@ details summary:focus-visible {
   }
   nav.sidebar.open { max-height: 80vh; overflow-y: auto; }
   nav.sidebar h1 { display: none; }
-  main { margin-left: 0; padding: 1.5rem; }
+  main { margin-left: 0; padding: 1rem; max-width: 100%; }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.15rem; }
   .chapter-grid { grid-template-columns: 1fr; }
+  .type-table { font-size: 0.8rem; }
+  .type-table th,
+  .type-table td { padding: 0.3rem 0.5rem; }
+  .exercise .file-path {
+    word-break: break-all;
+    font-size: 0.8rem;
+  }
+  pre {
+    font-size: 0.78rem;
+    padding: 0.75rem;
+  }
+  .exercise { padding: 1rem; }
+  .chapter-downloads { padding: 0.75rem 1rem; }
 }
