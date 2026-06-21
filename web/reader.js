@@ -51,8 +51,12 @@
     );
 
     walker.forEach(el => {
-      // Skip elements inside code blocks, pre, download sections, nav
-      if (el.closest('pre, code, .chapter-downloads, nav, .progress-check, script, style')) return;
+      // Skip elements inside code blocks, pre, download sections, nav, or hidden elements
+      if (el.closest('pre, code, .chapter-downloads, nav, .progress-check, script, style, #reader-bar')) return;
+      // Skip elements or ancestors that are hidden
+      if (el.offsetParent === null && el.style.display !== 'fixed') return;
+      const closestHidden = el.closest('[style*="display:none"], [style*="display: none"]');
+      if (closestHidden) return;
       // Skip empty elements
       const text = el.textContent.trim();
       if (!text) return;
