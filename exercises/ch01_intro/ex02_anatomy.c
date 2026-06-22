@@ -14,8 +14,3 @@ void create()  {
 
 	return
 }
-
-int query_is_broken()
-{
-	return 1;
-}

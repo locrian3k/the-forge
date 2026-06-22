@@ -11,7 +11,6 @@
     4. Moved opening brace of create() to its own line (Allman style)
     5. Replaced all tabs with 2-space indentation
     6. Added missing semicolon after return in create()
-    7. Fixed tab indentation in query_is_broken
 */
 #pragma strong_types
 #include "../defs.h"
@@ -31,5 +30,3 @@ void create()
 
   return;
 }
-
-int query_is_broken() { return 1; }
