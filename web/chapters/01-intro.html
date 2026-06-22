@@ -181,7 +181,9 @@
 <pre><code>#pragma strong_types
 #include "../defs.h"</code></pre>
       <p>
-        <code>#pragma strong_types</code> tells the compiler to enforce type checking.
+        <code>#pragma strong_types</code> tells the compiler to enforce type checking —
+        meaning it will catch mistakes like putting text where a number is expected.
+        You will learn about types in <a href="02-types.html">Chapter 2</a>.
         <code>#include "../defs.h"</code> pulls in the shared header file from the
         <code>exercises/</code> folder. The <code>../</code> means "go up one directory" —
         since your exercise file is inside <code>exercises/ch01_intro/</code>, the
