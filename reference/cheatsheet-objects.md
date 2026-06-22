@@ -56,7 +56,7 @@ void create()
 | `set_alias(arr)` | Additional ids | `set_alias(({"blade", "weapon"}))` |
 | `set_short(str)` | Inventory listing | `set_short("A rusty sword")` |
 | `set_long(str)` | Examine text | `set_long("Detailed description.")` |
-| `set_value(n)` | Gold value | `set_value(200)` |
+| `set_value(n)` | Coin value | `set_value(200)` |
 | `set_weight(n)` | Weight units | `set_weight(3)` |
 
 ## add_item (Examinable Details)

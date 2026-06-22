@@ -60,7 +60,7 @@
 
 **Alias**, Additional names an object responds to. Set with `set_alias()`.
 
-**Value**, Gold coin worth for selling. Set with `set_value()`.
+**Value**, Coin worth for selling. Set with `set_value()`.
 
 **Weight**, Encumbrance units. Set with `set_weight()`.
 

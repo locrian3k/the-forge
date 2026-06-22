@@ -29,7 +29,7 @@ void create()
   // TODO: Add at least one add_item() for an examinable detail
   //   on the object.
 
-  // TODO: Set a gold value with set_value() (positive integer)
+  // TODO: Set a coin value with set_value() (positive integer)
 
   // TODO: Set a weight with set_weight() (positive integer, 1-5)
 

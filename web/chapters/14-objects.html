@@ -80,7 +80,7 @@
     <h3>Things Players Pick Up</h3>
     <p>
       Objects are what players carry, examine, and use. The simplest type is a
-      <strong>treasure</strong>, something with a name, description, weight, and gold
+      <strong>treasure</strong>, something with a name, description, weight, and coin
       value that can be collected and sold to shops.
     </p>
     <p>
@@ -134,7 +134,7 @@
         <li>Set aliases with <code>set_alias()</code> using an array of at least 3 alternate names</li>
         <li>Set a short description with <code>set_short()</code> (shown in inventory lists)</li>
         <li>Set a long description with <code>set_long()</code> (at least two sentences)</li>
-        <li>Set a gold value with <code>set_value()</code> (positive integer)</li>
+        <li>Set a coin value with <code>set_value()</code> (positive integer)</li>
         <li>Set a weight with <code>set_weight()</code> (positive integer, typically 1-5)</li>
         <li>Add at least one <code>add_item()</code> for an examinable detail</li>
       </ul>
@@ -147,7 +147,7 @@
       <ol>
         <li><code>set_name()</code> should be lowercase and is how the game engine refers to the object internally. Players use this name (and aliases) with commands like <code>get</code>, <code>drop</code>, and <code>look at</code>.</li>
         <li><code>set_alias()</code> takes an array of strings. Include the name itself plus shorter or alternate forms: <code>({"ring","gold ring","signet","band"})</code>.</li>
-        <li><code>set_value()</code> sets how much gold a shop will pay for the item. Typical treasures range from 10 to 500 gold.</li>
+        <li><code>set_value()</code> sets how many coins a shop will pay for the item. Typical treasures range from 10 to 500.</li>
         <li><code>add_item()</code> on an object works just like in rooms, it lets players examine sub-features of the object (e.g. <code>look at engraving</code> while holding the ring).</li>
       </ol>
     </details>

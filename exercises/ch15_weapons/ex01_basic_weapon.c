@@ -36,7 +36,7 @@ void create()
 
   // TODO: Set the weight using set_weight() (typically 2-5)
 
-  // TODO: Set the gold value using set_value()
+  // TODO: Set the coin value using set_value()
 
   return;
 }

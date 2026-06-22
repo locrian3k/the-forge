@@ -1,308 +1,447 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chapter 1: Introduction — The Forge</title>
-  <link rel="stylesheet" href="../style.css">
-</head>
-<body>
-<a class="skip-link" href="#main-content">Skip to content</a>
-<button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776; Menu</button>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chapter 1: Introduction — The Forge</title>
+		<link rel="stylesheet" href="../style.css" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Skip to content</a>
+		<button
+			class="nav-toggle"
+			aria-label="Toggle navigation"
+			onclick="document.querySelector('.sidebar').classList.toggle('open')">
+			&#9776; Menu
+		</button>
 
-<nav class="sidebar" aria-label="Chapter navigation">
-  <h1>The Forge</h1>
-  <a href="../index.html">Home</a>
-  <div class="section-label">Overview</div>
-  <a href="00-big-picture.html">0. The Big Picture</a>
-  <div class="section-label">Language Basics</div>
-  <a href="01-intro.html">1. Introduction</a>
-  <a href="02-types.html">2. Types</a>
-  <a href="03-variables.html">3. Variables</a>
-  <a href="04-operators.html">4. Operators</a>
-  <a href="05-mappings.html">5. Mappings &amp; Arrays</a>
-  <a href="06-functions.html">6. Functions</a>
-  <a href="07-control.html">7. Control Structures</a>
-  <a href="08-modifiers.html">8. Modifiers</a>
-  <a href="09-preprocessor.html">9. Preprocessor</a>
-  <a href="10-inheritance.html">10. Inheritance</a>
-  <div class="section-label">Building Blocks</div>
-  <a href="11-codestyle.html">11. Codestyle</a>
-  <a href="12-driver-functions.html">12. Driver Functions</a>
-  <a href="13-rooms.html">13. Rooms</a>
-  <a href="14-objects.html">14. Objects</a>
-  <div class="section-label">Game Systems</div>
-  <a href="15-weapons.html">15. Weapons</a>
-  <a href="16-armor.html">16. Armor</a>
-  <a href="17-monsters.html">17. Monsters</a>
-  <a href="18-putting-together.html">18. Putting It Together</a>
-  <a href="19-advanced.html">19. Advanced Topics</a>
-  <div class="section-label">3K Extensions</div>
-  <a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
-  <a href="21-dungeon-integration.html">21. Dungeon Integration</a>
-  <div class="section-label">Reference</div>
-  <a href="../reference/glossary.html">Glossary</a>
-  <a href="../reference/cheatsheet-types.html">Types</a>
-  <a href="../reference/cheatsheet-operators.html">Operators</a>
-  <a href="../reference/cheatsheet-functions.html">Functions</a>
-  <a href="../reference/cheatsheet-control.html">Control</a>
-  <a href="../reference/cheatsheet-mappings.html">Mappings</a>
-  <a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
-  <a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
-  <a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
-  <a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
-  <a href="../reference/cheatsheet-driver-functions.html">Driver Functions</a>
-  <a href="../reference/cheatsheet-rooms.html">Rooms</a>
-  <a href="../reference/cheatsheet-objects.html">Objects</a>
-  <a href="../reference/cheatsheet-weapons.html">Weapons</a>
-  <a href="../reference/cheatsheet-armor.html">Armor</a>
-  <a href="../reference/cheatsheet-monsters.html">Monsters</a>
-  <a href="../reference/cheatsheet-advanced.html">Advanced</a>
-  <div class="section-label">Capstone</div>
-  <a href="../capstone/index.html">Overview</a>
-  <a href="../capstone/phase1.html">Phase 1: Foundation</a>
-  <a href="../capstone/phase2.html">Phase 2: Atmosphere</a>
-  <a href="../capstone/phase3.html">Phase 3: Combat</a>
-  <a href="../capstone/phase4.html">Phase 4: The Boss</a>
-  <a href="../capstone/phase5.html">Phase 5: Polish</a>
-</nav>
+		<nav class="sidebar" aria-label="Chapter navigation">
+			<h1>The Forge</h1>
+			<a href="../index.html">Home</a>
+			<div class="section-label">Overview</div>
+			<a href="00-big-picture.html">0. The Big Picture</a>
+			<div class="section-label">Language Basics</div>
+			<a href="01-intro.html">1. Introduction</a>
+			<a href="02-types.html">2. Types</a>
+			<a href="03-variables.html">3. Variables</a>
+			<a href="04-operators.html">4. Operators</a>
+			<a href="05-mappings.html">5. Mappings &amp; Arrays</a>
+			<a href="06-functions.html">6. Functions</a>
+			<a href="07-control.html">7. Control Structures</a>
+			<a href="08-modifiers.html">8. Modifiers</a>
+			<a href="09-preprocessor.html">9. Preprocessor</a>
+			<a href="10-inheritance.html">10. Inheritance</a>
+			<div class="section-label">Building Blocks</div>
+			<a href="11-codestyle.html">11. Codestyle</a>
+			<a href="12-driver-functions.html">12. Driver Functions</a>
+			<a href="13-rooms.html">13. Rooms</a>
+			<a href="14-objects.html">14. Objects</a>
+			<div class="section-label">Game Systems</div>
+			<a href="15-weapons.html">15. Weapons</a>
+			<a href="16-armor.html">16. Armor</a>
+			<a href="17-monsters.html">17. Monsters</a>
+			<a href="18-putting-together.html">18. Putting It Together</a>
+			<a href="19-advanced.html">19. Advanced Topics</a>
+			<div class="section-label">3K Extensions</div>
+			<a href="20-dungeon-rooms.html">20. Dungeon Rooms</a>
+			<a href="21-dungeon-integration.html">21. Dungeon Integration</a>
+			<div class="section-label">Reference</div>
+			<a href="../reference/glossary.html">Glossary</a>
+			<a href="../reference/cheatsheet-types.html">Types</a>
+			<a href="../reference/cheatsheet-operators.html">Operators</a>
+			<a href="../reference/cheatsheet-functions.html">Functions</a>
+			<a href="../reference/cheatsheet-control.html">Control</a>
+			<a href="../reference/cheatsheet-mappings.html">Mappings</a>
+			<a href="../reference/cheatsheet-modifiers.html">Modifiers</a>
+			<a href="../reference/cheatsheet-preprocessor.html">Preprocessor</a>
+			<a href="../reference/cheatsheet-inheritance.html">Inheritance</a>
+			<a href="../reference/cheatsheet-codestyle.html">Codestyle</a>
+			<a href="../reference/cheatsheet-driver-functions.html"
+				>Driver Functions</a
+			>
+			<a href="../reference/cheatsheet-rooms.html">Rooms</a>
+			<a href="../reference/cheatsheet-objects.html">Objects</a>
+			<a href="../reference/cheatsheet-weapons.html">Weapons</a>
+			<a href="../reference/cheatsheet-armor.html">Armor</a>
+			<a href="../reference/cheatsheet-monsters.html">Monsters</a>
+			<a href="../reference/cheatsheet-advanced.html">Advanced</a>
+			<div class="section-label">Capstone</div>
+			<a href="../capstone/index.html">Overview</a>
+			<a href="../capstone/phase1.html">Phase 1: Foundation</a>
+			<a href="../capstone/phase2.html">Phase 2: Atmosphere</a>
+			<a href="../capstone/phase3.html">Phase 3: Combat</a>
+			<a href="../capstone/phase4.html">Phase 4: The Boss</a>
+			<a href="../capstone/phase5.html">Phase 5: Polish</a>
+		</nav>
 
-<main id="main-content">
-  <header>
-    <h1>Chapter 1: Introduction</h1>
-    <p class="primer-link">
-      Primer:
-      <a href="https://3k.org/resources/primer/coding/introduction.html" target="_blank">
-        Introduction to LPC
-      </a>
-    </p>
-  </header>
+		<main id="main-content">
+			<header>
+				<h1>Chapter 1: Introduction</h1>
+				<p class="primer-link">
+					Primer:
+					<a
+						href="https://3k.org/resources/primer/coding/introduction.html"
+						target="_blank">
+						Introduction to LPC
+					</a>
+				</p>
+			</header>
 
-  <div class="concept-recap">
-    <p>
-      Every LPC file on 3Kingdoms follows a strict structure: it begins with
-      an optional file header comment (filename, author, date), then
-      <code>#pragma strong_types</code> and <code>#include "defs.h"</code>, followed by
-      an <code>inherit</code> statement that tells the driver which parent object to build on.
-      The <code>create()</code> function runs once when the object is first loaded, and it
-      always calls <code>::create()</code> to let the parent initialize first.
-    </p>
-    <p>
-      These exercises get you writing your first LPC file and training your eye for the
-      structural rules that every 3K file must follow. If you can write a compilable object
-      and spot common bugs, you are ready to move on.
-    </p>
-    <p>
-      Read the
-      <a href="https://3k.org/resources/primer/coding/introduction.html" target="_blank">Introduction</a>
-      chapter of the primer before starting.
-    </p>
-  </div>
+			<div class="concept-recap">
+				<p>
+					Every LPC file on 3Kingdoms follows a strict structure: it begins with
+					an optional file header comment (filename, author, date), then
+					<code>#pragma strong_types</code> and <code>#include "defs.h"</code>,
+					followed by an <code>inherit</code> statement that tells the driver
+					which parent object to build on. The <code>create()</code> function
+					runs once when the object is first loaded, and it always calls
+					<code>::create()</code> to let the parent initialize first.
+				</p>
+				<p>
+					These exercises get you writing your first LPC file and training your
+					eye for the structural rules that every 3K file must follow. If you
+					can write a compilable object and spot common bugs, you are ready to
+					move on.
+				</p>
+				<p>
+					Read the
+					<a
+						href="https://3k.org/resources/primer/coding/introduction.html"
+						target="_blank"
+						>Introduction</a
+					>
+					chapter of the primer before starting.
+				</p>
+			</div>
 
-  <div class="chapter-downloads">
-    <h3>&#128229; Exercise Files</h3>
-    <p>Download these files and place them in your <code>exercises/ch01_intro/</code> folder:</p>
-    <ul>
-      <li><a href="../../exercises/ch01_intro/ex01_hello.c" download>ex01_hello.c</a></li>
-      <li><a href="../../exercises/ch01_intro/ex02_anatomy.c" download>ex02_anatomy.c</a></li>    </ul>
-    <p style="margin-top:0.5rem; font-size:0.8rem; color:var(--text-muted);">These files use <code>#include &quot;../defs.h&quot;</code> to reference the main <code>defs.h</code> in your <code>exercises/</code> folder.</p>
-    <h3 style="margin-top:1rem;">&#128270; Solutions</h3>
-    <p style="font-size:0.85rem; color:var(--text-muted);">Finished? Compare your work against the reference solutions:</p>
-    <ul>
-      <li><a href="../../solutions/ch01_intro/ex01_hello.c" target="_blank">ex01_hello.c</a></li>
-      <li><a href="../../solutions/ch01_intro/ex02_anatomy.c" target="_blank">ex02_anatomy.c</a></li>
-    </ul>
-  </div>
+			<div class="chapter-downloads">
+				<h3>&#128229; Exercise Files</h3>
+				<p>
+					Download these files and place them in your
+					<code>exercises/ch01_intro/</code> folder:
+				</p>
+				<ul>
+					<li>
+						<a href="../../exercises/ch01_intro/ex01_hello.c" download
+							>ex01_hello.c</a
+						>
+					</li>
+					<li>
+						<a href="../../exercises/ch01_intro/ex02_anatomy.c" download
+							>ex02_anatomy.c</a
+						>
+					</li>
+				</ul>
+				<p
+					style="
+						margin-top: 0.5rem;
+						font-size: 0.8rem;
+						color: var(--text-muted);
+					">
+					These files use <code>#include &quot;../defs.h&quot;</code> to
+					reference the main <code>defs.h</code> in your
+					<code>exercises/</code> folder.
+				</p>
+				<h3 style="margin-top: 1rem">&#128270; Solutions</h3>
+				<p style="font-size: 0.85rem; color: var(--text-muted)">
+					Finished? Compare your work against the reference solutions:
+				</p>
+				<ul>
+					<li>
+						<a href="../../solutions/ch01_intro/ex01_hello.c" target="_blank"
+							>ex01_hello.c</a
+						>
+					</li>
+					<li>
+						<a href="../../solutions/ch01_intro/ex02_anatomy.c" target="_blank"
+							>ex02_anatomy.c</a
+						>
+					</li>
+				</ul>
+			</div>
 
-  <section class="exercise" id="setup">
-    <h2>Before You Begin: What is defs.h?</h2>
-    <p>
-      Every LPC area on 3Kingdoms uses a <strong>header file</strong> called
-      <code>defs.h</code>. Think of it as a shared cheat-sheet: it defines shortcuts
-      (called "macros") that you can reuse across all your files instead of typing out
-      long paths or common patterns every time.
-    </p>
-    <p>
-      For example, instead of writing <code>this_object()</code> everywhere, the header
-      lets you write <code>TO</code>. Instead of typing the full path to your area's
-      monsters directory, you define it once in <code>defs.h</code> and reuse the shortcut.
-    </p>
-    <p>
-      <strong>A <code>defs.h</code> file is already included in each exercise directory.</strong>
-      Open <span class="file-path">exercises/ch01_intro/defs.h</span> to see what is inside:
-    </p>
-<pre><code>// Minimal header for Forge curriculum exercises.
+			<section class="exercise" id="setup">
+				<h2>Before You Begin: What is defs.h?</h2>
+				<p>
+					Every LPC area on 3Kingdoms uses a <strong>header file</strong> called
+					<code>defs.h</code>. Think of it as a shared cheat-sheet: it defines
+					shortcuts (called "macros") that you can reuse across all your files
+					instead of typing out long paths or common patterns every time.
+				</p>
+				<p>
+					For example, instead of writing <code>this_object()</code> everywhere,
+					the header lets you write <code>TO</code>. Instead of typing the full
+					path to your area's monsters directory, you define it once in
+					<code>defs.h</code> and reuse the shortcut.
+				</p>
+				<p>
+					<strong
+						>A <code>defs.h</code> file is already included in each exercise
+						directory.</strong
+					>
+					Open <span class="file-path">exercises/ch01_intro/defs.h</span> to see
+					what is inside:
+				</p>
+				<pre><code>// Minimal header for Forge curriculum exercises.
 // You will build a full area defs.h in Chapter 9 and Chapter 18.
 
 #define TO        this_object()
 #define TP        this_player()
 #define ETO       environment()</code></pre>
-    <p>
-      That is it for now, just three shortcuts. You will learn exactly how
-      <code>#define</code> and <code>#include</code> work in
-      <a href="09-preprocessor.html">Chapter 9 (Preprocessor)</a>. For now, just know that
-      when your code says <code>#include "defs.h"</code>, it copies the contents of that
-      file into yours at compile time.
-    </p>
-    <p>
-      When you become a wizard on the MUD, your exercise files would live at
-      <code>/players/&lt;yourname&gt;/exercises/</code> and this same
-      <code>defs.h</code> pattern carries over.
-    </p>
-  </section>
+				<p>
+					That is it for now, just three shortcuts. You will learn exactly how
+					<code>#define</code> and <code>#include</code> work in
+					<a href="09-preprocessor.html">Chapter 9 (Preprocessor)</a>. For now,
+					just know that when your code says <code>#include "defs.h"</code>, it
+					copies the contents of that file into yours at compile time.
+				</p>
+				<p>
+					When you become a wizard on the MUD, your exercise files would live at
+					<code>/players/&lt;yourname&gt;/exercises/</code> and this same
+					<code>defs.h</code> pattern carries over.
+				</p>
+			</section>
 
-  <!-- Exercise 1.1 -->
-  <section class="exercise" id="ex01">
-    <h2>Exercise 1.1: Hello Mud <span class="tier apprentice">Apprentice</span></h2>
-    <div class="progress-check">
-      <input type="checkbox" id="check-01.01" data-exercise="01.01">
-      <label for="check-01.01">Completed</label>
-    </div>
-    <p class="objective">Write your very first LPC object: a simple training stone that a player could pick up and examine.</p>
+			<!-- Exercise 1.1 -->
+			<section class="exercise" id="ex01">
+				<h2>
+					Exercise 1.1: Hello Mud
+					<span class="tier apprentice">Apprentice</span>
+				</h2>
+				<div class="progress-check">
+					<input type="checkbox" id="check-01.01" data-exercise="01.01" />
+					<label for="check-01.01">Completed</label>
+				</div>
+				<p class="objective">
+					Write your very first LPC object: a simple training stone that a
+					player could pick up and examine.
+				</p>
 
-    <div class="requirements">
-      <h3>What You Will Build</h3>
-      <p>The finished file has five sections, in this exact order:</p>
+				<div class="requirements">
+					<h3>What You Will Build</h3>
+					<p>The finished file has five sections, in this exact order:</p>
 
-      <h4>1. File Header Comment</h4>
-      <p>Every file starts with a block comment identifying it:</p>
-<pre><code>/*
+					<h4>1. File Header Comment</h4>
+					<p>Every file starts with a block comment identifying it:</p>
+					<pre><code>/*
   filename.c
   YourName YYMMDD
   Brief description of what this file does.
 */</code></pre>
-      <p>
-        Replace <code>YourName</code> with your character name and <code>YYMMDD</code> with
-        today's date (e.g., <code>260315</code> for March 15, 2026).
-      </p>
+					<p>
+						Replace <code>YourName</code> with your character name and
+						<code>YYMMDD</code> with today's date (e.g., <code>260315</code> for
+						March 15, 2026).
+					</p>
 
-      <h4>2. Preamble</h4>
-      <p>Two lines that every <code>.c</code> file on 3K must have, right after the comment:</p>
-<pre><code>#pragma strong_types
+					<h4>2. Preamble</h4>
+					<p>
+						Two lines that every <code>.c</code> file on 3K must have, right
+						after the comment:
+					</p>
+					<pre><code>#pragma strong_types
 #include "../defs.h"</code></pre>
-      <p>
-        <code>#pragma strong_types</code> tells the compiler to enforce type checking —
-        meaning it will catch mistakes like putting text where a number is expected.
-        You will learn about types in <a href="02-types.html">Chapter 2</a>.
-        <code>#include "../defs.h"</code> pulls in the shared header file from the
-        <code>exercises/</code> folder. The <code>../</code> means "go up one directory" —
-        since your exercise file is inside <code>exercises/ch01_intro/</code>, the
-        <code>../</code> takes you back up to <code>exercises/</code> where
-        <code>defs.h</code> lives. On a live MUD, areas typically use
-        <code>#include "defs.h"</code> because the header is in the same directory
-        as the code.
-      </p>
+					<p>
+						<code>#pragma strong_types</code> tells the compiler to enforce type
+						checking, meaning it will catch mistakes like putting text where a
+						number is expected. You will learn about types in
+						<a href="02-types.html">Chapter 2</a>.
+						<code>#include "../defs.h"</code> pulls in the shared header file
+						from the <code>exercises/</code> folder. The <code>../</code> means
+						"go up one directory", since your exercise file is inside
+						<code>exercises/ch01_intro/</code>, the <code>../</code> takes you
+						back up to <code>exercises/</code> where <code>defs.h</code> lives.
+						On a live MUD, areas typically use
+						<code>#include "defs.h"</code> because the header is in the same
+						directory as the code.
+					</p>
 
-      <h4>3. Inherit Statement</h4>
-      <p>
-        This tells the driver your object is built on top of an existing parent object.
-        The syntax is the keyword <code>inherit</code>, followed by the path to the parent
-        in quotes, ending with a semicolon:
-      </p>
-<pre><code>inherit "obj/treasure";</code></pre>
-      <p>
-        This means your object gets all the behavior of a treasure (it can be picked up,
-        dropped, examined, etc.) without you having to write that code yourself.
-      </p>
+					<h4>3. Inherit Statement</h4>
+					<p>
+						This tells the driver your object is built on top of an existing
+						parent object. The syntax is the keyword <code>inherit</code>,
+						followed by the path to the parent in quotes, ending with a
+						semicolon:
+					</p>
+					<pre><code>inherit "obj/treasure";</code></pre>
+					<p>
+						This means your object gets all the behavior of a treasure (it can
+						be picked up, dropped, examined, etc.) without you having to write
+						that code yourself.
+					</p>
 
-      <h4>4. The create() Function</h4>
-      <p>
-        <code>create()</code> is the function the driver calls once when your object is
-        first loaded into the game. You define it like this:
-      </p>
-<pre><code>void create()
+					<h4>4. The create() Function</h4>
+					<p>
+						<code>create()</code> is the function the driver calls once when
+						your object is first loaded into the game. You define it like this:
+					</p>
+					<pre><code>void create()
 {
   // your code goes here
 
   return;
 }</code></pre>
-      <p>Key syntax details:</p>
-      <ul>
-        <li><strong><code>void</code></strong> means this function does not return a value to its caller.</li>
-        <li><strong><code>create</code></strong> is the function name. The parentheses <code>()</code> after it mean it takes no arguments.</li>
-        <li>The opening brace <strong><code>{</code></strong> goes on its <strong>own line</strong> (this is called Allman bracket style).</li>
-        <li>Every line inside the function is indented by <strong>2 spaces</strong> (not tabs).</li>
-        <li>The function must end with <strong><code>return;</code></strong>, note the semicolon.</li>
-      </ul>
+					<p>Key syntax details:</p>
+					<ul>
+						<li>
+							<strong><code>void</code></strong> means this function does not
+							return a value to its caller.
+						</li>
+						<li>
+							<strong><code>create</code></strong> is the function name. The
+							parentheses <code>()</code> after it mean it takes no arguments.
+						</li>
+						<li>
+							The opening brace <strong><code>{</code></strong> goes on its
+							<strong>own line</strong> (this is called Allman bracket style).
+						</li>
+						<li>
+							Every line inside the function is indented by
+							<strong>2 spaces</strong> (not tabs).
+						</li>
+						<li>
+							The function must end with <strong><code>return;</code></strong
+							>, note the semicolon.
+						</li>
+					</ul>
 
-      <h4>5. What Goes Inside create()</h4>
-      <p>
-        Inside <code>create()</code>, you need to do several things.
-        Every statement ends with a semicolon (<code>;</code>).
-      </p>
-      <p><strong>First</strong>, call the parent's create function so the treasure initializes properly:</p>
-<pre><code>  ::create();</code></pre>
-      <p>The <code>::</code> means "call the version of this function defined in my parent."</p>
+					<h4>5. What Goes Inside create()</h4>
+					<p>
+						Inside <code>create()</code>, you need to do several things. Every
+						statement ends with a semicolon (<code>;</code>).
+					</p>
+					<p>
+						<strong>First</strong>, call the parent's create function so the
+						treasure initializes properly:
+					</p>
+					<pre><code>  ::create();</code></pre>
+					<p>
+						The <code>::</code> means "call the version of this function defined
+						in my parent."
+					</p>
 
-      <p><strong>Then</strong>, use setter functions to configure your object. Each setter takes one argument in parentheses:</p>
-      <ul>
-        <li><code>set_name("training stone");</code>, the internal name the game uses to identify your object (what players type to interact with it)</li>
-        <li><code>set_alias(({"stone", "training stone"}));</code>, alternate names players can use.
-          The <code>({"...", "..."})</code> syntax is an LPC array.
-          Note the double parentheses: the outer <code>()</code> belong to the function call,
-          the inner <code>({...})</code> is the array.</li>
-        <li><code>set_short("a training stone");</code>, the one-line description shown in room inventories and when picking things up</li>
-        <li><code>set_long("Your description here.");</code>, the full description shown when a player examines the object. Write a sentence or two.</li>
-        <li><code>set_value(10);</code>, how much gold the object is worth</li>
-        <li><code>set_weight(1);</code>, how heavy the object is</li>
-      </ul>
-    </div>
+					<p>
+						<strong>Then</strong>, use setter functions to configure your
+						object. Each setter takes one argument in parentheses:
+					</p>
+					<ul>
+						<li>
+							<code>set_name("training stone");</code>, the internal name the
+							game uses to identify your object (what players type to interact
+							with it)
+						</li>
+						<li>
+							<code>set_alias(({"stone", "training stone"}));</code>, alternate
+							names players can use. The <code>({"...", "..."})</code> syntax is
+							an LPC array. Note the double parentheses: the outer
+							<code>()</code> belong to the function call, the inner
+							<code>({...})</code> is the array.
+						</li>
+						<li>
+							<code>set_short("a training stone");</code>, the one-line
+							description shown in room inventories and when picking things up
+						</li>
+						<li>
+							<code>set_long("Your description here.");</code>, the full
+							description shown when a player examines the object. Write a
+							sentence or two.
+						</li>
+						<li>
+							<code>set_value(10);</code>, how many coins the object is worth
+						</li>
+						<li><code>set_weight(1);</code>, how heavy the object is</li>
+					</ul>
+				</div>
 
-    <div class="requirements">
-      <h3>Requirements Summary</h3>
-      <ul>
-        <li>File header comment (filename, your name, date, description)</li>
-        <li><code>#pragma strong_types</code> as the first non-comment line</li>
-        <li><code>#include "defs.h"</code></li>
-        <li><code>inherit "obj/treasure";</code></li>
-        <li>A <code>void create()</code> function with Allman brackets that:
-          <ul>
-            <li>Calls <code>::create();</code></li>
-            <li>Sets name to <code>"training stone"</code></li>
-            <li>Sets aliases to <code>({"stone", "training stone"})</code></li>
-            <li>Sets short to <code>"a training stone"</code></li>
-            <li>Sets long to a description you write</li>
-            <li>Sets value to <code>10</code></li>
-            <li>Sets weight to <code>1</code></li>
-            <li>Ends with <code>return;</code></li>
-          </ul>
-        </li>
-        <li>2-space indentation (spaces only, no tabs)</li>
-      </ul>
-    </div>
+				<div class="requirements">
+					<h3>Requirements Summary</h3>
+					<ul>
+						<li>
+							File header comment (filename, your name, date, description)
+						</li>
+						<li>
+							<code>#pragma strong_types</code> as the first non-comment line
+						</li>
+						<li><code>#include "defs.h"</code> or <code>#include "../defs.h"</code></li>
+						<li><code>inherit "obj/treasure";</code></li>
+						<li>
+							A <code>void create()</code> function with Allman brackets that:
+							<ul>
+								<li>Calls <code>::create();</code></li>
+								<li>Sets name to <code>"training stone"</code></li>
+								<li>
+									Sets aliases to <code>({"stone", "training stone"})</code>
+								</li>
+								<li>Sets short to <code>"a training stone"</code></li>
+								<li>Sets long to a description you write</li>
+								<li>Sets value to <code>10</code></li>
+								<li>Sets weight to <code>1</code></li>
+								<li>Ends with <code>return;</code></li>
+							</ul>
+						</li>
+						<li>2-space indentation (spaces only, no tabs)</li>
+					</ul>
+				</div>
 
-    <p>File to create: <span class="file-path">exercises/ch01_intro/ex01_hello.c</span></p>
-    <details class="hints">
-      <summary>Hints (click to reveal)</summary>
-      <ol>
-        <li>Every statement must end with a semicolon — missing one would cause a compile error on the MUD. Double-check <code>::create();</code> and <code>return;</code>.</li>
-        <li>Make sure your opening braces <code>{</code> are each on their own line, not on the same line as <code>void create()</code>.</li>
-        <li>The alias array uses LPC array syntax: <code>({"item1", "item2"})</code>. If you forget the <code>({</code> and <code>})</code> wrappers, the code would not compile on the MUD.</li>
-        <li>Your long description can be any text you like. Just make sure it is wrapped in double quotes and ends with a semicolon.</li>
-      </ol>
-    </details>
-  </section>
+				<p>
+					File to create:
+					<span class="file-path">exercises/ch01_intro/ex01_hello.c</span>
+				</p>
+				<details class="hints">
+					<summary>Hints (click to reveal)</summary>
+					<ol>
+						<li>
+							Every statement must end with a semicolon — missing one would
+							cause a compile error on the MUD. Double-check
+							<code>::create();</code> and <code>return;</code>.
+						</li>
+						<li>
+							Make sure your opening braces <code>{</code> are each on their own
+							line, not on the same line as <code>void create()</code>.
+						</li>
+						<li>
+							The alias array uses LPC array syntax:
+							<code>({"item1", "item2"})</code>. If you forget the
+							<code>({</code> and <code>})</code> wrappers, the code would not
+							compile on the MUD.
+						</li>
+						<li>
+							Your long description can be any text you like. Just make sure it
+							is wrapped in double quotes and ends with a semicolon.
+						</li>
+					</ol>
+				</details>
+			</section>
 
-  <!-- Exercise 1.2 -->
-  <section class="exercise" id="ex02">
-    <h2>Exercise 1.2: Anatomy of an LPC File <span class="tier journeyman">Journeyman</span></h2>
-    <div class="progress-check">
-      <input type="checkbox" id="check-01.02" data-exercise="01.02">
-      <label for="check-01.02">Completed</label>
-    </div>
-    <p class="objective">Find and fix every bug in a broken LPC file. Train your eye for the structural rules every 3K file must follow.</p>
-    <div class="requirements">
-      <h3>The Broken File</h3>
-      <p>
-        The file below is supposed to be a working treasure object, but it has
-        <strong>8 bugs</strong> that violate 3K codestyle or will prevent it from compiling.
-        Copy this code into your exercise file, then find and fix all 8 issues.
-      </p>
-      <p>
-        Use what you learned in Exercise 1.1 about file structure, bracket style,
-        indentation, types, and statement endings to guide your review.
-      </p>
-<pre><code>#include &lt;defs.h&gt;
+			<!-- Exercise 1.2 -->
+			<section class="exercise" id="ex02">
+				<h2>
+					Exercise 1.2: Anatomy of an LPC File
+					<span class="tier journeyman">Journeyman</span>
+				</h2>
+				<div class="progress-check">
+					<input type="checkbox" id="check-01.02" data-exercise="01.02" />
+					<label for="check-01.02">Completed</label>
+				</div>
+				<p class="objective">
+					Find and fix every bug in a broken LPC file. Train your eye for the
+					structural rules every 3K file must follow.
+				</p>
+				<div class="requirements">
+					<h3>The Broken File</h3>
+					<p>
+						The file below is supposed to be a working treasure object, but it
+						has
+						<strong>8 bugs</strong> that violate 3K codestyle or will prevent it
+						from compiling. Copy this code into your exercise file, then find
+						and fix all 8 issues.
+					</p>
+					<p>
+						Use what you learned in Exercise 1.1 about file structure, bracket
+						style, indentation, types, and statement endings to guide your
+						review.
+					</p>
+					<pre><code>#include &lt;defs.h&gt;
 
 inherit "obj/treasure";
 
@@ -324,78 +463,127 @@ int query_is_broken()
 	return 1;
 }</code></pre>
 
-      <h3>Requirements</h3>
-      <ul>
-        <li>Find and fix all <strong>8 bugs</strong></li>
-        <li>The fixed file should have no syntax errors that would prevent compilation</li>
-        <li>The fixed file must follow all 3K codestyle rules from Exercise 1.1</li>
-        <li>Do not change the object's name, descriptions, value, or weight, only fix the structural and style issues</li>
-      </ul>
-      <p>
-        <strong>Tip:</strong> Read the file top to bottom, line by line. Compare each
-        section against the structure you learned in Exercise 1.1. Some bugs will
-        prevent compilation; others are style violations you can spot by comparing
-        against the rules from Exercise 1.1.
-      </p>
-    </div>
-    <p>File to create: <span class="file-path">exercises/ch01_intro/ex02_anatomy.c</span></p>
-    <details class="hints">
-      <summary>Hint 1 (click to reveal)</summary>
-      <p>Start from the very top of the file. What is missing before <code>#include</code>?
-        Remember the file structure from Exercise 1.1: file header comment, then
-        <code>#pragma strong_types</code>, then <code>#include</code>.</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 2</summary>
-      <p>Look carefully at the <code>#include</code> line. Compare
-        <code>&lt;defs.h&gt;</code> vs <code>"defs.h"</code>. Which one does 3K use?</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 3</summary>
-      <p>Check where the opening brace <code>{</code> of <code>create()</code> is.
-        Is it on its own line (Allman style)?</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 4</summary>
-      <p>Look at the whitespace before each indented line. Are those spaces or tabs?
-        3K requires 2-space indentation with no tabs.</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 5</summary>
-      <p>Read every statement ending carefully. Does every statement have a semicolon?
-        Including <code>return</code>?</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 6</summary>
-      <p><code>query_is_broken()</code> returns <code>1</code> or <code>0</code>, that is
-        a true/false value. What type should 3K use for booleans instead of <code>int</code>?</p>
-    </details>
-    <details class="hints">
-      <summary>Hint 8, Full answer key</summary>
-      <ol>
-        <li>Missing file header comment block (<code>/* filename / author / date / description */</code>)</li>
-        <li>Missing <code>#pragma strong_types</code> (must be the first non-comment line)</li>
-        <li><code>#include &lt;defs.h&gt;</code> should use quotes: <code>#include "defs.h"</code></li>
-        <li>Opening brace of <code>create()</code> is on the same line, move it to its own line</li>
-        <li>Tabs used for indentation, replace with 2-space indent</li>
-        <li><code>return</code> is missing its semicolon, should be <code>return;</code></li>
-        <li><code>int query_is_broken()</code> should be <code>status query_is_broken()</code></li>
-        <li><code>query_is_broken()</code> body also uses tab indentation</li>
-      </ol>
-    </details>
-  </section>
+					<h3>Requirements</h3>
+					<ul>
+						<li>Find and fix all <strong>8 bugs</strong></li>
+						<li>
+							The fixed file should have no syntax errors that would prevent
+							compilation
+						</li>
+						<li>
+							The fixed file must follow all 3K codestyle rules from Exercise
+							1.1
+						</li>
+						<li>
+							Do not change the object's name, descriptions, value, or weight,
+							only fix the structural and style issues
+						</li>
+					</ul>
+					<p>
+						<strong>Tip:</strong> Read the file top to bottom, line by line.
+						Compare each section against the structure you learned in Exercise
+						1.1. Some bugs will prevent compilation; others are style violations
+						you can spot by comparing against the rules from Exercise 1.1.
+					</p>
+				</div>
+				<p>
+					File to create:
+					<span class="file-path">exercises/ch01_intro/ex02_anatomy.c</span>
+				</p>
+				<details class="hints">
+					<summary>Hint 1 (click to reveal)</summary>
+					<p>
+						Start from the very top of the file. What is missing before
+						<code>#include</code>? Remember the file structure from Exercise
+						1.1: file header comment, then <code>#pragma strong_types</code>,
+						then <code>#include</code>.
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 2</summary>
+					<p>
+						Look carefully at the <code>#include</code> line. Compare
+						<code>&lt;defs.h&gt;</code> vs <code>"defs.h"</code>. Which one does
+						3K use?
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 3</summary>
+					<p>
+						Check where the opening brace <code>{</code> of
+						<code>create()</code> is. Is it on its own line (Allman style)?
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 4</summary>
+					<p>
+						Look at the whitespace before each indented line. Are those spaces
+						or tabs? 3K requires 2-space indentation with no tabs.
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 5</summary>
+					<p>
+						Read every statement ending carefully. Does every statement have a
+						semicolon? Including <code>return</code>?
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 6</summary>
+					<p>
+						<code>query_is_broken()</code> returns <code>1</code> or
+						<code>0</code>, that is a true/false value. What type should 3K use
+						for booleans instead of <code>int</code>?
+					</p>
+				</details>
+				<details class="hints">
+					<summary>Hint 8, Full answer key</summary>
+					<ol>
+						<li>
+							Missing file header comment block (<code
+								>/* filename / author / date / description */</code
+							>)
+						</li>
+						<li>
+							Missing <code>#pragma strong_types</code> (must be the first
+							non-comment line)
+						</li>
+						<li>
+							<code>#include &lt;defs.h&gt;</code> should use quotes:
+							<code>#include "defs.h"</code>
+						</li>
+						<li>
+							Opening brace of <code>create()</code> is on the same line, move
+							it to its own line
+						</li>
+						<li>Tabs used for indentation, replace with 2-space indent</li>
+						<li>
+							<code>return</code> is missing its semicolon, should be
+							<code>return;</code>
+						</li>
+						<li>
+							<code>int query_is_broken()</code> should be
+							<code>status query_is_broken()</code>
+						</li>
+						<li>
+							<code>query_is_broken()</code> body also uses tab indentation
+						</li>
+					</ol>
+				</details>
+			</section>
 
-  <div class="capstone-callout">
-    <h3>Capstone Connection: Phase 1 — The Foundation</h3>
-    <p>
-      These introductory exercises establish the file structure you will use for every
-      single file in your capstone dungeon area. Getting the preamble and bracket style
-      right now saves you from chasing errors later.
-    </p>
-  </div>
-</main>
+			<div class="capstone-callout">
+				<h3>Capstone Connection: Phase 1 — The Foundation</h3>
+				<p>
+					These introductory exercises establish the file structure you will use
+					for every single file in your capstone dungeon area. Getting the
+					preamble and bracket style right now saves you from chasing errors
+					later.
+				</p>
+			</div>
+		</main>
 
-<script src="../exercises.js"></script>
-<script src="../reader.js"></script>
-</body>
+		<script src="../exercises.js"></script>
+		<script src="../reader.js"></script>
+	</body>
 </html>
