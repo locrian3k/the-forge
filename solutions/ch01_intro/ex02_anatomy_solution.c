@@ -7,12 +7,11 @@
   Fixes applied:
     1. Added file header comment block
     2. Added #pragma strong_types as first non-comment line
-    3. Changed <defs.h> to "defs.h"
+    3. Changed <defs.h> to "../defs.h"
     4. Moved opening brace of create() to its own line (Allman style)
     5. Replaced all tabs with 2-space indentation
     6. Added missing semicolon after return in create()
-    7. Changed query_is_broken return type from int to status
-    8. Fixed tab indentation in query_is_broken
+    7. Fixed tab indentation in query_is_broken
 */
 #pragma strong_types
 #include "../defs.h"
@@ -33,4 +32,4 @@ void create()
   return;
 }
 
-status query_is_broken() { return 1; }
+int query_is_broken() { return 1; }
