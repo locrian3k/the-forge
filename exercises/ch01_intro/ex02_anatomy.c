@@ -1,6 +1,6 @@
 #include <defs.h>
 
-inherit "/obj/treasure";
+inherit "obj/treasure";
 
 void create()  {
 	::create();
