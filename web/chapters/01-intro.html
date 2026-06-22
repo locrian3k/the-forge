@@ -179,10 +179,16 @@
       <h4>2. Preamble</h4>
       <p>Two lines that every <code>.c</code> file on 3K must have, right after the comment:</p>
 <pre><code>#pragma strong_types
-#include "defs.h"</code></pre>
+#include "../defs.h"</code></pre>
       <p>
         <code>#pragma strong_types</code> tells the compiler to enforce type checking.
-        <code>#include "defs.h"</code> pulls in the header file you created in the setup above.
+        <code>#include "../defs.h"</code> pulls in the shared header file from the
+        <code>exercises/</code> folder. The <code>../</code> means "go up one directory" —
+        since your exercise file is inside <code>exercises/ch01_intro/</code>, the
+        <code>../</code> takes you back up to <code>exercises/</code> where
+        <code>defs.h</code> lives. On a live MUD, areas typically use
+        <code>#include "defs.h"</code> because the header is in the same directory
+        as the code.
       </p>
 
       <h4>3. Inherit Statement</h4>
