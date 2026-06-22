@@ -22,7 +22,7 @@ void create()
   // TODO: Set the full description shown when a player examines
   //       the object. Write a sentence or two of your own.
 
-  // TODO: Set the gold value to 10
+  // TODO: Set the coin value to 10
 
   // TODO: Set the weight to 1
 
