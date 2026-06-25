@@ -239,7 +239,10 @@ string label;</code></pre>
           "this function hands back a whole number."</li>
         <li><strong><code>query_score</code></strong>, the function name. On 3K, functions
           that read data always start with <code>query_</code>.</li>
-        <li><strong><code>()</code></strong>, empty parentheses mean it takes no arguments.</li>
+        <li><strong><code>()</code></strong>, empty parentheses mean the function does not
+          need any input to do its job. (Inputs passed to a function are called
+          <em>arguments</em> — you will work with them in
+          <a href="06-functions.html">Chapter 6</a>.)</li>
         <li><strong><code>{ return score; }</code></strong>, the body. <code>return</code>
           sends the value of <code>score</code> back to whatever called this function.
           The semicolon ends the statement. The braces wrap the body.</li>
