@@ -10,7 +10,7 @@ inherit "obj/treasure";
 int sides;
 status is_loaded;
 string inscription;
-float weight_oz;
+float luck_bonus;
 object owner;
 mixed enchantment;
 
@@ -35,7 +35,7 @@ void create()
   sides = 6;
   is_loaded = 0;
   inscription = "Roll for initiative";
-  weight_oz = 1.25;
+  luck_bonus = 1.25;
   owner = TO;
   enchantment = "lucky";
 
@@ -50,7 +50,7 @@ status query_is_loaded() { return is_loaded; }
 
 string query_inscription() { return inscription; }
 
-float query_weight_oz() { return weight_oz; }
+float query_luck_bonus() { return luck_bonus; }
 
 object query_owner() { return owner; }
 
