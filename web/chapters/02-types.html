@@ -186,7 +186,7 @@ string label;</code></pre>
       <h4>3. The create() Function</h4>
       <p>
         Inside <code>create()</code>, the starter file already includes
-        <code>::create();</code> and <code>return;</code> for you. Between them, do two things:
+        <code>::create();</code> and <code>return;</code> for you. Between them, do the following:
       </p>
       <ol>
         <li>Set the object identity using the setters you learned in Chapter 1:
@@ -218,7 +218,11 @@ string label;</code></pre>
           </ul>
         </li>
       </ol>
-      <p>End <code>create()</code> with <code>return;</code> as always.</p>
+      <p>The starter file already ends <code>create()</code> with <code>return;</code>.
+        Every <code>void</code> function on 3K must end with an explicit <code>return;</code>
+        — it tells the driver the function is done executing. Leaving it out is a codestyle
+        violation you will learn more about in
+        <a href="11-codestyle.html">Chapter 11</a>.</p>
 
       <h4>4. Query Functions (new concept)</h4>
       <p>
