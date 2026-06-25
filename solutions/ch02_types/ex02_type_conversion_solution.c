@@ -15,7 +15,7 @@ void create()
   set_short("a die reader");
   set_long(
     "A small magnifying lens etched with runes. Hold it over a "
-    "die to read its properties — it can translate numbers to "
+    "die to read its properties - it can translate numbers to "
     "labels, labels back to numbers, and identify any property."
   );
   set_value(5);
@@ -25,16 +25,10 @@ void create()
 }
 
 // Convert number of sides to a display label.
-string sides_to_label(int n)
-{
-  return (string)n;
-}
+string sides_to_label(int n) { return (string)n; }
 
 // Convert a label string back to a number of sides.
-int label_to_sides(string s)
-{
-  return (int)s;
-}
+int label_to_sides(string s) { return (int)s; }
 
 // Check if a die has a valid number of sides (greater than 0).
 status is_valid_die(int n)
