@@ -2,7 +2,7 @@
 #include "../defs.h"
 
 // Exercise 2.2, Type Conversion
-// Utility functions demonstrating explicit type conversion in LPC.
+// A die reader that interprets and displays die properties.
 
 inherit "obj/treasure";
 
@@ -10,13 +10,13 @@ void create()
 {
   ::create();
 
-  set_name("type converter");
-  set_alias(({"converter", "type converter"}));
-  set_short("a type converter");
+  set_name("die reader");
+  set_alias(({"reader", "die reader"}));
+  set_short("a die reader");
   set_long(
-    "A strange prism that refracts not light, but meaning itself. "
-    "Feed it a number and it gives you words. Feed it words and "
-    "it gives you a number."
+    "A small magnifying lens etched with runes. Hold it over a "
+    "die to read its properties — it can translate numbers to "
+    "labels, labels back to numbers, and identify any property."
   );
   set_value(5);
   set_weight(1);
@@ -24,31 +24,28 @@ void create()
   return;
 }
 
-// Convert an integer to its string representation.
-// Uses explicit (string) cast.
-string int_to_string(int n)
+// Convert number of sides to a display label.
+string sides_to_label(int n)
 {
   return (string)n;
 }
 
-// Convert a string to an integer.
-// Non-numeric strings return 0 by default.
-int string_to_int(string s)
+// Convert a label string back to a number of sides.
+int label_to_sides(string s)
 {
   return (int)s;
 }
 
-// Return 1 if n is positive, 0 otherwise.
-// Demonstrates producing a clean status from an int.
-status status_check(int n)
+// Check if a die has a valid number of sides (greater than 0).
+status is_valid_die(int n)
 {
   if (n > 0)
     return 1;
   return 0;
 }
 
-// Identify the type of an arbitrary value using type-check efuns.
-string describe_type(mixed val)
+// Identify the type of any die property.
+string identify_property(mixed val)
 {
   if (intp(val))
     return "int";

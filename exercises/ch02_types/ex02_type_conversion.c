@@ -2,7 +2,7 @@
   ex02_type_conversion.c
   YourName YYMMDD
   Exercise 2.2 — Type Conversion
-  Utility functions demonstrating explicit type conversion in LPC.
+  A die reader that interprets and displays die properties.
 */
 #pragma strong_types
 #include "../defs.h"
@@ -14,37 +14,30 @@ void create()
   ::create();
 
   // TODO: Set the object identity:
-  //   name  -> "type converter"
-  //   alias -> ({"converter", "type converter"})
-  //   short -> "a type converter"
-  //   long  -> a description of your choice
-  //   value -> 5
-  //   weight -> 1
+  //   name  -> "die reader"
+  //   alias, short, long, value, weight of your choice
 
   return;
 }
 
-// TODO: Convert an integer to its string representation.
+// TODO: Convert number of sides (int) to a display label (string).
 //   Use an explicit (string) cast on n.
-//   Example: int_to_string(42) returns "42"
 //
-// string int_to_string(int n)
+// string sides_to_label(int n)
 
-// TODO: Convert a string to an integer.
+// TODO: Convert a label string back to a number of sides (int).
 //   Use an explicit (int) cast on s.
 //   Non-numeric strings return 0 by default.
-//   Example: string_to_int("7") returns 7
 //
-// int string_to_int(string s)
+// int label_to_sides(string s)
 
-// TODO: Return 1 if n is positive, 0 otherwise.
-//   Demonstrates producing a clean status from an int.
-//   Example: status_check(5) returns 1, status_check(-3) returns 0
+// TODO: Check if a die has a valid number of sides (greater than 0).
+//   Return 1 if valid, 0 otherwise.
 //
-// status status_check(int n)
+// status is_valid_die(int n)
 
-// TODO: Identify the type of an arbitrary value using type-check efuns.
+// TODO: Identify the type of any die property.
 //   Check intp(), stringp(), floatp(), objectp() in order.
 //   Return "int", "string", "float", "object", or "unknown".
 //
-// string describe_type(mixed val)
+// string identify_property(mixed val)

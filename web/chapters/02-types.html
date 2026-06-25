@@ -391,37 +391,43 @@ string label;</code></pre>
     <div class="requirements">
       <h3>Requirements</h3>
       <p>
-        Start with the standard preamble (file header comment, pragma, include) and
+        Building on the die from Exercise 2.1, create a companion object — a
+        <strong>die reader</strong> that can interpret and display the die's
+        properties. Start with the standard preamble and
         <code>inherit "obj/treasure";</code>. In <code>create()</code>, set the name to
-        <code>"type converter"</code> and short to <code>"a type converter"</code>.
+        <code>"die reader"</code> and short to <code>"a die reader"</code>.
         Then write these four functions:
       </p>
 
-      <h4><code>string int_to_string(int n)</code></h4>
+      <h4><code>string sides_to_label(int n)</code></h4>
       <p>
-        Takes an integer and returns it as a string. For example, if
-        <code>n</code> is <code>42</code>, return <code>"42"</code>.
+        Takes the number of sides as an integer and returns a display string.
+        For example, if <code>n</code> is <code>6</code>, return <code>"6"</code>.
+        This shows how to convert an int to a string.
       </p>
 
-      <h4><code>int string_to_int(string s)</code></h4>
+      <h4><code>int label_to_sides(string s)</code></h4>
       <p>
-        Takes a string and returns it as an integer. For example, if
-        <code>s</code> is <code>"7"</code>, return <code>7</code>. If the string does not
-        start with digits (e.g. <code>"abc"</code>), return <code>0</code>.
+        The reverse — takes a label string like <code>"6"</code> and returns the
+        integer <code>6</code>. If the string has no digits (e.g. <code>"abc"</code>),
+        return <code>0</code>.
       </p>
 
-      <h4><code>status status_check(int n)</code></h4>
+      <h4><code>status is_valid_die(int n)</code></h4>
       <p>
-        Takes an integer and returns <code>1</code> if it is greater than 0, otherwise
-        returns <code>0</code>.
+        Takes a number of sides and returns <code>1</code> if it is a valid die
+        (greater than 0), otherwise returns <code>0</code>. A die with 0 or
+        negative sides makes no sense.
       </p>
 
-      <h4><code>string describe_type(mixed val)</code></h4>
+      <h4><code>string identify_property(mixed val)</code></h4>
       <p>
-        Takes a <code>mixed</code> value and returns a string naming its type:
-        <code>"int"</code>, <code>"string"</code>, <code>"float"</code>,
-        <code>"object"</code>, or <code>"unknown"</code>. Use the type-checking efuns
-        listed above to figure out which type it is.
+        The die has properties of different types — <code>sides</code> is an int,
+        <code>inscription</code> is a string, <code>luck_bonus</code> is a float,
+        <code>owner</code> is an object. This function takes any value and returns
+        a string naming its type: <code>"int"</code>, <code>"string"</code>,
+        <code>"float"</code>, <code>"object"</code>, or <code>"unknown"</code>.
+        Use the type-checking efuns listed above.
       </p>
     </div>
 
@@ -430,15 +436,15 @@ string label;</code></pre>
     <details class="hints">
       <summary>Hints (click to reveal)</summary>
       <ol>
-        <li><code>int_to_string</code>: The cast <code>(string)n</code> converts an int to a
-          string. Alternatively, <code>"" + n</code> also works, adding an int to a string
+        <li><code>sides_to_label</code>: The cast <code>(string)n</code> converts an int to a
+          string. Alternatively, <code>"" + n</code> also works — adding an int to a string
           produces a string.</li>
-        <li><code>string_to_int</code>: The cast <code>(int)s</code> converts a string to an
-          integer. <code>"42abc"</code> becomes <code>42</code>; <code>"abc"</code> becomes
+        <li><code>label_to_sides</code>: The cast <code>(int)s</code> converts a string to an
+          integer. <code>"6abc"</code> becomes <code>6</code>; <code>"abc"</code> becomes
           <code>0</code>. This handles the "no digits" case automatically.</li>
-        <li><code>status_check</code>: The comparison <code>n &gt; 0</code> already produces a
+        <li><code>is_valid_die</code>: The comparison <code>n &gt; 0</code> already produces a
           1 or 0 result. You can return it directly: <code>return n &gt; 0;</code></li>
-        <li><code>describe_type</code>: Use <code>if</code> statements to test each type in
+        <li><code>identify_property</code>: Use <code>if</code> statements to test each type in
           order. You have not formally learned <code>if</code> yet (that is Chapter 7), but
           the pattern is: <code>if (intp(val)) return "int";</code>. Check int, string, float,
           and object. If none match, return <code>"unknown"</code>.</li>
