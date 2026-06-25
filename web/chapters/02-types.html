@@ -172,15 +172,18 @@ string label;</code></pre>
         and status alike. An uninitialized string is <code>0</code>, not <code>""</code>
         (empty string). You will give them real values inside <code>create()</code>.
       </p>
-      <p>You need six global variables, one of each type:</p>
+      <p>
+        Imagine you are creating a six-sided die, and each side represents one of
+        the basic LPC types. You need six global variables, one per side:
+      </p>
       <table class="type-table">
         <tr><th>Type</th><th>Variable name</th><th>What it stores</th></tr>
-        <tr><td><code>int</code></td><td><code>score</code></td><td>A whole number (e.g. 42)</td></tr>
-        <tr><td><code>status</code></td><td><code>active</code></td><td>True or false (1 or 0)</td></tr>
-        <tr><td><code>string</code></td><td><code>label</code></td><td>Text (e.g. "Hello from The Forge")</td></tr>
-        <tr><td><code>float</code></td><td><code>ratio</code></td><td>A decimal number (e.g. 3.14)</td></tr>
-        <tr><td><code>object</code></td><td><code>self</code></td><td>A reference to a game entity</td></tr>
-        <tr><td><code>mixed</code></td><td><code>wildcard</code></td><td>Anything, the compiler does not check it</td></tr>
+        <tr><td><code>int</code></td><td><code>sides</code></td><td>A whole number (e.g. 6)</td></tr>
+        <tr><td><code>status</code></td><td><code>is_loaded</code></td><td>True or false (1 or 0)</td></tr>
+        <tr><td><code>string</code></td><td><code>inscription</code></td><td>Text (e.g. "Roll for initiative")</td></tr>
+        <tr><td><code>float</code></td><td><code>weight_oz</code></td><td>A decimal number (e.g. 1.25)</td></tr>
+        <tr><td><code>object</code></td><td><code>owner</code></td><td>A reference to a game entity</td></tr>
+        <tr><td><code>mixed</code></td><td><code>enchantment</code></td><td>Anything, the compiler does not check it</td></tr>
       </table>
 
       <h4>3. The create() Function</h4>
@@ -191,20 +194,20 @@ string label;</code></pre>
       <ol>
         <li>Set the object identity using the setters you learned in Chapter 1:
           <ul>
-            <li><code>set_name("type sampler");</code></li>
-            <li><code>set_short("a type sampler");</code></li>
+            <li><code>set_name("type die");</code></li>
+            <li><code>set_short("a six-sided type die");</code></li>
             <li>Set a long description, aliases, value, and weight of your choice.</li>
           </ul>
         </li>
         <li><strong>Assign values to your global variables.</strong> To assign a value to a
           variable, use the <code>=</code> operator. Each assignment is a statement that
           ends with a semicolon:
-<pre><code>  score = 42;
-  active = 1;
-  label = "Hello from The Forge";
-  ratio = 3.14;
-  self = this_object();
-  wildcard = "I could be anything";</code></pre>
+<pre><code>  sides = 6;
+  is_loaded = 0;
+  inscription = "Roll for initiative";
+  weight_oz = 1.25;
+  owner = this_object();
+  enchantment = "lucky";</code></pre>
           <p>Key details:</p>
           <ul>
             <li><code>status</code> values are only ever <code>1</code> (true) or <code>0</code> (false).</li>
@@ -269,9 +272,7 @@ string label;</code></pre>
         <li><code>mixed query_wildcard()</code>, returns <code>wildcard</code></li>
       </ul>
       <p>
-        These go <em>after</em> <code>create()</code>, at the bottom of the file.
-        This matters because <code>create()</code> is what assigns values to your
-        variables — if a query function runs before <code>create()</code> has finished,
+        These go <em>after</em> <code>create()</code>. This matters because <code>create()</code> is what assigns values to your variables - if a query function runs before <code>create()</code> has finished,
         the variables would still be <code>0</code> (their default).
       </p>
     </div>
@@ -299,7 +300,7 @@ string label;</code></pre>
     <details class="hints">
       <summary>Hints (click to reveal)</summary>
       <ol>
-        <li>A common mistake is mismatching the return type on a query function — make sure each function's return type matches the variable it returns. <code>int</code> variable →
+        <li>A common mistake is mismatching the return type on a query function - make sure each function's return type matches the variable it returns. <code>int</code> variable →
           <code>int</code> function, <code>string</code> variable → <code>string</code>
           function, etc.</li>
         <li>Global variables go between <code>inherit</code> and <code>create()</code>.
