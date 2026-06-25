@@ -42,15 +42,20 @@ void create()
 //
 // int label_to_sides(string s)
 
-// TODO: Check if a die has a valid number of sides (greater than 0).
-//   Return 1 if valid, 0 otherwise.
-//   This one needs multiple lines, so use Allman brackets.
+// TODO: Take a roll result (int) and return a display message (string).
+//   Concatenate a string with the cast int.
+//   Example: describe_roll(6) returns "You rolled: 6"
 //
-// status is_valid_die(int n)
+// string describe_roll(int n)
 
-// TODO: Identify the type of any die property.
-//   Check intp(), stringp(), floatp(), objectp() in order.
-//   Return "int", "string", "float", "object", or "unknown".
-//   This one needs multiple lines, so use Allman brackets.
+// TODO: Take the number of sides (int) and return the odds of rolling
+//   any one side as a float. Cast n to float first.
+//   Example: sides_to_odds(6) returns roughly 0.166667
 //
-// string identify_property(mixed val)
+// float sides_to_odds(int n)
+
+// TODO: Take the luck bonus (float) and return a formatted string.
+//   Concatenate a string with the cast float.
+//   Example: luck_report(1.25) returns "Luck modifier: 1.25"
+//
+// string luck_report(float bonus)

@@ -30,24 +30,11 @@ string sides_to_label(int n) { return (string)n; }
 // Convert a label string back to a number of sides.
 int label_to_sides(string s) { return (int)s; }
 
-// Check if a die has a valid number of sides (greater than 0).
-status is_valid_die(int n)
-{
-  if (n > 0)
-    return 1;
-  return 0;
-}
+// Take a roll result and return a display message.
+string describe_roll(int n) { return "You rolled: " + (string)n; }
 
-// Identify the type of any die property.
-string identify_property(mixed val)
-{
-  if (intp(val))
-    return "int";
-  if (stringp(val))
-    return "string";
-  if (floatp(val))
-    return "float";
-  if (objectp(val))
-    return "object";
-  return "unknown";
-}
+// Take the number of sides and return the odds of rolling any one side.
+float sides_to_odds(int n) { return 1.0 / (float)n; }
+
+// Take the luck bonus and return a formatted string.
+string luck_report(float bonus) { return "Luck modifier: " + (string)bonus; }

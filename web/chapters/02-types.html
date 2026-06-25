@@ -398,7 +398,7 @@ string label;</code></pre>
         properties. Start with the standard preamble and
         <code>inherit "obj/treasure";</code>. In <code>create()</code>, set the name to
         <code>"die reader"</code> and short to <code>"a die reader"</code>.
-        Then write these four functions:
+        Then write these five functions:
       </p>
 
       <h4><code>string sides_to_label(int n)</code></h4>
@@ -415,21 +415,26 @@ string label;</code></pre>
         return <code>0</code>.
       </p>
 
-      <h4><code>status is_valid_die(int n)</code></h4>
+      <h4><code>string describe_roll(int n)</code></h4>
       <p>
-        Takes a number of sides and returns <code>1</code> if it is a valid die
-        (greater than 0), otherwise returns <code>0</code>. A die with 0 or
-        negative sides makes no sense.
+        Takes a roll result and returns a display message. For example, if
+        <code>n</code> is <code>6</code>, return <code>"You rolled: 6"</code>.
+        Use string concatenation: <code>"You rolled: " + (string)n</code>.
       </p>
 
-      <h4><code>string identify_property(mixed val)</code></h4>
+      <h4><code>float sides_to_odds(int n)</code></h4>
       <p>
-        The die has properties of different types - <code>sides</code> is an int,
-        <code>inscription</code> is a string, <code>luck_bonus</code> is a float,
-        <code>owner</code> is an object. This function takes any value and returns
-        a string naming its type: <code>"int"</code>, <code>"string"</code>,
-        <code>"float"</code>, <code>"object"</code>, or <code>"unknown"</code>.
-        Use the type-checking efuns listed above.
+        Takes the number of sides and returns the odds of rolling any one
+        side as a float. For a 6-sided die, that is <code>1.0 / 6.0</code>.
+        Cast <code>n</code> to float first: <code>1.0 / (float)n</code>.
+      </p>
+
+      <h4><code>string luck_report(float bonus)</code></h4>
+      <p>
+        Takes the luck bonus and returns a formatted string. For example,
+        if <code>bonus</code> is <code>1.25</code>, return
+        <code>"Luck modifier: 1.25"</code>. Use string concatenation with
+        a cast: <code>"Luck modifier: " + (string)bonus</code>.
       </p>
     </div>
 
@@ -439,17 +444,18 @@ string label;</code></pre>
       <summary>Hints (click to reveal)</summary>
       <ol>
         <li><code>sides_to_label</code>: The cast <code>(string)n</code> converts an int to a
-          string. Alternatively, <code>"" + n</code> also works — adding an int to a string
+          string. Alternatively, <code>"" + n</code> also works - adding an int to a string
           produces a string.</li>
         <li><code>label_to_sides</code>: The cast <code>(int)s</code> converts a string to an
           integer. <code>"6abc"</code> becomes <code>6</code>; <code>"abc"</code> becomes
           <code>0</code>. This handles the "no digits" case automatically.</li>
-        <li><code>is_valid_die</code>: The comparison <code>n &gt; 0</code> already produces a
-          1 or 0 result. You can return it directly: <code>return n &gt; 0;</code></li>
-        <li><code>identify_property</code>: Use <code>if</code> statements to test each type in
-          order. You have not formally learned <code>if</code> yet (that is Chapter 7), but
-          the pattern is: <code>if (intp(val)) return "int";</code>. Check int, string, float,
-          and object. If none match, return <code>"unknown"</code>.</li>
+        <li><code>describe_roll</code>: Concatenate a string with a cast int:
+          <code>"You rolled: " + (string)n</code>. The <code>+</code> operator joins
+          strings together.</li>
+        <li><code>sides_to_odds</code>: Use <code>1.0 / (float)n</code>. The <code>1.0</code>
+          makes sure you get a float result, not integer division.</li>
+        <li><code>luck_report</code>: Same pattern as <code>describe_roll</code> but with a
+          float: <code>"Luck modifier: " + (string)bonus</code>.</li>
       </ol>
     </details>
   </section>
