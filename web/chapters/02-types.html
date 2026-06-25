@@ -349,8 +349,9 @@ string label;</code></pre>
         <li><strong><code>string</code></strong>, the return type. This function hands back text.</li>
         <li><strong><code>int_to_string</code></strong>, the function name.</li>
         <li><strong><code>int n</code></strong>, the parameter. When someone calls
-          <code>int_to_string(42)</code>, the value <code>42</code> is stored in <code>n</code>
-          for the duration of that function call.</li>
+          <code>int_to_string(6)</code>, the value <code>6</code> (like the number of
+          sides on your die) is stored in <code>n</code> for the duration of that
+          function call.</li>
       </ul>
       <p>
         Since these functions have multiple lines, use Allman brackets (opening
@@ -362,8 +363,8 @@ string label;</code></pre>
         Sometimes you need to convert a value from one type to another. In LPC, you can
         <strong>cast</strong> a value by putting the target type in parentheses before it:
       </p>
-<pre><code>(string)42       // converts the int 42 into the string "42"
-(int)"7"         // converts the string "7" into the int 7</code></pre>
+<pre><code>(string)6        // converts the int 6 into the string "6"
+(int)"6"         // converts the string "6" into the int 6</code></pre>
       <p>
         This is called a <strong>typecast</strong>. Not all conversions work, you cannot
         cast an array into an integer, for example, but between the basic types it
