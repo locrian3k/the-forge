@@ -337,25 +337,27 @@ string label;</code></pre>
       <p>
         In Exercise 2.1, your query functions looked like <code>int query_sides()</code> -
         empty parentheses, no input. Now you will write functions that receive a value
-        from their caller. The value goes inside the parentheses with its type:
+        from their caller. The value goes inside the parentheses with its type.
+        Here is a complete working example:
       </p>
-<pre><code>string int_to_string(int n)
-{
-  // n is an integer that was passed in by the caller.
-  // Do something with it and return a result.
-}</code></pre>
+<pre><code>string float_to_label(float f) { return (string)f; }</code></pre>
       <p>Breaking this down:</p>
       <ul>
         <li><strong><code>string</code></strong>, the return type. This function hands back text.</li>
-        <li><strong><code>int_to_string</code></strong>, the function name.</li>
-        <li><strong><code>int n</code></strong>, the parameter. When someone calls
-          <code>int_to_string(6)</code>, the value <code>6</code> (like the number of
-          sides on your die) is stored in <code>n</code> for the duration of that
+        <li><strong><code>float_to_label</code></strong>, the function name.</li>
+        <li><strong><code>float f</code></strong>, the parameter. When someone calls
+          <code>float_to_label(1.25)</code>, the value <code>1.25</code> (like the
+          luck bonus on your die) is stored in <code>f</code> for the duration of that
           function call.</li>
+        <li><strong><code>{ return (string)f; }</code></strong>, the body. The
+          <code>(string)</code> cast converts the float into text, and <code>return</code>
+          sends it back to whoever called the function.</li>
       </ul>
       <p>
-        Since these functions have multiple lines, use Allman brackets (opening
-        <code>{</code> on its own line) just like <code>create()</code>.
+        When the body is just a single return statement, use the one-line format shown
+        above. When the body has multiple lines (like <code>if</code> checks), use
+        Allman brackets with the opening <code>{</code> on its own line, just like
+        <code>create()</code>.
       </p>
 
       <h4>Type Casting</h4>
