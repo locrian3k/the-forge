@@ -235,12 +235,12 @@ string label;</code></pre>
         function to read data from your object.
       </p>
       <p>Here is the pattern:</p>
-<pre><code>int query_score() { return score; }</code></pre>
+<pre><code>int query_sides() { return sides; }</code></pre>
       <p>Breaking this down piece by piece:</p>
       <ul>
         <li><strong><code>int</code></strong>, the return type. This tells the compiler
           "this function hands back a whole number."</li>
-        <li><strong><code>query_score</code></strong>, the function name. On 3K, functions
+        <li><strong><code>query_sides</code></strong>, the function name. On 3K, functions
           that read data always start with <code>query_</code>.</li>
         <li><strong><code>()</code></strong>, empty parentheses mean the function does not
           need any input to do its job. (Inputs passed to a function are called
@@ -264,7 +264,7 @@ string label;</code></pre>
 <pre><code>string query_label() { return label; }</code></pre>
       <p>Write one query function for each of your six global variables:</p>
       <ul>
-        <li><code>int query_score()</code>, returns <code>score</code></li>
+        <li><code>int query_sides()</code>, returns <code>sides</code></li>
         <li><code>status query_active()</code>, returns <code>active</code></li>
         <li><code>string query_label()</code>, returns <code>label</code></li>
         <li><code>float query_ratio()</code>, returns <code>ratio</code></li>
@@ -308,7 +308,7 @@ string label;</code></pre>
           (Chapter 3 explains the difference) and your query functions will not be able
           to see them.</li>
         <li>One-line query functions use braces on the same line:
-          <code>int query_score() { return score; }</code>. This is the only exception
+          <code>int query_sides() { return sides; }</code>. This is the only exception
           to Allman bracket style in 3K codestyle.</li>
         <li>Do not forget <code>return;</code> at the end of <code>create()</code>. The query
           functions already have their own <code>return</code> statements with values.</li>
@@ -335,7 +335,7 @@ string label;</code></pre>
 
       <h4>Functions That Take Arguments</h4>
       <p>
-        In Exercise 2.1, your query functions looked like <code>int query_score()</code> —
+        In Exercise 2.1, your query functions looked like <code>int query_sides()</code> -
         empty parentheses, no input. Now you will write functions that receive a value
         from their caller. The value goes inside the parentheses with its type:
       </p>
