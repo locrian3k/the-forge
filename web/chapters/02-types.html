@@ -241,7 +241,7 @@ string label;</code></pre>
           that read data always start with <code>query_</code>.</li>
         <li><strong><code>()</code></strong>, empty parentheses mean the function does not
           need any input to do its job. (Inputs passed to a function are called
-          <em>arguments</em> — you will work with them in
+          <em>arguments</em> - you will work with them in
           <a href="06-functions.html">Chapter 6</a>.)</li>
         <li><strong><code>{ return score; }</code></strong>, the body. <code>return</code>
           sends the value of <code>score</code> back to whatever called this function.
@@ -270,6 +270,9 @@ string label;</code></pre>
       </ul>
       <p>
         These go <em>after</em> <code>create()</code>, at the bottom of the file.
+        This matters because <code>create()</code> is what assigns values to your
+        variables — if a query function runs before <code>create()</code> has finished,
+        the variables would still be <code>0</code> (their default).
       </p>
     </div>
 
