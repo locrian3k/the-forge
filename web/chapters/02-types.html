@@ -99,8 +99,8 @@
     <p>
       Type-checking efuns (built-in functions provided by the driver) like <code>intp()</code>, <code>stringp()</code>, and
       <code>objectp()</code> let you inspect types at runtime, essential when working with
-      <code>mixed</code> variables. Casting — placing a type like <code>(int)</code> or
-      <code>(string)</code> in front of a value — tells the compiler to treat that
+      <code>mixed</code> variables. Casting - placing a type like <code>(int)</code> or
+      <code>(string)</code> in front of a value - tells the compiler to treat that
       value as the specified type.
     </p>
     <p>
@@ -151,7 +151,7 @@
   Exercise 2.1, one variable of each LPC type.
 */
 #pragma strong_types
-#include "defs.h"
+#include "../defs.h"
 
 inherit "obj/treasure";</code></pre>
 
@@ -185,10 +185,10 @@ string label;</code></pre>
 
       <h4>3. The create() Function</h4>
       <p>
-        Inside <code>create()</code>, do three things (in this order):
+        Inside <code>create()</code>, the starter file already calls
+        <code>::create();</code> for you. After that, do two things:
       </p>
       <ol>
-        <li>Call <code>::create();</code> so the parent treasure initializes.</li>
         <li>Set the object identity using the setters you learned in Chapter 1:
           <ul>
             <li><code>set_name("type sampler");</code></li>
