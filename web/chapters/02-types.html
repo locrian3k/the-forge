@@ -210,7 +210,9 @@ string label;</code></pre>
             <li><code>status</code> values are only ever <code>1</code> (true) or <code>0</code> (false).</li>
             <li><code>float</code> literals must have a decimal point: <code>3.14</code>, not <code>3</code>.</li>
             <li><code>this_object()</code> is a built-in function that returns a reference to the
-              current object. It is the simplest way to get a valid <code>object</code> value.</li>
+              current object. Remember from Chapter 1 that your <code>defs.h</code> defines
+              <code>TO</code> as a shortcut for <code>this_object()</code>, so you could
+              also write <code>self = TO;</code> here.</li>
             <li><code>mixed</code> can hold anything, a string, an int, an object. The compiler
               will not check what you put in it.</li>
           </ul>
