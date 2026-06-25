@@ -1,5 +1,6 @@
 /*
   ex04_interactive.c
+  YourName YYMMDD
   Exercise 13.4 — Interactive Room
   A room with a custom command (e.g. "dig") that clones a hidden
   treasure into the player's inventory.

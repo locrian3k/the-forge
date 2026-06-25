@@ -1,5 +1,6 @@
 /*
   ex01_basic_weapon.c
+  YourName YYMMDD
   Exercise 15.1 — Basic Weapon
   Create a simple weapon with a type, damage class, and descriptions.
   Inherit from /obj/weapon and configure it entirely in create().

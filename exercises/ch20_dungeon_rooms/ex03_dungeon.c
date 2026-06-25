@@ -1,5 +1,6 @@
 /*
   ex03_dungeon.c
+  YourName YYMMDD
   Exercise 20.3 — Room Comparison: Dungeon Version
   Create a room using /room/dungeon/dr.c with set_dungeon().
   Compare this with ex03_standard.c to see what the dungeon

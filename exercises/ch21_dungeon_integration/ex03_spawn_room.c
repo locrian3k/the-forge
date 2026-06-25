@@ -1,5 +1,6 @@
 /*
   ex03_spawn_room.c
+  YourName YYMMDD
   Exercise 21.3 — Reset Spawning with add_clone
   Create a dungeon room that uses add_clone() to spawn monsters.
   Unlike clone_object()->move(), add_clone() handles deduplication

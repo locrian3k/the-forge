@@ -1,5 +1,6 @@
 /*
   ex02_rm4.c
+  YourName YYMMDD
   Exercise 21.2 — Area Layout: Room 4
   Dead-end alcove at the north end. Only exit leads south
   back to Room 3. Inherits the base droom.

@@ -1,5 +1,6 @@
 /*
   ex01_goblin.c
+  YourName YYMMDD
   Exercise 10.1 — Basic Inheritance, Child Class
   Goblin inherits base_creature and customizes the creature name.
   Demonstrates ::create(), inherited functions, and child-specific additions.

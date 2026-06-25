@@ -1,5 +1,6 @@
 /*
   ex03_loops.c
+  YourName YYMMDD
   Exercise 7.3 — Loop Workshop
   Demonstrates the three main loop constructs in LPC:
     for     - index-based iteration over an array

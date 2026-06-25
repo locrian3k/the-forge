@@ -1,5 +1,6 @@
 /*
   ex01_dungeon_room.c
+  YourName YYMMDD
   Exercise 20.1 — Basic Dungeon Room
   Create a room using /room/dungeon/dr.c instead of /room/room.
   The key addition is set_dungeon(), which registers this room

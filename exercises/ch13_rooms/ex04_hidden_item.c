@@ -1,5 +1,6 @@
 /*
   ex04_hidden_item.c
+  YourName YYMMDD
   Exercise 13.4 — Hidden Treasure (companion object)
   A simple treasure object cloned by the interactive room when
   a player performs the custom command.

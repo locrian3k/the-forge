@@ -1,5 +1,6 @@
 /*
   ex02_call_out.c
+  YourName YYMMDD
   Exercise 19.2 — Call Out Trap
   Create a room with a delayed trap that fires a few seconds
   after a player enters. The trap can be avoided by leaving

@@ -1,5 +1,6 @@
 /*
   ex03_artifact.c
+  YourName YYMMDD
   Exercise 10.3 — Multiple Inheritance, Artifact (Child)
   Inherits from BOTH describable and trackable, combining description
   management and location tracking into a single object.

@@ -1,5 +1,6 @@
 /*
   ex01_basic_armor.c
+  YourName YYMMDD
   Exercise 16.1 — Basic Armor
   Create a piece of armor with a type and a 10-element AC array.
   Note: 3K uses the British spelling /obj/armour.

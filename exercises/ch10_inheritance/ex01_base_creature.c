@@ -1,5 +1,6 @@
 /*
   ex01_base_creature.c
+  YourName YYMMDD
   Exercise 10.1 — Basic Inheritance, Base Class
   A simple creature base class that provides name management.
   Children inherit this to get creature_name for free.

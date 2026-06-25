@@ -1,5 +1,6 @@
 /*
   ex01_style_fix.c
+  YourName YYMMDD
   Exercise 11.1 — Style Correction
   This room file compiles but violates 3K codestyle in many ways.
   Find and fix all 9+ violations listed in the chapter.

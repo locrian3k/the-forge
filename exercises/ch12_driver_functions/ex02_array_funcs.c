@@ -1,5 +1,6 @@
 /*
   ex02_array_funcs.c
+  YourName YYMMDD
   Exercise 12.2 — Array Operations
   Demonstrates foreach iteration, filter(), and sort_array()
   with closure comparators.

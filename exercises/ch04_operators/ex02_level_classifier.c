@@ -1,5 +1,6 @@
 /*
   ex02_level_classifier.c
+  YourName YYMMDD
   Exercise 4.2 — Level Classifier
   Uses comparison operators and if/else to classify player levels
   into title strings.

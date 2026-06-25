@@ -1,5 +1,6 @@
 /*
   ex02_scoreboard.c
+  YourName YYMMDD
   Exercise 6.2 — Cross-Object Calls (Scoreboard)
   Maintains a mapping of player names to kill counts.
   Other objects call add_kill() and query_kills() on this object

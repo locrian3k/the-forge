@@ -1,5 +1,6 @@
 /*
   ex01_first_room.c
+  YourName YYMMDD
   Exercise 13.1 — Your First Room
   Create a basic room that a player can enter, look around in,
   and leave through an exit.

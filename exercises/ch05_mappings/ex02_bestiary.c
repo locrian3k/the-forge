@@ -1,5 +1,6 @@
 /*
   ex02_bestiary.c
+  YourName YYMMDD
   Exercise 5.2 — Monster Bestiary
   Demonstrates nested mappings, iteration with foreach, and
   conditional filtering over mapping data.

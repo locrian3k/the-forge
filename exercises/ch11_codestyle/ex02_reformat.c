@@ -1,5 +1,6 @@
 /*
   ex02_reformat.c
+  YourName YYMMDD
   Exercise 11.2 — Reformat from Scratch
   This monster file compiles and works correctly but uses horrible
   formatting. Reformat it entirely to match 3K codestyle.

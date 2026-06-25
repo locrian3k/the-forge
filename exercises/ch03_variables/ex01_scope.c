@@ -1,5 +1,6 @@
 /*
   ex01_scope.c
+  YourName YYMMDD
   Exercise 3.1 — Scope Matters
   Demonstrates the difference between global and local variable scope.
 */

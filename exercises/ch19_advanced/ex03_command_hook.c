@@ -1,5 +1,6 @@
 /*
   ex03_command_hook.c
+  YourName YYMMDD
   Exercise 19.3 — Command Hook
   Create a forge room where players can use a custom command
   to craft an item. Uses add_action() in init() to register

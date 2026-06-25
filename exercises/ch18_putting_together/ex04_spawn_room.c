@@ -1,5 +1,6 @@
 /*
   ex04_spawn_room.c
+  YourName YYMMDD
   Exercise 18.4 — Reset Spawning
   Create a room that spawns monsters using clone_object() in
   create() and respawns them in reset(). Uses present() to

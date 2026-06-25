@@ -1,5 +1,6 @@
 /*
   ex01_basic_monster.c
+  YourName YYMMDD
   Exercise 17.1 — Basic Monster
   Create a simple monster using /obj/monster with combat stats,
   idle chat messages, and an extra_look() function.

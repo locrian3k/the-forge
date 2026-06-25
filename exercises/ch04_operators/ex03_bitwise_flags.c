@@ -1,5 +1,6 @@
 /*
   ex03_bitwise_flags.c
+  YourName YYMMDD
   Exercise 4.3 — Bitwise Flags
   A permission system using bitwise operators.
 */

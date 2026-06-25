@@ -1,5 +1,6 @@
 /*
   ex03_trackable.c
+  YourName YYMMDD
   Exercise 10.3 — Multiple Inheritance, Parent 2 (Trackable)
   Provides location tracking. Any object that inherits this gains
   the ability to store and return a location string.

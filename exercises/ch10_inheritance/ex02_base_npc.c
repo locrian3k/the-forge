@@ -1,5 +1,6 @@
 /*
   ex02_base_npc.c
+  YourName YYMMDD
   Exercise 10.2 — Override and Extend, Parent NPC
   A base NPC class with look and greeting functions that children
   can override and extend using the :: operator.

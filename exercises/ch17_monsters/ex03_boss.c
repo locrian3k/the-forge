@@ -1,5 +1,6 @@
 /*
   ex03_boss.c
+  YourName YYMMDD
   Exercise 17.3 — Boss Monster (Super Monster)
   Create a boss using /obj/super_monster with damage reduction,
   a death narrative, a death message for slain players, loot drop,

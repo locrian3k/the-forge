@@ -1,5 +1,6 @@
 /*
   ex01_droom.c
+  YourName YYMMDD
   Exercise 21.1 — Base Dungeon Room (droom.c pattern)
   Create an inheritable base room for a dungeon area.
   All interior dungeon rooms should inherit this file.

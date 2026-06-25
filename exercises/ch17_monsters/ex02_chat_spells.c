@@ -1,5 +1,6 @@
 /*
   ex02_chat_spells.c
+  YourName YYMMDD
   Exercise 17.2 — Chat and Spells (Complex Monster)
   Create a complex monster with a multi-spell attack system,
   combat chat, and idle chat. Uses /obj/complex_monster.

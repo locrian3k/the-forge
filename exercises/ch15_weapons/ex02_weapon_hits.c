@@ -1,5 +1,6 @@
 /*
   ex02_weapon_hits.c
+  YourName YYMMDD
   Exercise 15.2 — Weapon Hits (Super Weapon)
   Create a super weapon with a weapon_hits() callback that fires
   every combat round. Implement at least two special procs

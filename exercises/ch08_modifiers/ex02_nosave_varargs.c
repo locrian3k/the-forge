@@ -1,5 +1,6 @@
 /*
   ex02_nosave_varargs.c
+  YourName YYMMDD
   Exercise 8.2 — Nosave and Varargs
   Demonstrate nosave (transient data), varargs (optional arguments),
   and nomask (override protection) modifiers.

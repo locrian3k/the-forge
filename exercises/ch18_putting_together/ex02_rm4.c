@@ -1,5 +1,6 @@
 /*
   ex02_rm4.c
+  YourName YYMMDD
   Exercise 18.2 — Area Layout: Room 4
   Dead-end room at the north end. Only exit leads south
   back to Room 3.

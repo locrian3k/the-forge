@@ -1,5 +1,6 @@
 /*
   ex03_droom.c
+  YourName YYMMDD
   Exercise 18.3 — Base Area Room (droom)
   Create an inheritable base room for your area. All interior
   rooms should inherit this file instead of /room/room directly.

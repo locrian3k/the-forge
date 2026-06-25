@@ -1,5 +1,6 @@
 /*
   ex02_readable_object.c
+  YourName YYMMDD
   Exercise 14.2 — Readable Object
   A scroll or journal that players can read using add_action().
 */

@@ -1,5 +1,6 @@
 /*
   ex02_wear_hooks.c
+  YourName YYMMDD
   Exercise 16.2 — Wear/Remove Hooks
   Create armor with do_wear() and do_remove() callbacks.
   Enforce a level requirement and display thematic messages.

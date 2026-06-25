@@ -1,5 +1,6 @@
 /*
   ex02_room_details.c
+  YourName YYMMDD
   Exercise 13.2 — Room Details
   A room enriched with examinable items, searchable features,
   and multiple exits.

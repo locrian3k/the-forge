@@ -1,5 +1,6 @@
 /*
   ex02_guard.c
+  YourName YYMMDD
   Exercise 10.2 — Override and Extend, Guard (Child)
   Inherits base_npc and overrides extra_look() and query_greeting()
   using :: to extend the parent's behavior rather than replace it.

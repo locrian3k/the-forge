@@ -1,5 +1,6 @@
 /*
   ex03_standard.c
+  YourName YYMMDD
   Exercise 20.3 — Room Comparison: Standard Version
   Create the same room using /room/room (no dungeon system).
   Compare with ex03_dungeon.c to see what the dungeon layer adds.

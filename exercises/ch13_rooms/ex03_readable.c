@@ -1,5 +1,6 @@
 /*
   ex03_readable.c
+  YourName YYMMDD
   Exercise 13.3 — Readable Items
   A room with a readable inscription using add_read() and a named
   callback function. Includes SCREENREAD support.

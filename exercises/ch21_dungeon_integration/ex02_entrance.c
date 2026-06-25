@@ -1,5 +1,6 @@
 /*
   ex02_entrance.c
+  YourName YYMMDD
   Exercise 21.2 — Area Layout: Entrance
   The outdoor entrance to the dungeon. Uses /room/room (not
   the dungeon base room) since it is outside the dungeon.

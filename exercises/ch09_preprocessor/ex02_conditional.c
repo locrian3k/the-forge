@@ -1,5 +1,6 @@
 /*
   ex02_conditional.c
+  YourName YYMMDD
   Exercise 9.2 — Conditional Compilation
   Demonstrate #ifdef, #if, and include guards. Behavior changes
   at compile time based on defines in the header.

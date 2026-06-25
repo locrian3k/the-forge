@@ -1,5 +1,6 @@
 /*
   ex01_inventory_tracker.c
+  YourName YYMMDD
   Exercise 5.1 — Inventory Tracker
   Demonstrates basic mapping operations: create, assign, lookup,
   delete, and key retrieval.

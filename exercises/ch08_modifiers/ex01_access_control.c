@@ -1,5 +1,6 @@
 /*
   ex01_access_control.c
+  YourName YYMMDD
   Exercise 8.1 — Access Control
   Demonstrate LPC access modifiers: public, private, protected, static.
   Each function should use the modifier best suited to its role.

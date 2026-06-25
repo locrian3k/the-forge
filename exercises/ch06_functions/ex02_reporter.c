@@ -1,5 +1,6 @@
 /*
   ex02_reporter.c
+  YourName YYMMDD
   Exercise 6.2 — Cross-Object Calls (Reporter)
   Loads the scoreboard object and calls its functions to demonstrate
   cross-object communication. Stores the result for verification.

@@ -1,5 +1,6 @@
 /*
   ex01_treasure.c
+  YourName YYMMDD
   Exercise 14.1 — Treasure Object
   Create a treasure object that players can pick up, examine,
   and sell to shops. Includes examinable sub-details.

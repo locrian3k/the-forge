@@ -1,5 +1,6 @@
 /*
   ex02_rm2.c
+  YourName YYMMDD
   Exercise 21.2 — Area Layout: Room 2
   First interior dungeon room. Inherits the base droom so it
   gets set_dungeon(), set_light(), and direction blocking for free.

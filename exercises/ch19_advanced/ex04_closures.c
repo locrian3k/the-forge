@@ -1,5 +1,6 @@
 /*
   ex04_closures.c
+  YourName YYMMDD
   Exercise 19.4 — Closures
   Demonstrates three closure styles in LPC:
     1. Efun closures: #'< (reference to built-in operator)

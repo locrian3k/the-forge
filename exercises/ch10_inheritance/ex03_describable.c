@@ -1,5 +1,6 @@
 /*
   ex03_describable.c
+  YourName YYMMDD
   Exercise 10.3 — Multiple Inheritance, Parent 1 (Describable)
   Provides description management. Any object that inherits this
   gains the ability to store and return a description string.

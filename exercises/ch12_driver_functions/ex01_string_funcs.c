@@ -1,5 +1,6 @@
 /*
   ex01_string_funcs.c
+  YourName YYMMDD
   Exercise 12.1 — String Toolbox
   A utility object with common string manipulation functions
   using LPC driver efuns.

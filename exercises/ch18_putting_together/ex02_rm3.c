@@ -1,5 +1,6 @@
 /*
   ex02_rm3.c
+  YourName YYMMDD
   Exercise 18.2 — Area Layout: Room 3
   Central chamber connecting Room 2 (west) and Room 4 (north).
 */

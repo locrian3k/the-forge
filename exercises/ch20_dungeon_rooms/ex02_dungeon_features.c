@@ -1,5 +1,6 @@
 /*
   ex02_dungeon_features.c
+  YourName YYMMDD
   Exercise 20.2 — Dungeon Features (add_clone)
   Create a dungeon room that uses add_clone() to spawn objects
   or monsters. Unlike clone_object()->move(), add_clone()

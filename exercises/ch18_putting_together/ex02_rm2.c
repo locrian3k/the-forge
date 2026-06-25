@@ -1,5 +1,6 @@
 /*
   ex02_rm2.c
+  YourName YYMMDD
   Exercise 18.2 — Area Layout: Room 2
   First interior room, connected south to the entrance and
   east to Room 3. Uses bidirectional exits.

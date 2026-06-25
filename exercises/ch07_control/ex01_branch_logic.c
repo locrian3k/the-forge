@@ -1,5 +1,6 @@
 /*
   ex01_branch_logic.c
+  YourName YYMMDD
   Exercise 7.1 — Branch Logic
   Implements weather description using both if/else and switch/case
   to demonstrate equivalent branching approaches.

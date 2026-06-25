@@ -1,5 +1,6 @@
 /*
   ex02_shadow_bug.c
+  YourName YYMMDD
   Exercise 3.2 — Shadow Bug Fix
   A fellow coder wrote this counter object, but query_counter() always
   returns 0 no matter how many times do_increment() is called.

@@ -1,5 +1,6 @@
 /*
   ex02_fall_through.c
+  YourName YYMMDD
   Exercise 7.2 — Switch Fall-Through
   Demonstrates intentional fall-through in switch statements where
   multiple damage types share the same message.

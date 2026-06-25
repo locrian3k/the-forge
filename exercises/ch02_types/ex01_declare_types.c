@@ -1,5 +1,6 @@
 /*
   ex01_declare_types.c
+  YourName YYMMDD
   Exercise 2.1 — Type Declaration Drill
   Create a treasure object that declares one global variable of each
   basic LPC type and provides query functions to read them.

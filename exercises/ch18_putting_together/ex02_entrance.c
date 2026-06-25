@@ -1,5 +1,6 @@
 /*
   ex02_entrance.c
+  YourName YYMMDD
   Exercise 18.2 — Area Layout: Entrance
   Create the outdoor entrance room for the Training Grounds area.
   This is a standard /room/room (not a dungeon room) since it
