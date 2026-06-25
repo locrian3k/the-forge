@@ -84,7 +84,7 @@
       A <strong>type</strong> tells the compiler what kind of data a variable holds.
       When you write <code>int hp = 100;</code>, the compiler knows <code>hp</code> is a
       number. When you write <code>string name = "Steve";</code>, it knows <code>name</code>
-      is text. Get the type wrong and the compiler stops you before your code ever runs —
+      is text. Get the type wrong and the compiler stops you before your code ever runs,
       that is what <code>#pragma strong_types</code> enforces.
     </p>
     <p>For 95% of MUD coding, you only need five types:</p>
@@ -97,7 +97,7 @@
       <tr><td><code>mixed</code></td><td>Any type</td><td><code>mixed x = "could be anything";</code></td></tr>
     </table>
     <p>
-      Type-checking efuns like <code>intp()</code>, <code>stringp()</code>, and
+      Type-checking efuns (built-in functions provided by the driver) like <code>intp()</code>, <code>stringp()</code>, and
       <code>objectp()</code> let you inspect types at runtime, essential when working with
       <code>mixed</code> variables. Explicit casting with <code>(int)</code> or
       <code>(string)</code> converts between types when needed.
